@@ -1,0 +1,37 @@
+{
+  "name": "plantilla-webinar-ghl",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "instalar": "node scripts/instalar-ghl.ts",
+    "revisar": "node scripts/revisar-plantilla.ts",
+    "verificar": "tsc --noEmit && node scripts/probar-horario.ts && node scripts/probar-parseo.ts && node scripts/probar-puerta.ts && node scripts/probar-red.ts && node scripts/probar-intentos.ts",
+    "probar:horario": "node scripts/probar-horario.ts",
+    "probar:parseo": "node scripts/probar-parseo.ts",
+    "probar:puerta": "node scripts/probar-puerta.ts",
+    "probar:red": "node scripts/probar-red.ts",
+    "probar:intentos": "node scripts/probar-intentos.ts",
+    "probar:movil": "node scripts/probar-movil.mjs"
+  },
+  "dependencies": {
+    "@vercel/edge-config": "^1.5.1",
+    "mercadopago": "^3.6.1",
+    "next": "16.3.1",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "server-only": "^0.0.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "playwright": "^1.62.1",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  },
+  "description": "Embudo de webinar en vivo: Next.js + GoHighLevel como única base. Registro, recordatorios, puerta de la sala, oferta y panel."
+}

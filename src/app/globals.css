@@ -1,0 +1,121 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------------------
+   Paleta y tipografía de la plantilla.
+
+   Cinco colores hacen toda la identidad. Cámbialos aquí y el sitio entero
+   cambia: no hay colores sueltos en las páginas, solo estos nombres.
+
+     fondo          el color de la página
+     superficie     tarjetas y secciones alternas
+     fondo-claro    bandas destacadas (detalles, precio)
+     acento         botones, etiquetas, énfasis
+     acento-claro   texto sobre el acento oscuro, marcas suaves
+     crema          titulares
+     texto          párrafos
+     texto-tenue    secundario
+     linea          bordes (el acento con transparencia)
+   --------------------------------------------------------------------------- */
+@theme {
+  --color-fondo: #0f1521;
+  --color-superficie: #171f2e;
+  --color-fondo-claro: #1f2a3d;
+  --color-acento: #e0a458;
+  --color-acento-claro: #f3d9ab;
+  --color-crema: #f5f1e8;
+  --color-texto: #dfe3ea;
+  --color-texto-tenue: #9aa5b6;
+  --color-linea: rgba(224, 164, 88, 0.22);
+
+  --font-display: var(--fuente-display), Georgia, serif;
+  --font-sans: var(--fuente-sans), system-ui, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-fondo);
+  color: var(--color-texto);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Los inputs en móvil deben ser de 16px o Safari hace zoom al enfocarlos. */
+input,
+select,
+textarea {
+  font-size: 16px;
+}
+
+@utility contenedor {
+  width: 100%;
+  max-width: 71.25rem; /* 1140px */
+  margin-inline: auto;
+}
+
+@utility titulo {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.15;
+}
+
+/* Fondos que antes eran fotografías: ahora son degradados sobre la paleta,
+   para que la plantilla se vea bien sin una sola imagen cargada. */
+@utility fondo-hero {
+  background:
+    radial-gradient(ellipse 70% 60% at 20% 0%, rgba(224, 164, 88, 0.14), transparent 60%),
+    radial-gradient(ellipse 60% 50% at 100% 100%, rgba(224, 164, 88, 0.08), transparent 60%),
+    var(--color-fondo);
+}
+
+@utility fondo-banda {
+  background:
+    linear-gradient(135deg, rgba(224, 164, 88, 0.1), transparent 55%),
+    var(--color-fondo-claro);
+}
+
+@utility boton-acento {
+  display: block;
+  width: 100%;
+  text-align: center;
+  background: linear-gradient(180deg, var(--color-acento), color-mix(in srgb, var(--color-acento) 78%, black));
+  color: #1a1206;
+  border: 0;
+  border-radius: 0.5rem;
+  padding: 1.25rem 1.75rem;
+  font-weight: 700;
+  font-size: 0.9375rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  box-shadow: 0 10px 30px color-mix(in srgb, var(--color-acento) 28%, transparent);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  cursor: pointer;
+}
+
+.boton-acento:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 38px color-mix(in srgb, var(--color-acento) 40%, transparent);
+}
+
+.boton-acento:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+@utility cifra {
+  font-variant-numeric: tabular-nums;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
