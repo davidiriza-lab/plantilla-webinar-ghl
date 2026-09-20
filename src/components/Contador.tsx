@@ -12,6 +12,8 @@ interface Props {
    * En una fecha única no hay siguiente: pedirla sería un bucle de recargas.
    */
   seRepite: boolean;
+  /** `cajas` (por defecto) o `linea`: cifras grandes en una fila, para ir dentro de un panel. */
+  variante?: 'cajas' | 'linea';
 }
 
 interface Restante {
@@ -43,6 +45,7 @@ export default function Contador({
   finMs,
   enlaceIngreso,
   seRepite,
+  variante = 'cajas',
 }: Props) {
   const router = useRouter();
   const [ahora, setAhora] = useState<number | null>(null);
@@ -103,6 +106,34 @@ export default function Contador({
     [dos(r.minutos), 'Min'],
     [dos(r.segundos), 'Seg'],
   ];
+
+  if (variante === 'linea') {
+    return (
+      <div
+        className="flex items-end justify-between gap-2"
+        role="timer"
+        aria-label="Tiempo restante para la próxima clase"
+      >
+        {celdas.map(([valor, etiqueta], i) => (
+          <div key={etiqueta} className="flex items-end gap-2">
+            <div className="text-center">
+              <b className="cifra block font-display text-[52px] font-bold leading-none tracking-[-0.04em] text-crema max-sm:text-[38px]">
+                {valor}
+              </b>
+              <small className="mt-2 block text-[10.5px] font-semibold uppercase tracking-[0.2em] text-texto-tenue">
+                {etiqueta}
+              </small>
+            </div>
+            {i < celdas.length - 1 && (
+              <span aria-hidden className="mb-7 text-[28px] leading-none text-acento/50 max-sm:mb-6 max-sm:text-[22px]">
+                :
+              </span>
+            )}
+          </div>
+        ))}
+      </div>
+    );
+  }
 
   return (
     <div

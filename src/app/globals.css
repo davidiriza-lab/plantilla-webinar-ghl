@@ -75,7 +75,7 @@ textarea {
 
 @utility fondo-banda {
   background:
-    linear-gradient(rgba(6, 16, 34, 0.82), rgba(6, 16, 34, 0.92)),
+    linear-gradient(rgba(6, 16, 34, 0.9), rgba(6, 16, 34, 0.95)),
     url('/assets/bgi/orbital-lines-overlay.webp') center / cover no-repeat,
     url('/assets/bgi/bg-starfield.webp') center / cover no-repeat;
 }
@@ -84,6 +84,14 @@ textarea {
   background:
     linear-gradient(180deg, rgba(6, 16, 34, 0.6), rgba(6, 16, 34, 0.94)),
     url('/assets/bgi/bg-deep-gradient.webp') center / cover no-repeat;
+}
+
+/* El cierre: la Tierra entrando por un lado, como pide el kit para bloques
+   de visión y resultados. El velo deja limpio el lado izquierdo, donde va el texto. */
+@utility fondo-vision {
+  background:
+    linear-gradient(90deg, rgba(6, 16, 34, 0.97) 0%, rgba(6, 16, 34, 0.86) 48%, rgba(6, 16, 34, 0.45) 100%),
+    url('/assets/bgi/bg-earth-side.webp') center / cover no-repeat;
 }
 
 @utility fondo-nebulosa {

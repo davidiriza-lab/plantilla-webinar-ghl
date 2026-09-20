@@ -363,37 +363,46 @@ export default async function Landing() {
         </section>
       )}
 
-      {/* ── Cierre ─────────────────────────────────────────────────── */}
-      <section className="fondo-banda border-t border-linea px-6 py-22 text-center max-sm:px-5 max-sm:py-15">
-        <div className="contenedor">
-          <h2 className="titulo mb-4 text-[44px] text-crema max-sm:text-[32px]">
-            {L.cierre.titulo}
-          </h2>
-
-          <p className="mx-auto mb-9 max-w-[620px] text-[17px] text-texto">
-            {L.cierre.parrafo} <span className="text-acento">{L.cierre.parrafoAcento}</span>.
-          </p>
-
-          <p className="mb-8.5 text-texto-tenue">
-            {ocurrencia.estado === 'en_vivo'
-              ? 'La clase está pasando ahora mismo.'
-              : 'La próxima clase empieza en:'}
-          </p>
-
-          <div className="mb-9.5">
-            <Contador
-              inicioMs={ocurrencia.inicioMs}
-              finMs={ocurrencia.finMs}
-              enlaceIngreso={config.enlaceIngreso}
-              seRepite={ocurrencia.modo === 'recurrente'}
-            />
+      {/* ── Cierre: texto a la izquierda, la próxima clase como un panel ── */}
+      <section className="fondo-vision border-t border-linea px-6 py-24 max-sm:px-5 max-sm:py-16">
+        <div className="contenedor grid items-center gap-14 md:grid-cols-[1.1fr_0.9fr] md:gap-16">
+          <div>
+            <p className="mb-5 text-xs font-bold uppercase tracking-[0.24em] text-acento-claro">
+              {L.franja}
+            </p>
+            <h2 className="titulo mb-6 max-w-[16ch] text-[52px] text-crema max-sm:text-[36px]">
+              {L.cierre.titulo}
+            </h2>
+            <p className="mb-9 max-w-[46ch] text-[18px] leading-relaxed text-texto max-sm:text-[16px]">
+              {L.cierre.parrafo} <span className="text-acento-claro">{L.cierre.parrafoAcento}</span>.
+            </p>
+            {registroAbierto && (
+              <a href="#registro" className="boton-acento inline-block w-auto px-9 max-sm:w-full">
+                {L.cierre.cta}
+              </a>
+            )}
           </div>
 
-          {registroAbierto && (
-            <a href="#registro" className="boton-acento mx-auto max-w-[520px]">
-              {L.cierre.cta}
-            </a>
-          )}
+          <div className="panel p-8 max-sm:p-6">
+            <p className="mb-1 text-[11.5px] font-bold uppercase tracking-[0.22em] text-acento-claro">
+              {ocurrencia.estado === 'en_vivo' ? 'Estamos en vivo' : 'Próxima clase'}
+            </p>
+            <p className="titulo mb-1 text-[26px] text-crema max-sm:text-[22px]">
+              {ocurrencia.fechaLegible}
+            </p>
+            <p className="mb-7 text-[15px] text-texto-tenue">
+              {ocurrencia.horaLegible} · {ocurrencia.etiquetaZona} · {config.duracionMinutos} min
+            </p>
+            <div className="border-t border-linea pt-6">
+              <Contador
+                variante="linea"
+                inicioMs={ocurrencia.inicioMs}
+                finMs={ocurrencia.finMs}
+                enlaceIngreso={config.enlaceIngreso}
+                seRepite={ocurrencia.modo === 'recurrente'}
+              />
+            </div>
+          </div>
         </div>
       </section>
 
