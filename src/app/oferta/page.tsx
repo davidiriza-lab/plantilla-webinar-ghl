@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import { leerConfig, aPublica } from '@/lib/config';
 import { MARCA } from '@/contenido/marca';
 import { OFERTA } from '@/contenido/oferta';
@@ -115,11 +116,21 @@ export default async function Oferta() {
       {/* ── 2. Problema / continuidad ──────────────────────────────── */}
       <section className="fondo-profundo border-b border-linea px-6 py-22 max-sm:px-5 max-sm:py-15">
         <div className="contenedor grid items-center gap-14 md:grid-cols-2">
-          <PlaceholderImagen
-            numero={5}
-            descripcion={O.problema.descripcionImagen}
-            className="mx-auto w-full max-w-[420px] max-md:order-2"
-          />
+          {O.problema.imagen ? (
+            <Image
+              src={O.problema.imagen}
+              alt=""
+              width={928}
+              height={1152}
+              className="mx-auto w-full max-w-[420px] rounded-[22px] border border-linea shadow-[0_20px_60px_rgba(0,0,0,0.4)] max-md:order-2"
+            />
+          ) : (
+            <PlaceholderImagen
+              numero={5}
+              descripcion={O.problema.descripcionImagen}
+              className="mx-auto w-full max-w-[420px] max-md:order-2"
+            />
+          )}
 
           <div className="max-md:order-1">
             <h2 className="titulo mb-6 text-[34px] leading-[1.12] text-crema max-sm:text-[27px]">

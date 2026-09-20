@@ -39,6 +39,8 @@ export const OFERTA = {
     puntoDeTrabajo: 'Ese es el punto que trabajamos en Business Growth Intensive.', // EJEMPLO
     cierre: 'No buscamos que sepas más. Buscamos que',
     cierreAcento: 'tu negocio ejecute sin ti.', // EJEMPLO
+    /** Ruta en /public/assets o '' para un marcador. */
+    imagen: '/assets/bgi/oferta-problema.webp' as string, // EJEMPLO
     descripcionImagen: 'Ilustración del problema, formato 4:5',
   },
 

@@ -40,21 +40,21 @@ export const LANDING = {
         titulo: 'Diseñar la trayectoria: de dónde vienen tus clientes y a dónde quieres llegar', // EJEMPLO
         texto: 'Un mapa de una página con tu embudo real, tus números y el siguiente nivel concreto.', // EJEMPLO
         /** Ruta en /public/assets o '' para un marcador. */
-        imagen: '',
+        imagen: '/assets/bgi/parte-1-trayectoria.webp' as string, // EJEMPLO
         descripcionImagen: 'Foto o ilustración de la parte 1, formato 16:10',
       },
       {
         numero: 'Parte 2',
         titulo: 'Montar tu primer equipo de IA: agentes que capturan, siguen y cierran', // EJEMPLO
         texto: 'Qué se automatiza primero, qué no, y cómo se conecta con tu CRM sin romper nada.', // EJEMPLO
-        imagen: '',
+        imagen: '/assets/bgi/parte-2-equipo-ia.webp' as string, // EJEMPLO
         descripcionImagen: 'Foto o ilustración de la parte 2, formato 16:10',
       },
       {
         numero: 'Parte 3',
         titulo: 'Ejecutar el crecimiento: el ritmo semanal que sostiene la altitud', // EJEMPLO
         texto: 'El embudo exacto que estás viendo ahora: registro, recordatorios, clase en vivo y oferta.', // EJEMPLO
-        imagen: '',
+        imagen: '/assets/bgi/parte-3-altitud.webp' as string, // EJEMPLO
         descripcionImagen: 'Foto o ilustración de la parte 3, formato 16:10',
       },
     ],
