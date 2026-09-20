@@ -11,6 +11,7 @@ import PlaceholderImagen from '@/components/PlaceholderImagen';
 import Marca from '@/components/Marca';
 import Negritas from '@/components/Negritas';
 import Icono from '@/components/Icono';
+import { ruta } from '@/lib/ruta';
 
 // La config se relee cada minuto: lo que se cambia en /admin se ve solo.
 export const revalidate = 60;
@@ -113,7 +114,7 @@ export default async function Landing() {
                       className="absolute size-[190px] rounded-full bg-[radial-gradient(circle,rgba(56,130,246,0.30)_0%,rgba(56,130,246,0)_68%)]"
                     />
                     <Image
-                      src={s.imagen}
+                      src={ruta(s.imagen)}
                       alt=""
                       width={512}
                       height={512}
@@ -163,7 +164,7 @@ export default async function Landing() {
           <div className="max-md:order-1">
             {MARCA.retrato ? (
               <Image
-                src={MARCA.retrato}
+                src={ruta(MARCA.retrato)}
                 alt={MARCA.presentador}
                 width={1000}
                 height={1250}
@@ -226,7 +227,7 @@ export default async function Landing() {
                       className="absolute inset-[-24px] rounded-full bg-[radial-gradient(circle,rgba(56,130,246,0.28)_0%,rgba(56,130,246,0)_68%)]"
                     />
                     <Image
-                      src={imagen}
+                      src={ruta(imagen)}
                       alt=""
                       width={384}
                       height={384}
@@ -349,8 +350,8 @@ export default async function Landing() {
                 >
                   {c.video ? (
                     <video
-                      src={c.video}
-                      poster={c.imagen}
+                      src={ruta(c.video)}
+                      poster={ruta(c.imagen)}
                       controls
                       playsInline
                       preload="none"
@@ -359,7 +360,7 @@ export default async function Landing() {
                     />
                   ) : (
                     <Image
-                      src={c.imagen}
+                      src={ruta(c.imagen)}
                       alt={c.quien}
                       width={960}
                       height={540}

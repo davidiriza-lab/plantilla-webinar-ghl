@@ -3,6 +3,7 @@
 import { useState, type FormEvent } from 'react';
 import { LADAS, LADA_POR_DEFECTO, componerTelefono } from '@/lib/telefono';
 import type { TipoFormulario } from '@/lib/etiquetas';
+import { ruta } from '@/lib/ruta';
 
 interface Props {
   enlaceSoporte: string;
@@ -44,7 +45,7 @@ export default function FormularioInteres({
     setMensaje('');
 
     try {
-      const res = await fetch('/api/registro', {
+      const res = await fetch(ruta('/api/registro'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

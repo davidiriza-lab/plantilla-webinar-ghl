@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { MARCA } from '@/contenido/marca';
+import { ruta } from '@/lib/ruta';
 
 /**
  * El logo del embudo. Si `MARCA.logo` apunta a una imagen en /public/assets,
@@ -18,7 +19,7 @@ export default function Marca({
   if (MARCA.logo) {
     return (
       <Image
-        src={MARCA.logo}
+        src={ruta(MARCA.logo)}
         alt={texto}
         width={1400}
         height={614}

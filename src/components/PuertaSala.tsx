@@ -3,6 +3,7 @@
 import { useEffect, useState, type FormEvent } from 'react';
 import { evaluarPuerta, type EntradaPuerta } from '@/lib/puerta';
 import { LADAS, LADA_POR_DEFECTO, componerTelefono } from '@/lib/telefono';
+import { ruta } from '@/lib/ruta';
 
 interface Props {
   entrada: EntradaPuerta;
@@ -111,7 +112,7 @@ export default function PuertaSala({
     setMensaje('');
 
     try {
-      const res = await fetch('/api/registro', {
+      const res = await fetch(ruta('/api/registro'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

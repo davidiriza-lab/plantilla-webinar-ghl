@@ -4,6 +4,7 @@ import { MARCA } from '@/contenido/marca';
 
 import { useState, type FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
+import { ruta } from '@/lib/ruta';
 
 export default function Login() {
   const router = useRouter();
@@ -17,7 +18,7 @@ export default function Login() {
     setError('');
 
     try {
-      const res = await fetch('/api/admin/sesion', {
+      const res = await fetch(ruta('/api/admin/sesion'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ contrasena: String(datos.get('contrasena')) }),

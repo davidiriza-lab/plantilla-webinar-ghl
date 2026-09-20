@@ -1,3 +1,4 @@
+import { ruta } from '@/lib/ruta';
 /**
  * Añadir la clase al calendario, sin depender de AddEvent.
  *
@@ -47,7 +48,7 @@ export default function BotonCalendario({
       >
         Google Calendar
       </a>
-      <a href="/api/calendario.ics" className={claseBoton}>
+      <a href={ruta('/api/calendario.ics')} className={claseBoton}>
         Apple u Outlook
       </a>
     </div>

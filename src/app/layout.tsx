@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import { Space_Grotesk, Inter } from 'next/font/google';
 import { MARCA } from '@/contenido/marca';
+import { variablesDeFondos } from '@/lib/fondos';
 import './globals.css';
 
 // Tipografías del kit Business Growth Intensive: Space Grotesk para titulares,
@@ -46,6 +47,7 @@ export default function RootLayout({
     <html
       lang="es"
       className={`${display.variable} ${sans.variable}`}
+      style={variablesDeFondos() as React.CSSProperties}
     >
       <body>{children}</body>
     </html>

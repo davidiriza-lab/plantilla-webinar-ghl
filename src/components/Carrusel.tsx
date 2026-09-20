@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { useCallback, useEffect, useState } from 'react';
+import { ruta } from '@/lib/ruta';
 
 interface Props {
   imagenes: ReadonlyArray<{ src: string; alt: string }>;
@@ -31,7 +32,7 @@ export default function Carrusel({ imagenes }: Props) {
           {imagenes.map((img, i) => (
             <Image
               key={img.src}
-              src={img.src}
+              src={ruta(img.src)}
               alt={img.alt}
               width={1280}
               height={854}

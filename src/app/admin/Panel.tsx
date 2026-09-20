@@ -4,6 +4,7 @@ import { useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import type { CampoConfig, ConfigWebinar } from '@/lib/config';
 import type { Salud } from '@/lib/salud';
+import { ruta } from '@/lib/ruta';
 
 interface Props {
   config: ConfigWebinar;
@@ -84,7 +85,7 @@ export default function Panel({ config, campos, corregidos, resumen }: Props) {
     setResinc('yendo');
     setResincMensaje('');
     try {
-      const res = await fetch('/api/admin/resincronizar', { method: 'POST' });
+      const res = await fetch(ruta('/api/admin/resincronizar'), { method: 'POST' });
       const cuerpo = (await res.json()) as {
         ok?: boolean;
         mensaje?: string;
@@ -137,7 +138,7 @@ export default function Panel({ config, campos, corregidos, resumen }: Props) {
     }
 
     try {
-      const res = await fetch('/api/admin/config', {
+      const res = await fetch(ruta('/api/admin/config'), {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(cambios),
@@ -166,7 +167,7 @@ export default function Panel({ config, campos, corregidos, resumen }: Props) {
   }
 
   async function salir(): Promise<void> {
-    await fetch('/api/admin/sesion', { method: 'DELETE' });
+    await fetch(ruta('/api/admin/sesion'), { method: 'DELETE' });
     router.refresh();
   }
 
@@ -184,7 +185,7 @@ export default function Panel({ config, campos, corregidos, resumen }: Props) {
           </div>
           <div className="flex shrink-0 gap-2">
             <a
-              href="/api/admin/respaldo"
+              href={ruta('/api/admin/respaldo')}
               title="Descarga un CSV con todos los registrados y sus etiquetas. Guárdalo cada semana."
               className="rounded-lg border border-acento/40 px-4 py-2 text-xs font-semibold uppercase tracking-wider text-acento hover:bg-acento/10"
             >

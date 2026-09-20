@@ -9,6 +9,7 @@ import BotonCompra from '@/components/BotonCompra';
 import PlaceholderImagen from '@/components/PlaceholderImagen';
 import Marca from '@/components/Marca';
 import { leerIdentidad } from '@/lib/identidad';
+import { ruta } from '@/lib/ruta';
 
 export const revalidate = 60;
 
@@ -118,7 +119,7 @@ export default async function Oferta() {
         <div className="contenedor grid items-center gap-14 md:grid-cols-2">
           {O.problema.imagen ? (
             <Image
-              src={O.problema.imagen}
+              src={ruta(O.problema.imagen)}
               alt=""
               width={1024}
               height={1280}

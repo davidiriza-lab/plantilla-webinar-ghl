@@ -65,31 +65,32 @@ textarea {
   letter-spacing: -0.035em;
 }
 
-/* ── Fondos con la fotografía del kit. Siempre con velo navy encima para que
-   el texto se lea; en móvil el velo es más denso. ────────────────────────── */
+/* ── Fondos con la fotografía del kit. Las rutas de las imágenes viven en
+   src/lib/fondos.ts (llegan como variables --f-*). Siempre con velo navy
+   encima para que el texto se lea; en móvil el velo es más denso. ────────── */
 @utility fondo-hero {
   /* En móvil no hay columna vacía a la derecha: velo uniforme para leer encima. */
   @media (max-width: 767px) {
     background:
       linear-gradient(180deg, rgba(6, 16, 34, 0.7), rgba(6, 16, 34, 0.85)),
-      url('/assets/bgi/bg-hero-earth.webp') center / cover no-repeat;
+      var(--f-hero) center / cover no-repeat;
   }
   background:
     linear-gradient(90deg, rgba(6, 16, 34, 0.88) 0%, rgba(6, 16, 34, 0.55) 42%, rgba(6, 16, 34, 0.08) 100%),
-    url('/assets/bgi/bg-hero-earth.webp') center / cover no-repeat;
+    var(--f-hero) center / cover no-repeat;
 }
 
 @utility fondo-banda {
   background:
     linear-gradient(rgba(6, 16, 34, 0.5), rgba(6, 16, 34, 0.7)),
-    url('/assets/bgi/orbital-lines-overlay.webp') center / cover no-repeat,
-    url('/assets/bgi/bg-starfield.webp') center / cover no-repeat;
+    var(--f-orbitas) center / cover no-repeat,
+    var(--f-estrellas) center / cover no-repeat;
 }
 
 @utility fondo-profundo {
   background:
     linear-gradient(180deg, rgba(6, 16, 34, 0.25), rgba(6, 16, 34, 0.6)),
-    url('/assets/bgi/bg-deep-gradient.webp') center / cover no-repeat;
+    var(--f-profundo) center / cover no-repeat;
 }
 
 /* El cierre: la Tierra entrando por un lado, como pide el kit para bloques
@@ -97,13 +98,13 @@ textarea {
 @utility fondo-vision {
   background:
     linear-gradient(90deg, rgba(6, 16, 34, 0.88) 0%, rgba(6, 16, 34, 0.5) 45%, rgba(6, 16, 34, 0.05) 100%),
-    url('/assets/bgi/bg-earth-side.webp') center / cover no-repeat;
+    var(--f-lado) center / cover no-repeat;
 }
 
 @utility fondo-nebulosa {
   background:
     linear-gradient(180deg, rgba(6, 16, 34, 0.3), rgba(6, 16, 34, 0.65)),
-    url('/assets/bgi/bg-nebula.webp') center / cover no-repeat;
+    var(--f-nebulosa) center / cover no-repeat;
 }
 
 /* Tarjeta tipo panel oscuro translúcido, como manda el kit. */

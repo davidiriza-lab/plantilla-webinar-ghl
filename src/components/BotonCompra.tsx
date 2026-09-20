@@ -1,4 +1,5 @@
 'use client';
+import { ruta } from '@/lib/ruta';
 
 /**
  * El botón de compra cuando ya sabemos quién es (se registró o entró a la
@@ -24,7 +25,7 @@ export default function BotonCompra({
   texto,
 }: Props) {
   function ir(): void {
-    fetch('/api/registro', {
+    fetch(ruta('/api/registro'), {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       keepalive: true,
