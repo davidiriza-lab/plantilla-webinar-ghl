@@ -1,4 +1,4 @@
-# Plantilla · Embudo de webinar con GoHighLevel
+# Plantilla embudo BGI · Embudo de webinar con GoHighLevel
 
 Un embudo completo de webinar en vivo que **usa GoHighLevel como única base de
 datos**: registro, página de gracias, puerta de la sala, oferta y panel de

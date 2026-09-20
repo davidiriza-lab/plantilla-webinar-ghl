@@ -1,6 +1,6 @@
 @AGENTS.md
 
-# Embudo de webinar (plantilla)
+# Plantilla embudo BGI
 
 Sitio de un webinar en vivo con **GoHighLevel como única base de datos**. No hay
 Supabase, Postgres ni cron. Next.js hace las páginas y captura; GHL guarda
