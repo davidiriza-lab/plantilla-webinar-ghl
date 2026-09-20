@@ -247,13 +247,15 @@
       <thead><tr><th>Cuenta</th><th>Para qué</th><th>Costo</th></tr></thead>
       <tbody>
         <tr><td><strong>Claude Code</strong></td><td>Es quien construye. Todo el manual pasa por aquí</td><td>Tu suscripción de Claude</td></tr>
-        <tr><td><strong>GoHighLevel</strong> (una sub-cuenta)</td><td>Guardar prospectos, configuración y mandar recordatorios</td><td>Tu plan actual</td></tr>
+        <tr><td><strong>GoHighLevel</strong>, de preferencia con <strong>agencia propia</strong></td><td>Guardar prospectos, configuración y mandar recordatorios, en una sub-cuenta solo para el webinar</td><td>Tu plan de GHL</td></tr>
         <tr><td><strong>GitHub</strong></td><td>Tu copia del código y los despliegues automáticos</td><td>Gratis</td></tr>
         <tr><td><strong>Vercel</strong></td><td>Donde vive el sitio</td><td>Gratis para empezar</td></tr>
         <tr><td>Meta Business (opcional)</td><td>Pixel y API de conversiones para que tus anuncios aprendan</td><td>Gratis</td></tr>
         <tr><td>Mercado Pago (opcional)</td><td>Cobrar la oferta y marcar ventas en el pipeline</td><td>Comisión por venta</td></tr>
       </tbody>
     </table></div>
+
+    <div class="nota"><span class="t">Por qué te conviene tener tu propia agencia de GoHighLevel</span><p>Con agencia propia creas una sub-cuenta limpia solo para este webinar, generas tú las llaves sin pedirle nada a nadie, puedes <strong>importar snapshots</strong> (una sub-cuenta ya armada, con pipeline, campos y workflows) y, el día que quieras montar este embudo para un cliente, es otra sub-cuenta y otra copia del repositorio. Si hoy vives como sub-cuenta dentro de la agencia de alguien más, todo el manual funciona igual; solo que para crear la sub-cuenta o importar un snapshot dependes del dueño de esa agencia.</p></div>
 
     <h3>Cómo leer cada módulo</h3>
     <div class="ritmo">
@@ -267,7 +269,7 @@
 
     <div class="lista" data-modulo="m0">
       <div class="cab"><b>Antes de empezar</b><span></span></div>
-      <label><input type="checkbox" id="c-0-1"><span>Tengo acceso a una sub-cuenta de GoHighLevel donde voy a trabajar <small>Puede ser nueva o una que ya uses. El instalador no borra nada.</small></span></label>
+      <label><input type="checkbox" id="c-0-1"><span>Tengo una sub-cuenta de GoHighLevel donde voy a trabajar <small>Lo ideal: una nueva, dentro de tu propia agencia. Si usas una que ya existe, el instalador no borra nada.</small></span></label>
       <label><input type="checkbox" id="c-0-2"><span>Tengo cuenta en GitHub y en Vercel con el mismo correo</span></label>
       <label><input type="checkbox" id="c-0-3"><span>Tengo suscripción de Claude</span></label>
       <label><input type="checkbox" id="c-0-4"><span>Sé qué voy a enseñar en la clase y qué voy a ofrecer al final <small>No hace falta el copy final. Hace falta saber el tema y el precio aproximado.</small></span></label>
@@ -415,7 +417,7 @@ Herramientas listas. Lo marcado con ✗ (si hay) son módulos que aún no tocan.
     <div class="cabecera"><span class="num">04</span><h2>Conectar GoHighLevel</h2><p class="meta">Veinte minutos. El paso más importante del manual.</p></div>
 
     <h3>Qué es</h3>
-    <p>El sitio necesita dos cosas para hablar con tu sub-cuenta: una llave (el <em>Private Integration Token</em>) y la dirección (el <em>Location ID</em>). Con eso, el instalador crea en tu sub-cuenta todo lo que el embudo usa: los custom values donde vive la configuración, dos custom fields de contacto, y comprueba el pipeline. Lo corre Claude; tú solo consigues la llave.</p>
+    <p>El sitio necesita dos cosas para hablar con tu sub-cuenta: una llave (el <em>Private Integration Token</em>) y la dirección (el <em>Location ID</em>). Con eso, el instalador crea en tu sub-cuenta todo lo que el embudo usa: los custom values donde vive la configuración, tres custom fields de contacto (de dónde vino, a qué clase se apuntó en texto, y ese mismo día como fecha para que los recordatorios sepan cuándo salir), y comprueba el pipeline. Lo corre Claude; tú solo consigues la llave.</p>
 
     <h3>Cómo funciona</h3>
     <p>Un Private Integration Token es una llave que GHL le da a una integración, con permisos concretos. No caduca por tiempo: solo muere si alguien la borra desde la sub-cuenta. Por eso es la llave correcta para algo que va a vivir meses. Las "API keys" viejas de GHL no sirven aquí.</p>
@@ -443,10 +445,12 @@ Si algo sale con ✗, explícame qué tengo que hacer en GHL y vuelve a correrlo
 2. Custom values (la configuración que edita /admin)
   + "Titulo del webinar"
   + "Webinar Modo"
-  … (crea 29 la primera vez)
-3. Custom fields de contacto (Fuente y Fecha de su clase)
+  … (crea 30 la primera vez)
+3. Custom fields de contacto (Fuente, Fecha de su clase y Dia de su clase)
   + campo "Fuente"
   · GHL_CAMPO_FUENTE_ID=xxxx → se escribe en .env.local
+  + campo "Dia de su clase"
+  · GHL_CAMPO_DIA_CLASE_ID=xxxx → se escribe en .env.local
 4. Pipeline de oportunidades
   ✓ Pipeline "Webinars" con sus 4 etapas
 5. Panel /admin
@@ -494,7 +498,7 @@ Todo listo del lado de GoHighLevel.</code></pre>
         <tbody>
           <tr><td>Programación</td><td>Modo recurrente (cada jueves) o fecha única; día, hora, zona, duración</td><td>Recurrente si vas a dar la clase cada semana. Fecha única cierra el registro sola cuando pasa.</td></tr>
           <tr><td>La sala</td><td>Cuántos minutos antes abre la puerta; mando manual (auto / abierta / cerrada)</td><td>15 minutos. Deja el mando en <em>auto</em> salvo el día de la clase si quieres abrir antes.</td></tr>
-          <tr><td>Enlaces</td><td>Zoom, grupo de WhatsApp, WhatsApp de soporte</td><td>El Zoom con la contraseña incluida en el enlace (<code>?pwd=…</code>), para que nadie tenga que teclearla.</td></tr>
+          <tr><td>Enlaces</td><td>Zoom, enlace de la puerta, grupo de WhatsApp, WhatsApp de soporte, enlace de la oferta</td><td>El Zoom con la contraseña incluida (<code>?pwd=…</code>). El <strong>enlace de la puerta</strong> es tu dominio + <code>/ingreso</code> y el de la oferta tu dominio + <code>/oferta</code>: son los que mandan tus correos. Mientras no tengas dominio (módulo 11), déjalos vacíos y vuelve.</td></tr>
           <tr><td>La oferta</td><td>Precio (solo el número, en MXN), enlace de pago</td><td>Sin enlace de pago el botón se ve, pero avisa que falta. Lo llenas en el módulo 09.</td></tr>
           <tr><td>Etiquetas</td><td>Los nombres de las etiquetas generales</td><td>Déjalas como vienen. Son las que disparan tus workflows (módulo 07).</td></tr>
           <tr><td>Seguimiento</td><td>Pixel de Meta y token de conversiones</td><td>Módulo 10. Puede quedar vacío hasta entonces.</td></tr>
@@ -574,22 +578,34 @@ Todo listo del lado de GoHighLevel.</code></pre>
       <div class="paso"><div class="k">/oferta · comprar</div><div class="r">Fue a pagar</div><div class="e"><i>carrito webinar</i><i>carrito 24-septiembre</i><i>→ Cliente Potencial</i></div></div>
       <div class="paso"><div class="k">webhook de pago</div><div class="r">Pagó</div><div class="e"><i>pago webinar</i><i>pago 24-septiembre</i><i>→ Cliente Ganado</i></div></div>
     </div>
-    <p>Además, cada contacto lleva dos campos: <em>Fuente</em> (de qué anuncio vino, armado con los parámetros UTM del enlace) y <em>Fecha de su clase</em> (el texto "jueves 24 de septiembre", para que tus correos lo digan sin calcular nada).</p>
+    <p>Además, cada contacto lleva tres campos: <em>Fuente</em> (de qué anuncio vino, armado con los parámetros UTM del enlace), <em>Fecha de su clase</em> (el texto "jueves 24 de septiembre", para que tus correos lo digan sin calcular nada) y <em>Dia de su clase</em> (ese mismo día como fecha: a él apuntan las esperas de los recordatorios, porque una espera de GHL no puede apuntar a un texto).</p>
+
+    <h3>Los cuatro workflows</h3>
+    <div class="tabla"><table>
+      <thead><tr><th>Workflow</th><th>Se dispara con</th><th>Qué hace</th></tr></thead>
+      <tbody>
+        <tr><td>1 · Confirmación de registro</td><td><code>registro webinar</code></td><td>Correo inmediato: fecha y hora de su clase, grupo de WhatsApp, enlace de la puerta.</td></tr>
+        <tr><td>2 · Recordatorios</td><td><code>registro webinar</code></td><td>Espera al <em>Dia de su clase</em> y manda tres correos: 9:00 am, una hora antes y diez minutos antes. Si alguien se registra tarde, los que ya pasaron se saltan.</td></tr>
+        <tr><td>3 · Oferta post-clase</td><td><code>ingreso webinar</code></td><td>Solo a quien entró a la sala: dos horas después la oferta, y un correo más cada día por dos días. Sin contadores ni urgencia falsa.</td></tr>
+        <tr><td>4 · Compró</td><td><code>pago webinar</code></td><td>Saca al comprador del workflow 3 y le manda la bienvenida.</td></tr>
+      </tbody>
+    </table></div>
+    <p>La estructura completa y el copy de ejemplo de los nueve correos están en <code>docs/WORKFLOWS.md</code> de tu repositorio. Todos los datos que cambian salen de custom values o del contacto (<code>{{contact.fecha_de_su_clase}}</code>, <code>{{custom_values.webinar_proxima_hora}}</code>, <code>{{custom_values.enlace_de_la_puerta}}</code>…): cambias la fecha en el panel y los correos de la semana siguiente ya la dicen bien.</p>
+
+    <h3>Pídele a Claude · el copy</h3>
+    <div class="prompt"><b>Prompt · mis correos</b><span class="texto">Lee docs/WORKFLOWS.md y mi copy en src/contenido/. Reescribe los nueve correos con mi voz, mi clase y mi oferta, conservando tal cual todo lo que va entre llaves dobles (custom values y campos del contacto). Entrégamelos en un archivo docs/MIS-CORREOS.md, cada uno con su asunto, listos para pegar en GoHighLevel.</span></div>
 
     <div class="tu"><span class="t">Lo único que haces tú (en GHL → Automatizaciones)</span>
-      <p>Crea, como mínimo, estos tres workflows. Cada uno se dispara con <em>Contact Tag → Added</em> → la etiqueta general. GHL no permite crear workflows por API, por eso este módulo es tuyo.</p>
-      <div class="tabla"><table>
-        <thead><tr><th>Workflow</th><th>Disparador</th><th>Qué manda</th></tr></thead>
-        <tbody>
-          <tr><td>Confirmación</td><td>Tag added: <code>registro webinar</code></td><td>Correo inmediato: fecha, hora, enlace al grupo. Usa <code>{{custom_values.webinar_proxima_fecha}}</code> y <code>{{custom_values.webinar_proxima_hora}}</code>.</td></tr>
-          <tr><td>Recordatorios</td><td>Tag added: <code>registro webinar</code></td><td>Esperas hasta el día de la clase (usa el campo <em>Fecha de su clase</em> o una espera fija) y mandas: la mañana de la clase, 1 hora antes, 10 minutos antes con <code>{{custom_values.enlace_de_ingreso_al_webinar}}</code>.</td></tr>
-          <tr><td>Oferta</td><td>Tag added: <code>ingreso webinar</code></td><td>Después de la clase: la oferta, con <code>{{custom_values.enlace_de_la_oferta}}</code>. Opcional: una secuencia de 3 días.</td></tr>
-        </tbody>
-      </table></div>
-      <p>En cada uno: activa <strong>Allow Re-Entry</strong> y <strong>publícalo</strong>.</p>
+      <p>GHL no permite crear workflows con su API oficial, por eso este paso es tuyo. Si en la formación recibiste el <strong>snapshot</strong> de la sub-cuenta, los cuatro ya están creados en borrador: abre cada uno, pega tu copy y publícalo. Si no, créalos con la estructura de <code>docs/WORKFLOWS.md</code>:</p>
+      <ol>
+        <li>Disparador <em>Contact Tag → Tag Added</em> con la etiqueta general, en minúsculas.</li>
+        <li>Los pasos, en el orden del documento. En los recordatorios, la espera es de tipo <em>fecha específica</em> apuntando al campo <em>Dia de su clase</em>.</li>
+        <li><strong>Si tu clase no es a las 8:00 pm</strong>, cambia la hora de las tres esperas del workflow 2 (9:00 am, una hora antes, diez minutos antes).</li>
+        <li>En cada workflow: activa <strong>Allow Re-Entry</strong> y <strong>publícalo</strong>.</li>
+      </ol>
     </div>
 
-    <div class="ojo-con"><span class="t">Dos trampas que cuestan una clase entera</span><p>1. Sin <em>Allow Re-Entry</em>, quien se registró a la clase de la semana pasada y se registra otra vez no recibe nada. 2. Un workflow en borrador no manda nada y no avisa. Publica.</p></div>
+    <div class="ojo-con"><span class="t">Tres trampas que cuestan una clase entera</span><p>1. Sin <em>Allow Re-Entry</em>, quien se registró a la clase de la semana pasada y se registra otra vez no recibe nada. 2. Un workflow en borrador no manda nada y no avisa. Publica. 3. Los recordatorios mandan el <strong>enlace de la puerta</strong>, nunca el Zoom directo: quien entra por el Zoom no pasa lista, no recibe la etiqueta de ingreso y jamás le llega la oferta.</p></div>
 
     <h3>Pídele a Claude</h3>
     <p>Antes te registrabas a mano con tu correo para probar. Ahora lo hace un comando: manda un registro real por la misma ruta que la landing y va a GHL a comprobar contacto, etiquetas y pipeline. Con tu correo, para que te llegue la confirmación del workflow.</p>
@@ -599,17 +615,19 @@ Todo listo del lado de GoHighLevel.</code></pre>
   ✓ El sitio aceptó el registro
   ✓ Contacto creado en GHL (b1c2…)
   ✓ Etiquetas: registro webinar, registro 24-septiembre
-  ✓ Custom fields (Fuente / Fecha de su clase) escritos
-  ✓ Oportunidad en el pipeline: etapa "Nuevo Registro"
+  ✓ Custom fields escritos (3): Fuente, Fecha de su clase…
+  ✓ "Dia de su clase" = 2026-09-24 (a este campo esperan los recordatorios)
+  ✓ Oportunidad en el pipeline: etapa "Nuevo Registro" del pipeline "Webinars"
 
 El embudo escribe bien en GoHighLevel.</code></pre>
     <p>Si el correo no llega en dos minutos, el sitio no es el problema (el contacto ya tiene la etiqueta): revisa que el workflow esté publicado. Para limpiar después, pídele a Claude que vuelva a correrlo con <code>--limpiar</code>, o borra el contacto en GHL.</p>
 
     <div class="lista" data-modulo="m7">
       <div class="cab"><b>Módulo 07</b><span></span></div>
-      <label><input type="checkbox" id="c-7-1"><span>Workflow de confirmación creado, disparado por <code>registro webinar</code>, con Allow Re-Entry, publicado</span></label>
-      <label><input type="checkbox" id="c-7-2"><span>Workflow de recordatorios creado y publicado</span></label>
-      <label><input type="checkbox" id="c-7-3"><span>Workflow de oferta post-clase creado, disparado por <code>ingreso webinar</code>, publicado</span></label>
+      <label><input type="checkbox" id="c-7-1"><span>Claude reescribió los nueve correos con mi voz y conservó los custom values</span></label>
+      <label><input type="checkbox" id="c-7-2"><span>Los cuatro workflows existen, con Allow Re-Entry, y están publicados</span></label>
+      <label><input type="checkbox" id="c-7-3"><span>Las tres esperas de los recordatorios tienen la hora de mi clase y apuntan a <em>Dia de su clase</em></span></label>
+      <label><input type="checkbox" id="c-7-6"><span>El <em>enlace de la puerta</em> y el de la oferta están cargados en el panel</span></label>
       <label><input type="checkbox" id="c-7-4"><span><code>npm run probar:embudo</code> terminó con "El embudo escribe bien en GoHighLevel"</span></label>
       <label><input type="checkbox" id="c-7-5"><span>Me llegó el correo de confirmación del workflow</span></label>
     </div>

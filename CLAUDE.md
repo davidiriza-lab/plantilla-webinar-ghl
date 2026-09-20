@@ -33,6 +33,7 @@ de Vercel/Meta/Mercado Pago, DNS) díselo con los pasos exactos.
 | Fecha, hora, zona, enlaces, precio, pixel, etiquetas | **NO en código**: `/admin` → custom values de GHL |
 | Qué custom values existen | `src/lib/campos.ts` |
 | Etiquetas que se mandan a GHL | `src/lib/etiquetas.ts` |
+| Workflows de GHL y el copy de sus correos | `docs/WORKFLOWS.md` (estructura + ejemplo; GHL no los crea por API oficial) |
 | Etapas del pipeline | `src/lib/pipeline.ts` (se resuelven por nombre) |
 | Puerta de la sala (cuándo abre) | `src/lib/puerta.ts` |
 | Cálculo de la próxima fecha | `src/lib/schedule.ts` |
@@ -49,6 +50,13 @@ de Vercel/Meta/Mercado Pago, DNS) díselo con los pasos exactos.
   después para que se reconcilie.
 - **Las etiquetas se SUMAN**, nunca se reemplazan: `POST /contacts/{id}/tags`,
   no el arreglo `tags` del upsert. GHL las guarda en minúsculas.
+- **Los correos de GHL mandan el enlace de la puerta** (`{{custom_values.enlace_de_la_puerta}}`,
+  tu dominio + `/ingreso`), nunca el Zoom directo: entrar por `/ingreso` es lo que
+  pone la etiqueta de asistencia y dispara la oferta. Al reescribir correos,
+  conserva intacto todo lo que va entre `{{ }}`.
+- **Los recordatorios esperan al campo de fecha** `{{contact.dia_de_su_clase}}`
+  (lo escribe el registro en `YYYY-MM-DD`, día local del webinar). El campo de
+  texto `fecha_de_su_clase` es solo para nombrar la fecha en los correos.
 - **La puerta se equivoca abriendo.** Cualquier cambio en `src/lib/puerta.ts`
   debe pasar `npm run probar:puerta`.
 - **Meta:** solo el registro manda `Lead`. La puerta manda `Asistio`

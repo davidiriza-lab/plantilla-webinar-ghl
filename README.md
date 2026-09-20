@@ -386,6 +386,7 @@ scripts/
   capturas-manual.mjs       capturas reales de las páginas para el manual (npm run capturas)
 docs/
   GUIA.html                 el manual de trabajo (fuente única; se publica en /manual-embudo)
+  WORKFLOWS.md              los 4 workflows de GHL con el copy de ejemplo de sus 9 correos
   assets/capturas/          capturas que usa el manual (npm run capturas las regenera)
 ```
 
