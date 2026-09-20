@@ -1,16 +1,16 @@
-# Despliega a producción en Vercel cada vez que se sube a main. Ver README → "Publicar en Vercel".
+# En cada push a main corre las pruebas (tipos + 5 suites). Si falla, GitHub
+# lo marca en rojo y el dueño se entera.
 #
-# Así el dueño del embudo no depende de la máquina de nadie: lo que está en
-# GitHub es lo que está en producción. Necesita tres secretos en el repo
-# (Settings → Secrets and variables → Actions):
-#   VERCEL_TOKEN        token de la cuenta Vercel dueña del proyecto
-#   VERCEL_ORG_ID       "orgId"     de .vercel/project.json
-#   VERCEL_PROJECT_ID   "projectId" de .vercel/project.json
-name: Deploy a Vercel
+# El despliegue lo hace Vercel solo, con su integración de Git (ver README →
+# "Publicar"). Este flujo SOLO despliega si además existen los tres secretos
+# VERCEL_TOKEN, VERCEL_ORG_ID y VERCEL_PROJECT_ID en el repo — útil para
+# quien prefiera que nada se publique sin pasar las pruebas.
+name: Pruebas y deploy
 
 on:
   push:
     branches: [main]
+  pull_request:
   workflow_dispatch:
 
 concurrency:
@@ -18,7 +18,7 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  deploy:
+  pruebas:
     runs-on: ubuntu-latest
     env:
       VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
@@ -32,11 +32,19 @@ jobs:
       - run: npm ci
       - name: Pruebas y tipos
         run: npm run verificar
+
+      - name: ¿Hay secretos de Vercel?
+        id: chk
+        run: echo "ok=${{ secrets.VERCEL_TOKEN != '' && github.event_name == 'push' }}" >> "$GITHUB_OUTPUT"
       - name: Vercel CLI
+        if: steps.chk.outputs.ok == 'true'
         run: npm i -g vercel@latest
       - name: Traer configuración del proyecto
+        if: steps.chk.outputs.ok == 'true'
         run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
       - name: Build
+        if: steps.chk.outputs.ok == 'true'
         run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
       - name: Deploy
+        if: steps.chk.outputs.ok == 'true'
         run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}

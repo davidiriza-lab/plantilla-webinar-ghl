@@ -14,7 +14,8 @@
     "probar:puerta": "node scripts/probar-puerta.ts",
     "probar:red": "node scripts/probar-red.ts",
     "probar:intentos": "node scripts/probar-intentos.ts",
-    "probar:movil": "node scripts/probar-movil.mjs"
+    "probar:movil": "node scripts/probar-movil.mjs",
+    "subir-env": "node scripts/subir-env.mjs"
   },
   "dependencies": {
     "@vercel/edge-config": "^1.5.1",

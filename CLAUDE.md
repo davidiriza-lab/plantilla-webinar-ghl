@@ -44,6 +44,10 @@ cuaderno de trabajo paso a paso. Esto es lo mínimo para ayudar bien.
   eventos `Lead` en otros formularios: infla el conteo.
 - **No uses `any`.** Escrituras a GHL solo desde API routes (`src/app/api/*`).
 - Antes de proponer un deploy: `npm run verificar` (tipos + 5 suites).
+- Para publicar, la vía es `vercel` (CLI) y `vercel git connect`; no pidas al
+  dueño que configure secretos de GitHub salvo que lo quiera explícitamente.
+- Para crear la copia de un alumno: `gh repo create <nombre> --template
+  davidiriza-lab/plantilla-webinar-ghl --private --clone`.
 
 ## Comandos
 
@@ -51,7 +55,9 @@ cuaderno de trabajo paso a paso. Esto es lo mínimo para ayudar bien.
 npm run instalar    # prepara la sub-cuenta de GHL y escribe IDs en .env.local
 npm run revisar     # lista el copy de ejemplo que sigue sin cambiar
 npm run dev         # http://localhost:3000  ·  panel en /admin
-npm run verificar   # tipos + pruebas (lo mismo que corre el deploy)
+npm run verificar   # tipos + pruebas (lo mismo que corre GitHub Actions)
+npm run subir-env   # copia .env.local al proyecto de Vercel (tras `vercel link`)
+vercel --prod       # publica  ·  `vercel git connect` para que cada push publique
 ```
 
 ## Cómo llega un prospecto

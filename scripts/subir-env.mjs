@@ -1,0 +1,54 @@
+/**
+ * npm run subir-env — copia las variables de .env.local al proyecto de Vercel.
+ *
+ * Requiere haber corrido `vercel link` en esta carpeta. Sube cada variable
+ * con valor a Production y Preview (sensibles por defecto en Vercel), y salta
+ * las vacías y las que crea la propia integración de Vercel (EDGE_CONFIG).
+ * Con `--ver` solo muestra lo que haría.
+ */
+import { readFileSync, existsSync } from 'node:fs';
+import { spawnSync } from 'node:child_process';
+
+const SOLO_VER = process.argv.includes('--ver');
+const NO_SUBIR = new Set(['EDGE_CONFIG']);
+
+if (!existsSync('.env.local')) {
+  console.error('No hay .env.local en esta carpeta.');
+  process.exit(1);
+}
+if (!existsSync('.vercel/project.json') && !SOLO_VER) {
+  console.error('Esta carpeta no está ligada a un proyecto de Vercel. Corre primero:  npx vercel link');
+  process.exit(1);
+}
+
+const vars = [];
+for (const linea of readFileSync('.env.local', 'utf8').split('\n')) {
+  const m = linea.match(/^\s*([A-Z0-9_]+)\s*=\s*(.*?)\s*$/);
+  if (!m) continue;
+  const [, clave, crudo] = m;
+  const valor = crudo.replace(/^"(.*)"$/, '$1');
+  if (!valor || NO_SUBIR.has(clave)) continue;
+  vars.push([clave, valor]);
+}
+
+console.log(`\n${SOLO_VER ? 'Se subirían' : 'Subiendo'} ${vars.length} variables a Vercel (production y preview)\n`);
+let fallos = 0;
+for (const [clave, valor] of vars) {
+  for (const entorno of ['production', 'preview']) {
+    if (SOLO_VER) {
+      console.log(`  vercel env add ${clave} ${entorno} --value ••• --force --yes`);
+      continue;
+    }
+    // --value y no stdin: por stdin Vercel guarda la variable VACÍA sin avisar.
+    const r = spawnSync('npx', ['vercel', 'env', 'add', clave, entorno, '--value', valor, '--force', '--yes'], {
+      encoding: 'utf8',
+    });
+    if (r.status === 0) console.log(`  ✓ ${clave} → ${entorno}`);
+    else {
+      fallos++;
+      console.log(`  ✗ ${clave} → ${entorno}: ${(r.stderr || r.stdout).trim().split('\n').pop()}`);
+    }
+  }
+}
+console.log(fallos ? `\n${fallos} variable(s) no se pudieron subir.\n` : '\nListo. Vuelve a desplegar para que tomen efecto.\n');
+process.exit(fallos ? 1 : 0);

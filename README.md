@@ -40,23 +40,26 @@ Config evita que el sitio dependa de que GHL esté vivo.
 
 ## Empezar (resumen; la guía lo lleva paso a paso)
 
-```bash
-# 1. Copia el repo (botón "Use this template" en GitHub) y clónalo
-npm install
-cp .env.example .env.local        # llena GHL_API_KEY, GHL_LOCATION_ID, ADMIN_PASSWORD
+Todo se hace desde VS Code con Claude Code abierto, con GitHub (`gh auth login`)
+y Vercel (`vercel login`) conectados una sola vez.
 
-# 2. Prepara tu sub-cuenta de GHL (crea custom values y campos, revisa el pipeline)
+```bash
+# 1. Tu copia (desde Claude Code: "crea mi copia de la plantilla…")
+gh repo create webinar-mi-programa --template davidiriza-lab/plantilla-webinar-ghl --private --clone
+cd webinar-mi-programa && npm install && cp .env.example .env.local
+
+# 2. Prepara tu sub-cuenta de GHL (custom values, campos, revisa el pipeline)
 npm run instalar
 
 # 3. Arranca y configura desde el panel
 npm run dev                       # http://localhost:3000/admin
 
-# 4. Pon tu copy
-#    src/contenido/marca.ts · landing.ts · oferta.ts
+# 4. Pon tu copy en src/contenido/{marca,landing,oferta}.ts
 npm run revisar                   # lista lo que sigue siendo ejemplo
 
-# 5. Publica en Vercel (la guía explica Edge Config y los secretos de GitHub)
-npm run verificar
+# 5. Publica
+vercel link && npm run subir-env && vercel --prod
+vercel git connect                # cada push a main publica solo
 ```
 
 El pipeline "Webinars" con sus 4 etapas se crea **a mano** en GHL (la API no
@@ -429,28 +432,35 @@ todos los contactos que llevan la etiqueta general de registro, con teléfono,
 fuente, fecha de su clase, etiquetas e id de GHL. Guardarlo cada semana. Es lo
 que permite recuperar si alguien borra contactos o una etiqueta en GHL.
 
-### Despliegue desde GitHub
+### Pruebas en cada push
 
-`.github/workflows/deploy.yml`: cada push a `main` corre `npm run verificar` y
-despliega a producción en Vercel con la CLI. Necesita tres secretos en el repo:
-`VERCEL_TOKEN`, `VERCEL_ORG_ID` y `VERCEL_PROJECT_ID`. Si una prueba falla, no se
-despliega.
+`.github/workflows/deploy.yml`: cada push corre `npm run verificar`. El deploy lo
+hace la integración de Git de Vercel (`vercel git connect`); el flujo solo
+despliega él mismo si existen los secretos `VERCEL_TOKEN`, `VERCEL_ORG_ID` y
+`VERCEL_PROJECT_ID`.
 
 ---
 
 ## Publicar en Vercel
 
-1. Importa el repo en Vercel (**Add New → Project**) y copia las variables de
-   `.env.local`.
-2. **Storage → Create → Edge Config**, conéctalo al proyecto (`EDGE_CONFIG` se
-   crea solo) y pon `EDGE_CONFIG_ID`, `VERCEL_TEAM_ID` y un `VERCEL_API_TOKEN`
-   (márcalo *Sensitive*).
-3. Apunta tu dominio.
-4. Entra a `/admin` y guarda una vez: eso siembra la copia y confirma que todo
-   quedó conectado.
-5. Para que cada push a `main` despliegue solo, pon en GitHub (Settings →
-   Secrets → Actions): `VERCEL_TOKEN`, `VERCEL_ORG_ID` y `VERCEL_PROJECT_ID`
-   (los dos últimos salen de `.vercel/project.json` tras `vercel link`).
+Desde la terminal, con `vercel login` hecho:
+
+1. `vercel link` crea el proyecto (deja `.vercel/`, que no se sube a GitHub).
+2. `npm run subir-env` copia todas las variables de `.env.local` a Production y
+   Preview (usa `--value`: por stdin Vercel guarda la variable vacía).
+3. `vercel --prod` publica. Entra a `/admin` con tu contraseña.
+4. En vercel.com: **Storage → Create → Edge Config**, conéctalo al proyecto
+   (`EDGE_CONFIG` se crea solo). Copia `EDGE_CONFIG_ID` (`ecfg_…`), crea un
+   token en **Account → Tokens** (`VERCEL_API_TOKEN`) y, si es equipo,
+   `VERCEL_TEAM_ID`. Vuelve a `npm run subir-env && vercel --prod`.
+5. Guarda una vez en `/admin`: siembra la copia y el banner de salud queda limpio.
+6. `vercel git connect` liga el repo: cada push a `main` publica solo.
+7. `vercel domains add tu-dominio.com` y sigue las instrucciones de DNS.
+
+GitHub Actions corre `npm run verificar` en cada push (sin configurar nada).
+Si además pones `VERCEL_TOKEN`, `VERCEL_ORG_ID` y `VERCEL_PROJECT_ID` como
+secretos del repo, el flujo también despliega, para quien quiera que nada se
+publique sin pasar las pruebas.
 
 No hay base de datos que migrar: los contactos y la configuración viven en tu
 GoHighLevel.
