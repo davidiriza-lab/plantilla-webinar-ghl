@@ -3,7 +3,7 @@
  *
  * La página solo acomoda lo que hay aquí. Si una lista queda vacía
  * (carrusel, casos), esa sección no se muestra. Las tres partes llevan un
- * icono del catálogo, no una foto.
+ * icono 3D generado (o, si no hay, uno lineal del catálogo).
  *
  * Todo lo marcado «EJEMPLO» es el copy de muestra del webinar de Business
  * Growth Intensive: reemplázalo con el tuyo.
@@ -35,28 +35,34 @@ export const LANDING = {
     titulo: 'Las tres partes del sistema', // EJEMPLO
     subtitulo: 'Lo que hacemos con cada negocio dentro del intensivo, en versión de 90 minutos.', // EJEMPLO
     /**
-     * `icono` es un nombre del catálogo de src/components/Icono.tsx:
-     * trayectoria · red · cohete · grafica · objetivo · orbita · personas ·
-     * foco · brujula · calendario · escudo · mensaje
+     * Cada tarjeta lleva un icono grande arriba. Dos formas de ponerlo:
+     *  - `imagen`: un icono 3D generado (PNG/WebP cuadrado con fondo
+     *    transparente) en /public/assets. Es el que se ve si está lleno.
+     *  - `icono`: si `imagen` queda en '', se usa un icono lineal del catálogo
+     *    de src/components/Icono.tsx: trayectoria · red · cohete · grafica ·
+     *    objetivo · orbita · personas · foco · brujula · calendario · escudo · mensaje
      */
     lista: [
       {
         numero: 'Parte 1',
         titulo: 'Diseñar la trayectoria: de dónde vienen tus clientes y a dónde quieres llegar', // EJEMPLO
         texto: 'Un mapa de una página con tu embudo real, tus números y el siguiente nivel concreto.', // EJEMPLO
-        icono: 'trayectoria', // EJEMPLO
+        imagen: '/assets/bgi/icono3d-trayectoria.webp' as string, // EJEMPLO
+        icono: 'trayectoria',
       },
       {
         numero: 'Parte 2',
         titulo: 'Montar tu primer equipo de IA: agentes que capturan, siguen y cierran', // EJEMPLO
         texto: 'Qué se automatiza primero, qué no, y cómo se conecta con tu CRM sin romper nada.', // EJEMPLO
-        icono: 'red', // EJEMPLO
+        imagen: '/assets/bgi/icono3d-equipo-ia.webp' as string, // EJEMPLO
+        icono: 'red',
       },
       {
         numero: 'Parte 3',
         titulo: 'Ejecutar el crecimiento: el ritmo semanal que sostiene la altitud', // EJEMPLO
         texto: 'El embudo exacto que estás viendo ahora: registro, recordatorios, clase en vivo y oferta.', // EJEMPLO
-        icono: 'grafica', // EJEMPLO
+        imagen: '/assets/bgi/icono3d-crecimiento.webp' as string, // EJEMPLO
+        icono: 'grafica',
       },
     ],
   },

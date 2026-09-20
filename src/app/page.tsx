@@ -99,15 +99,32 @@ export default async function Landing() {
 
           <div className="grid gap-7 md:grid-cols-3">
             {L.secretos.lista.map((s) => (
-              <article key={s.numero} className="panel relative p-8 text-left max-sm:p-6">
+              <article key={s.numero} className="panel relative overflow-hidden p-8 text-left max-sm:p-6">
                 {/* El punto de luz de las tarjetas del kit. */}
                 <span
                   aria-hidden
                   className="absolute right-6 top-6 size-2 rounded-full bg-acento shadow-[0_0_18px_rgba(56,130,246,0.8)]"
                 />
-                <div className="mb-7 flex size-14 items-center justify-center rounded-2xl border border-acento/35 bg-acento/10 text-acento">
-                  <Icono nombre={s.icono} className="size-7" />
-                </div>
+                {s.imagen ? (
+                  // Icono 3D generado: flota sobre un halo azul, sin caja.
+                  <div className="relative mb-6 flex h-[168px] items-center justify-center max-sm:h-[140px]">
+                    <span
+                      aria-hidden
+                      className="absolute size-[190px] rounded-full bg-[radial-gradient(circle,rgba(56,130,246,0.30)_0%,rgba(56,130,246,0)_68%)]"
+                    />
+                    <Image
+                      src={s.imagen}
+                      alt=""
+                      width={512}
+                      height={512}
+                      className="relative h-full w-auto drop-shadow-[0_18px_30px_rgba(3,10,28,0.55)]"
+                    />
+                  </div>
+                ) : (
+                  <div className="mb-7 flex size-14 items-center justify-center rounded-2xl border border-acento/35 bg-acento/10 text-acento">
+                    <Icono nombre={s.icono} className="size-7" />
+                  </div>
+                )}
                 <span className="mb-3 block text-[11.5px] font-bold uppercase tracking-[0.22em] text-acento-claro">
                   {s.numero}
                 </span>

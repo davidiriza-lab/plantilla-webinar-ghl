@@ -19,7 +19,7 @@ cuaderno de trabajo paso a paso. Esto es lo mínimo para ayudar bien.
 | Colores | `src/app/globals.css` (bloque `@theme`, 9 variables; por defecto la identidad de Business Growth Intensive: navy, azul eléctrico, cian) |
 | Tipografías | `src/app/layout.tsx` (Space Grotesk + Inter) |
 | Fondos del kit BGI | `public/assets/bgi/` — utilidades `fondo-hero`, `fondo-banda`, `fondo-profundo`, `fondo-nebulosa` en globals.css |
-| Iconos de las tarjetas | `src/components/Icono.tsx` (catálogo por nombre; en el contenido se elige con `icono: 'cohete'`) |
+| Iconos de las tarjetas | `imagen` en `landing.ts`: icono 3D generado, WebP cuadrado 512 px con fondo transparente en `public/assets/`. Si queda en `''`, cae al icono lineal de `src/components/Icono.tsx` (`icono: 'cohete'`) |
 | Fecha, hora, zona, enlaces, precio, pixel, etiquetas | **NO en código**: `/admin` → custom values de GHL |
 | Qué custom values existen | `src/lib/campos.ts` |
 | Etiquetas que se mandan a GHL | `src/lib/etiquetas.ts` |
