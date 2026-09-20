@@ -120,8 +120,8 @@ export default async function Oferta() {
             <Image
               src={O.problema.imagen}
               alt=""
-              width={928}
-              height={1152}
+              width={1024}
+              height={1280}
               className="mx-auto w-full max-w-[420px] rounded-[22px] border border-linea shadow-[0_20px_60px_rgba(0,0,0,0.4)] max-md:order-2"
             />
           ) : (
