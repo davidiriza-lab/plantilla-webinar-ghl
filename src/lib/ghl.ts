@@ -143,6 +143,29 @@ export async function writeCustomValue(
 
   if (!res.ok) {
     const detail = await res.text();
+
+    // El índice puede venir de una lectura cacheada anterior a que el campo
+    // existiera (lo acaba de crear el instalador, o alguien en GHL). Entonces
+    // el POST choca con "same key already exists": se relee sin caché y se
+    // escribe sobre el que ya está, en vez de fallarle al dueño en el panel.
+    if (!existing && res.status === 400 && /already exists/i.test(detail)) {
+      const fresco = await fetchCustomValues({ fresco: true });
+      const real = fresco.get(slug);
+      if (real?.id) {
+        index.set(slug, real);
+        const reintento = await fetchGhl(
+          `${BASE_URL}/locations/${locationId}/customValues/${real.id}`,
+          {
+            method: 'PUT',
+            headers: headers(token),
+            body: JSON.stringify({ name: real.name ?? name, value }),
+            cache: 'no-store',
+          },
+        );
+        if (reintento.ok) return;
+      }
+    }
+
     throw new Error(
       `No se pudo guardar "${name}" (${res.status}): ${detail.slice(0, 200)}`,
     );
