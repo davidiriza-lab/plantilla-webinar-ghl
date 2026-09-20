@@ -109,6 +109,7 @@ export async function POST(request: Request): Promise<NextResponse> {
   // siga siendo correcta aunque la clase recurrente ya se haya recorrido.
   let config;
   let fechaClase = '';
+  let diaClase = '';
   let etiquetas: string[] = [];
   let enlaceIngreso = '';
 
@@ -117,6 +118,7 @@ export async function POST(request: Request): Promise<NextResponse> {
     config = aPublica(crudo);
     const o = calcularOcurrencia(config);
     fechaClase = o.fechaLegible;
+    diaClase = o.fechaIso;
     etiquetas = etiquetasDe(tipo, config.etiquetas, o.etiquetaFecha);
     enlaceIngreso = config.enlaceIngreso;
 
@@ -157,6 +159,7 @@ export async function POST(request: Request): Promise<NextResponse> {
       telefono: e164,
       fuente,
       fechaClase,
+      diaClase,
       etiquetas,
     });
   } catch (error) {

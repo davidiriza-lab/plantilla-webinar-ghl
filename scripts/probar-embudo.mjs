@@ -142,9 +142,17 @@ const tags = (contacto.tags ?? []).map((t) => String(t).toLowerCase());
 const tieneRegistro = tags.some((t) => t.startsWith('registro'));
 if (tieneRegistro) ok(`Etiquetas: ${tags.join(', ')}`);
 else falla(`El contacto no tiene etiqueta de registro. Tiene: ${tags.join(', ') || 'ninguna'}`);
-const fuente = Object.values(contacto.customFields ?? {}).length;
-if (fuente) ok('Custom fields (Fuente / Fecha de su clase) escritos');
+const camposContacto = contacto.customFields ?? [];
+if (camposContacto.length) ok(`Custom fields escritos (${camposContacto.length}): Fuente, Fecha de su clase…`);
 else console.log('  · Sin custom fields en el contacto (revisa GHL_CAMPO_FUENTE_ID en .env.local)');
+const idDia = process.env.GHL_CAMPO_DIA_CLASE_ID || env.GHL_CAMPO_DIA_CLASE_ID;
+if (idDia) {
+  const dia = camposContacto.find((c) => c.id === idDia);
+  if (dia?.value) ok(`"Dia de su clase" = ${dia.value} (a este campo esperan los recordatorios)`);
+  else falla('El contacto no trae "Dia de su clase": los recordatorios de GHL no sabrían qué día salir.');
+} else {
+  console.log('  · Falta GHL_CAMPO_DIA_CLASE_ID en .env.local: corre npm run instalar para crear el campo de fecha.');
+}
 
 // 2. Pipeline
 // La oportunidad se crea en segundo plano: hasta ~8 s de margen.

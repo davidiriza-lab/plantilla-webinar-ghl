@@ -41,6 +41,8 @@ console.log('\nRECURRENTE — jueves 20:00 America/Mexico_City, 90 min\n');
   );
   verificar('  fecha larga', o.fechaLegible, 'jueves 20 de agosto');
   verificar('  fecha corta', o.fechaCorta, 'jueves 20');
+  // En UTC ya es día 21: el campo de fecha de GHL debe llevar el día LOCAL.
+  verificar('  día para GHL (local, no UTC)', o.fechaIso, '2026-08-20');
 }
 
 {

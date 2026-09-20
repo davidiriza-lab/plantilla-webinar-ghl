@@ -40,7 +40,10 @@ for (const [clave, valor] of vars) {
       continue;
     }
     // --value y no stdin: por stdin Vercel guarda la variable VACÍA sin avisar.
-    const r = spawnSync('npx', ['vercel', 'env', 'add', clave, entorno, '--value', valor, '--force', '--yes'], {
+    // En preview la CLI exige decir la rama aunque lleve --yes; la rama vacía
+    // significa "todas las ramas de Preview" y evita que se quede preguntando.
+    const destino = entorno === 'preview' ? [entorno, ''] : [entorno];
+    const r = spawnSync('npx', ['vercel', 'env', 'add', clave, ...destino, '--value', valor, '--force', '--yes'], {
       encoding: 'utf8',
     });
     if (r.status === 0) console.log(`  ✓ ${clave} → ${entorno}`);

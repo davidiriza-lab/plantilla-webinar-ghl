@@ -164,6 +164,11 @@ export interface RegistroEntrante {
    * los recordatorios de GHL puedan nombrarla sin tener que calcularla.
    */
   fechaClase?: string;
+  /**
+   * El mismo día en formato fecha ("2026-08-20"), para el custom field de tipo
+   * fecha al que apuntan las esperas de los workflows de recordatorios.
+   */
+  diaClase?: string;
   /** Las etiquetas a poner: la general y la de la fecha. */
   etiquetas?: string[];
 }
@@ -219,6 +224,11 @@ export async function upsertContacto(
   const campoFecha = process.env.GHL_CAMPO_FECHA_CLASE_ID;
   if (campoFecha && datos.fechaClase) {
     campos.push({ id: campoFecha, value: datos.fechaClase });
+  }
+
+  const campoDia = process.env.GHL_CAMPO_DIA_CLASE_ID;
+  if (campoDia && datos.diaClase) {
+    campos.push({ id: campoDia, value: datos.diaClase });
   }
 
   if (campos.length > 0) cuerpo.customFields = campos;

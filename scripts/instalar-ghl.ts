@@ -4,8 +4,9 @@
  * Lee GHL_API_KEY y GHL_LOCATION_ID de `.env.local` (o del entorno) y:
  *   1. comprueba que el token entra a la sub-cuenta;
  *   2. crea los custom values que falten (los de src/lib/campos.ts);
- *   3. crea los custom fields de contacto "Fuente" y "Fecha de su clase"
- *      y escribe sus IDs en `.env.local`;
+ *   3. crea los custom fields de contacto "Fuente", "Fecha de su clase" (texto)
+ *      y "Dia de su clase" (fecha, para las esperas de los workflows) y escribe
+ *      sus IDs en `.env.local`;
  *   4. busca el pipeline "Webinars" con sus 4 etapas y, si no está, te dice
  *      exactamente qué crear (la API oficial de GHL no crea pipelines);
  *   5. genera ADMIN_SESSION_SECRET si falta.
@@ -185,7 +186,7 @@ if (!cv.ok) {
 }
 
 // 3. Custom fields ────────────────────────────────────────────────────────────
-console.log('\n3. Custom fields de contacto (Fuente y Fecha de su clase)');
+console.log('\n3. Custom fields de contacto (Fuente, Fecha de su clase y Dia de su clase)');
 const cf = await ghl<{ customFields?: Array<{ id: string; name: string; dataType: string }> }>(
   `/locations/${LOCATION}/customFields?model=contact`,
 );
@@ -193,7 +194,7 @@ if (!cf.ok) {
   falta(`No se pudieron leer los custom fields (HTTP ${cf.status}). El PIT necesita el permiso "locations/customFields".`);
 } else {
   const campos = cf.data.customFields ?? [];
-  const asegurar = async (nombre: string, claveEnv: string, comentario: string): Promise<void> => {
+  const asegurar = async (nombre: string, claveEnv: string, comentario: string, dataType = 'TEXT'): Promise<void> => {
     if (env[claveEnv]) {
       const porId = campos.find((c) => c.id === env[claveEnv]);
       if (porId) {
@@ -210,7 +211,7 @@ if (!cf.ok) {
       }
       const r = await ghl<{ customField?: { id: string; name: string; dataType: string } }>(
         `/locations/${LOCATION}/customFields`,
-        { method: 'POST', body: JSON.stringify({ name: nombre, dataType: 'TEXT', model: 'contact' }) },
+        { method: 'POST', body: JSON.stringify({ name: nombre, dataType, model: 'contact' }) },
       );
       if (!r.ok || !r.data?.customField) {
         falta(`No se pudo crear el campo "${nombre}" (HTTP ${r.status})`);
@@ -231,6 +232,13 @@ if (!cf.ok) {
     'Fecha de su clase',
     'GHL_CAMPO_FECHA_CLASE_ID',
     'Id del custom field "Fecha de su clase" (lo escribió el instalador).',
+  );
+  // De tipo fecha: es al que apuntan las esperas de los workflows de recordatorios.
+  await asegurar(
+    'Dia de su clase',
+    'GHL_CAMPO_DIA_CLASE_ID',
+    'Id del custom field de fecha "Dia de su clase" (lo escribió el instalador).',
+    'DATE',
   );
 }
 

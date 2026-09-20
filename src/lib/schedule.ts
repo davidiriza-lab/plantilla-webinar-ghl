@@ -36,6 +36,12 @@ export interface Ocurrencia {
   fechaCorta: string;
   /** "20-agosto" — el sufijo de las etiquetas de GHL. */
   etiquetaFecha: string;
+  /**
+   * "2026-08-20": el día de la clase en la zona del webinar. Va a un custom
+   * field de tipo fecha para que los workflows de GHL puedan esperar hasta ese
+   * día (una espera no puede apuntar al texto "jueves 20 de agosto").
+   */
+  fechaIso: string;
 }
 
 const DIAS = [
@@ -262,7 +268,10 @@ export function calcularOcurrencia(
       : 'proximo';
 
   const { larga, corta, etiqueta } = describirFecha(inicioMs, zona);
-  const diaSemanaReal = relojEn(inicioMs, zona).diaSemana;
+  const pared = relojEn(inicioMs, zona);
+  const diaSemanaReal = pared.diaSemana;
+  const dosDigitos = (n: number): string => String(n).padStart(2, '0');
+  const fechaIso = `${pared.anio}-${dosDigitos(pared.mes)}-${dosDigitos(pared.dia)}`;
 
   return {
     estado,
@@ -275,6 +284,7 @@ export function calcularOcurrencia(
     fechaLegible: larga,
     fechaCorta: corta,
     etiquetaFecha: etiqueta,
+    fechaIso,
   };
 }
 
