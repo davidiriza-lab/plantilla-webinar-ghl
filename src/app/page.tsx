@@ -86,7 +86,7 @@ export default async function Landing() {
       </section>
 
       {/* ── Los 3 secretos ─────────────────────────────────────────── */}
-      <section className="border-t border-linea bg-fondo px-6 py-22 text-center max-sm:px-5 max-sm:py-15">
+      <section className="fondo-profundo border-y border-linea px-6 py-22 text-center max-sm:px-5 max-sm:py-15">
         <div className="contenedor">
           <p className="mb-4.5 text-xs font-bold uppercase tracking-[0.24em] text-acento-claro">
             {L.secretos.etiqueta}
@@ -138,7 +138,7 @@ export default async function Landing() {
       </section>
 
       {/* ── El presentador ─────────────────────────────────────────── */}
-      <section className="fondo-profundo px-6 py-22 max-sm:px-5 max-sm:py-15">
+      <section className="px-6 py-22 max-sm:px-5 max-sm:py-15">
         <div className="contenedor grid items-center gap-14 md:grid-cols-2">
           <div className="max-md:order-2">
             <h2 className="titulo text-[30px] uppercase tracking-wider text-crema">
@@ -263,7 +263,7 @@ export default async function Landing() {
       </section>
 
       {/* ── El método (con carrusel opcional) ──────────────────────── */}
-      <section className="px-6 py-22 max-sm:px-5 max-sm:py-15">
+      <section className="fondo-profundo border-y border-linea px-6 py-22 max-sm:px-5 max-sm:py-15">
         <div
           className={`contenedor grid items-center gap-14 ${
             L.metodo.carrusel.length > 0 ? 'md:grid-cols-2' : 'text-center'
@@ -282,7 +282,7 @@ export default async function Landing() {
       </section>
 
       {/* ── Para quién es y para quién no ──────────────────────────── */}
-      <section className="fondo-profundo px-6 py-22 max-sm:px-5 max-sm:py-15">
+      <section className="px-6 py-22 max-sm:px-5 max-sm:py-15">
         <div className="contenedor grid gap-10 md:grid-cols-2">
           <div>
             <h2 className="titulo mb-7 text-[28px] text-crema max-sm:text-[24px]">

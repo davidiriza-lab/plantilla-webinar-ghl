@@ -87,9 +87,11 @@ textarea {
     var(--f-estrellas) center / cover no-repeat;
 }
 
+/* Sección alterna: Deep Space del kit, claramente más claro que la página,
+   para que el ojo lea el cambio de bloque. Alternar siempre lisa / profunda. */
 @utility fondo-profundo {
   background:
-    linear-gradient(180deg, rgba(6, 16, 34, 0.25), rgba(6, 16, 34, 0.6)),
+    linear-gradient(180deg, rgba(16, 46, 107, 0.82), rgba(14, 40, 94, 0.9)),
     var(--f-profundo) center / cover no-repeat;
 }
 
