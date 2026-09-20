@@ -10,6 +10,7 @@ import PixelMeta from '@/components/PixelMeta';
 import PlaceholderImagen from '@/components/PlaceholderImagen';
 import Marca from '@/components/Marca';
 import Negritas from '@/components/Negritas';
+import Icono from '@/components/Icono';
 
 // La config se relee cada minuto: lo que se cambia en /admin se ve solo.
 export const revalidate = 60;
@@ -97,36 +98,21 @@ export default async function Landing() {
           </p>
 
           <div className="grid gap-7 md:grid-cols-3">
-            {L.secretos.lista.map((s, i) => (
-              <article
-                key={s.numero}
-                className="overflow-hidden panel text-left"
-              >
-                {s.imagen ? (
-                  <Image
-                    src={s.imagen}
-                    alt={s.titulo}
-                    width={960}
-                    height={600}
-                    className="h-[190px] w-full object-cover"
-                  />
-                ) : (
-                  <PlaceholderImagen
-                    numero={i + 1}
-                    descripcion={s.descripcionImagen}
-                    aspecto="paisaje"
-                    className="rounded-none border-0 border-b"
-                  />
-                )}
-                <div className="px-6.5 pb-8 pt-7">
-                  <span className="mb-3 block font-display text-[15px] uppercase tracking-[0.2em] text-acento">
-                    {s.numero}
-                  </span>
-                  <h3 className="titulo mb-3 text-[21px] leading-[1.28] text-crema">
-                    {s.titulo}
-                  </h3>
-                  <p className="text-[14.5px] text-texto-tenue">{s.texto}</p>
+            {L.secretos.lista.map((s) => (
+              <article key={s.numero} className="panel relative p-8 text-left max-sm:p-6">
+                {/* El punto de luz de las tarjetas del kit. */}
+                <span
+                  aria-hidden
+                  className="absolute right-6 top-6 size-2 rounded-full bg-acento shadow-[0_0_18px_rgba(56,130,246,0.8)]"
+                />
+                <div className="mb-7 flex size-14 items-center justify-center rounded-2xl border border-acento/35 bg-acento/10 text-acento">
+                  <Icono nombre={s.icono} className="size-7" />
                 </div>
+                <span className="mb-3 block text-[11.5px] font-bold uppercase tracking-[0.22em] text-acento-claro">
+                  {s.numero}
+                </span>
+                <h3 className="titulo mb-3 text-[22px] leading-[1.2] text-crema">{s.titulo}</h3>
+                <p className="text-[15px] leading-relaxed text-texto-tenue">{s.texto}</p>
               </article>
             ))}
           </div>

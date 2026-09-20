@@ -2,8 +2,8 @@
  * EL COPY DE LA LANDING (/) Y DE LA PÁGINA DE GRACIAS (/gracias).
  *
  * La página solo acomoda lo que hay aquí. Si una lista queda vacía
- * (carrusel, casos), esa sección no se muestra. Si una imagen queda en '',
- * se muestra un marcador con la descripción para que sepas qué falta.
+ * (carrusel, casos), esa sección no se muestra. Las tres partes llevan un
+ * icono del catálogo, no una foto.
  *
  * Todo lo marcado «EJEMPLO» es el copy de muestra del webinar de Business
  * Growth Intensive: reemplázalo con el tuyo.
@@ -34,28 +34,29 @@ export const LANDING = {
     etiqueta: 'Lo que vas a aprender',
     titulo: 'Las tres partes del sistema', // EJEMPLO
     subtitulo: 'Lo que hacemos con cada negocio dentro del intensivo, en versión de 90 minutos.', // EJEMPLO
+    /**
+     * `icono` es un nombre del catálogo de src/components/Icono.tsx:
+     * trayectoria · red · cohete · grafica · objetivo · orbita · personas ·
+     * foco · brujula · calendario · escudo · mensaje
+     */
     lista: [
       {
         numero: 'Parte 1',
         titulo: 'Diseñar la trayectoria: de dónde vienen tus clientes y a dónde quieres llegar', // EJEMPLO
         texto: 'Un mapa de una página con tu embudo real, tus números y el siguiente nivel concreto.', // EJEMPLO
-        /** Ruta en /public/assets o '' para un marcador. */
-        imagen: '/assets/bgi/parte-1-trayectoria.webp' as string, // EJEMPLO
-        descripcionImagen: 'Foto o ilustración de la parte 1, formato 16:10',
+        icono: 'trayectoria', // EJEMPLO
       },
       {
         numero: 'Parte 2',
         titulo: 'Montar tu primer equipo de IA: agentes que capturan, siguen y cierran', // EJEMPLO
         texto: 'Qué se automatiza primero, qué no, y cómo se conecta con tu CRM sin romper nada.', // EJEMPLO
-        imagen: '/assets/bgi/parte-2-equipo-ia.webp' as string, // EJEMPLO
-        descripcionImagen: 'Foto o ilustración de la parte 2, formato 16:10',
+        icono: 'red', // EJEMPLO
       },
       {
         numero: 'Parte 3',
         titulo: 'Ejecutar el crecimiento: el ritmo semanal que sostiene la altitud', // EJEMPLO
         texto: 'El embudo exacto que estás viendo ahora: registro, recordatorios, clase en vivo y oferta.', // EJEMPLO
-        imagen: '/assets/bgi/parte-3-altitud.webp' as string, // EJEMPLO
-        descripcionImagen: 'Foto o ilustración de la parte 3, formato 16:10',
+        icono: 'grafica', // EJEMPLO
       },
     ],
   },
@@ -83,8 +84,12 @@ export const LANDING = {
     tituloAcento: 'Es un sistema que puedes operar tú.', // EJEMPLO
     parrafo:
       'Este método nace de construir sistemas reales para negocios reales. En la clase te muestro el camino completo.', // EJEMPLO
-    /** Fotos del carrusel. Vacío = la sección no se muestra. */
-    carrusel: [] as ReadonlyArray<{ src: string; alt: string }>,
+    /** Fotos del carrusel (formato 3:2). Vacío = se muestra solo el texto. */
+    carrusel: [
+      { src: '/assets/bgi/parte-1-trayectoria.webp', alt: 'Una trayectoria que despega del horizonte' }, // EJEMPLO
+      { src: '/assets/bgi/parte-2-equipo-ia.webp', alt: 'Una red de nodos coordinados' }, // EJEMPLO
+      { src: '/assets/bgi/parte-3-altitud.webp', alt: 'La Tierra desde órbita al amanecer' }, // EJEMPLO
+    ] as ReadonlyArray<{ src: string; alt: string }>,
   },
 
   paraTi: {

@@ -23,7 +23,7 @@ export const MARCA = {
   /** La plantilla trae el logo de BGI; cámbialo por el tuyo o deja '' para usar el nombre en texto. */
   logo: '/assets/bgi/bgi-logo-white.png', // EJEMPLO
   /** Foto del presentador en /public/assets, o '' para mostrar un marcador. */
-  retrato: '',
+  retrato: '/assets/bgi/retrato-presentador.webp' as string, // EJEMPLO (persona ficticia generada: pon tu foto real)
 
   /** Sin barra final. Se usa en metadatos y en el archivo de calendario. */
   sitio: 'https://businessgrowthintensive.com', // EJEMPLO
