@@ -10,6 +10,17 @@ const basePath = (process.env.BASE_PATH ?? '').replace(/\/$/, '');
 const nextConfig: NextConfig = {
   basePath,
   env: { NEXT_PUBLIC_BASE_PATH: basePath },
+  async rewrites() {
+    return [
+      {
+        // El cuaderno de trabajo (docs/GUIA.html) se publica como página
+        // estática autocontenida; scripts/publicar-manual.mjs la genera en
+        // cada build. En BGI se sirve como www.mibgi.com/manual-embudo.
+        source: '/manual-embudo',
+        destination: '/manual-embudo.html',
+      },
+    ];
+  },
   async redirects() {
     return [
       {

@@ -43,3 +43,6 @@ next-env.d.ts
 
 # el ejemplo sí se versiona
 !.env.example
+
+# generado por scripts/publicar-manual.mjs a partir de docs/GUIA.html
+/public/manual-embudo.html

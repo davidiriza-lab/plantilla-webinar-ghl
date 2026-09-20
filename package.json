@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "node scripts/publicar-manual.mjs && next build",
+    "manual": "node scripts/publicar-manual.mjs",
     "start": "next start",
     "instalar": "node scripts/instalar-ghl.ts",
     "revisar": "node scripts/revisar-plantilla.ts",

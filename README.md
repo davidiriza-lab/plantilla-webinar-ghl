@@ -5,7 +5,7 @@ datos**: registro, página de gracias, puerta de la sala, oferta y panel de
 control. Sin Supabase, sin Postgres, sin cron. Lo copias, lo conectas a tu
 sub-cuenta de GHL en 30 minutos y lo adaptas con tu copy.
 
-- **Cuaderno de trabajo paso a paso:** [`docs/GUIA.html`](docs/GUIA.html) (ábrelo en el navegador)
+- **Cuaderno de trabajo paso a paso:** https://www.mibgi.com/manual-embudo (fuente: [`docs/GUIA.html`](docs/GUIA.html), se publica en cada build como `/manual-embudo`)
 - **Para Claude Code:** [`CLAUDE.md`](CLAUDE.md) explica el proyecto para que te ayude a adaptarlo
 
 ---
