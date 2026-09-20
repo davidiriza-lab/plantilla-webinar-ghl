@@ -10,9 +10,9 @@
  */
 export const MARCA = {
   /** Quién da la clase. Aparece en la landing, la oferta y el pie. */
-  presentador: 'David Iriza', // EJEMPLO
+  presentador: 'Tu Nombre', // EJEMPLO
   /** Una línea bajo el nombre: qué eres o qué creaste. */
-  rol: 'Fundador de Business Growth Intensive', // EJEMPLO
+  rol: 'Business Growth Intensive', // EJEMPLO
 
   /** El nombre corto del webinar. Es el "logo" en texto si no cargas imagen. */
   webinar: 'Business Growth Intensive', // EJEMPLO

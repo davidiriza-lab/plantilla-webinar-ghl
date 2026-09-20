@@ -470,5 +470,5 @@ GoHighLevel.
 
 ## Licencia y origen
 
-Plantilla del programa **Business Growth Intensive** de David Iriza. Úsala en
+Plantilla del programa **Business Growth Intensive**. Úsala en
 tus proyectos y en los de tus clientes; no la revendas como producto.
