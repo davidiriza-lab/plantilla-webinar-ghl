@@ -84,11 +84,15 @@ export const LANDING = {
     tituloAcento: 'Es un sistema que puedes operar tú.', // EJEMPLO
     parrafo:
       'Este método nace de construir sistemas reales para negocios reales. En la clase te muestro el camino completo.', // EJEMPLO
-    /** Fotos del carrusel (formato 3:2). Vacío = se muestra solo el texto. */
+    /**
+     * Fotos del carrusel (formato 3:2). Aquí va PRUEBA de trabajo real: tus
+     * sesiones, tu sistema en pantalla, tu clase. No decoración.
+     * Vacío = se muestra solo el texto.
+     */
     carrusel: [
-      { src: '/assets/bgi/parte-1-trayectoria.webp', alt: 'Una trayectoria que despega del horizonte' }, // EJEMPLO
-      { src: '/assets/bgi/parte-2-equipo-ia.webp', alt: 'Una red de nodos coordinados' }, // EJEMPLO
-      { src: '/assets/bgi/parte-3-altitud.webp', alt: 'La Tierra desde órbita al amanecer' }, // EJEMPLO
+      { src: '/assets/bgi/metodo-1-sesion.webp', alt: 'Sesión de trabajo con dueños de negocio revisando un embudo en pantalla' }, // EJEMPLO
+      { src: '/assets/bgi/metodo-2-sistema.webp', alt: 'El tablero de oportunidades del CRM, operado desde una laptop' }, // EJEMPLO
+      { src: '/assets/bgi/metodo-3-clase-en-vivo.webp', alt: 'Una clase en vivo vista desde el escritorio de un asistente' }, // EJEMPLO
     ] as ReadonlyArray<{ src: string; alt: string }>,
   },
 
