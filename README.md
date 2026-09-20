@@ -40,25 +40,31 @@ Config evita que el sitio dependa de que GHL esté vivo.
 
 ## Empezar (resumen; la guía lo lleva paso a paso)
 
-Todo se hace desde VS Code con Claude Code abierto, con GitHub (`gh auth login`)
-y Vercel (`vercel login`) conectados una sola vez.
+Todo se hace desde VS Code con Claude Code abierto: el manual da, módulo por
+módulo, el prompt que se le pega a Claude y lo único que queda fuera (crear
+una llave en GHL, un token en Vercel, un registro DNS). Estos son los comandos
+que Claude corre por debajo:
 
 ```bash
 # 1. Tu copia (desde Claude Code: "crea mi copia de la plantilla…")
 gh repo create webinar-mi-programa --template davidiriza-lab/plantilla-webinar-ghl --private --clone
-cd webinar-mi-programa && npm install && cp .env.example .env.local
+cd webinar-mi-programa && npm install
+npm run diagnostico               # ¿Node, git, claude, gh y vercel listos?
 
 # 2. Prepara tu sub-cuenta de GHL (custom values, campos, revisa el pipeline)
-npm run instalar
+npm run instalar -- --token pit-… --location … --password …   # escribe .env.local y corre
 
 # 3. Arranca y configura desde el panel
 npm run dev                       # http://localhost:3000/admin
 
 # 4. Pon tu copy en src/contenido/{marca,landing,oferta}.ts
 npm run revisar                   # lista lo que sigue siendo ejemplo
+npm run probar:embudo -- --email tu@correo.com   # un registro real, comprobado en GHL
 
 # 5. Publica
 vercel link && npm run subir-env && vercel --prod
+npm run edge-config -- --token <token de la API de Vercel>   # crea la copia
+npm run subir-env && vercel --prod
 vercel git connect                # cada push a main publica solo
 ```
 
@@ -112,6 +118,10 @@ npm run probar:puerta    # la puerta y las etiquetas
 npm run probar:red       # timeout y reintento hacia GHL (~17 s)
 npm run probar:intentos  # freno de fuerza bruta del login
 npm run probar:movil     # que ninguna página se desborde a lo ancho
+npm run probar:embudo    # un registro de prueba de punta a punta, comprobado en GHL
+                         #   -- --puerta prueba también /ingreso · --email tu@correo
+                         #   · --limpiar borra el contacto al final
+npm run diagnostico      # el taller: Node, git, claude, gh, vercel, .env.local, vercel link
 ```
 
 ---
@@ -366,10 +376,17 @@ src/
     capi.ts                 API de Conversiones de Meta
 scripts/
   instalar-ghl.ts           prepara la sub-cuenta (npm run instalar)
+  diagnostico.mjs           ¿está listo el taller? (npm run diagnostico)
+  crear-edge-config.mjs     la copia en Edge Config por API (npm run edge-config)
+  subir-env.mjs             .env.local → Vercel (npm run subir-env)
   revisar-plantilla.ts      lista el copy de ejemplo (npm run revisar)
+  probar-embudo.mjs         registro de prueba comprobado en GHL (npm run probar:embudo)
   probar-*.ts               las suites de pruebas
+  publicar-manual.mjs       genera /manual-embudo desde docs/GUIA.html (en cada build)
+  capturas-manual.mjs       capturas reales de las páginas para el manual (npm run capturas)
 docs/
-  GUIA.html                 el cuaderno de trabajo
+  GUIA.html                 el manual de trabajo (fuente única; se publica en /manual-embudo)
+  assets/capturas/          capturas que usa el manual (npm run capturas las regenera)
 ```
 
 ---
@@ -450,10 +467,11 @@ Desde la terminal, con `vercel login` hecho:
 2. `npm run subir-env` copia todas las variables de `.env.local` a Production y
    Preview (usa `--value`: por stdin Vercel guarda la variable vacía).
 3. `vercel --prod` publica. Entra a `/admin` con tu contraseña.
-4. En vercel.com: **Storage → Create → Edge Config**, conéctalo al proyecto
-   (`EDGE_CONFIG` se crea solo). Copia `EDGE_CONFIG_ID` (`ecfg_…`), crea un
-   token en **Account → Tokens** (`VERCEL_API_TOKEN`) y, si es equipo,
-   `VERCEL_TEAM_ID`. Vuelve a `npm run subir-env && vercel --prod`.
+4. Crea un token en **vercel.com → Account Settings → Tokens** y corre
+   `npm run edge-config -- --token <token>`: crea el Edge Config por API, su
+   token de lectura, y deja `EDGE_CONFIG`, `EDGE_CONFIG_ID`, `VERCEL_API_TOKEN`
+   (y `VERCEL_TEAM_ID` si el proyecto vive en un equipo) en `.env.local`. Es
+   idempotente. Vuelve a `npm run subir-env && vercel --prod`.
 5. Guarda una vez en `/admin`: siembra la copia y el banner de salud queda limpio.
 6. `vercel git connect` liga el repo: cada push a `main` publica solo.
 7. `vercel domains add tu-dominio.com` y sigue las instrucciones de DNS.

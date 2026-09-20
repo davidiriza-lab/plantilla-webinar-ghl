@@ -2,15 +2,15 @@
  * npm run subir-env — copia las variables de .env.local al proyecto de Vercel.
  *
  * Requiere haber corrido `vercel link` en esta carpeta. Sube cada variable
- * con valor a Production y Preview (sensibles por defecto en Vercel), y salta
- * las vacías y las que crea la propia integración de Vercel (EDGE_CONFIG).
+ * con valor a Production y Preview (sensibles por defecto en Vercel) y salta
+ * las vacías. EDGE_CONFIG también va: la escribe `npm run edge-config`.
  * Con `--ver` solo muestra lo que haría.
  */
 import { readFileSync, existsSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
 
 const SOLO_VER = process.argv.includes('--ver');
-const NO_SUBIR = new Set(['EDGE_CONFIG']);
+const NO_SUBIR = new Set([]);
 
 if (!existsSync('.env.local')) {
   console.error('No hay .env.local en esta carpeta.');

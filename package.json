@@ -6,8 +6,11 @@
     "dev": "next dev",
     "build": "node scripts/publicar-manual.mjs && next build",
     "manual": "node scripts/publicar-manual.mjs",
+    "capturas": "node scripts/capturas-manual.mjs",
     "start": "next start",
     "instalar": "node scripts/instalar-ghl.ts",
+    "diagnostico": "node scripts/diagnostico.mjs",
+    "edge-config": "node scripts/crear-edge-config.mjs",
     "revisar": "node scripts/revisar-plantilla.ts",
     "verificar": "tsc --noEmit && node scripts/probar-horario.ts && node scripts/probar-parseo.ts && node scripts/probar-puerta.ts && node scripts/probar-red.ts && node scripts/probar-intentos.ts",
     "probar:horario": "node scripts/probar-horario.ts",
@@ -16,6 +19,7 @@
     "probar:red": "node scripts/probar-red.ts",
     "probar:intentos": "node scripts/probar-intentos.ts",
     "probar:movil": "node scripts/probar-movil.mjs",
+    "probar:embudo": "node scripts/probar-embudo.mjs",
     "subir-env": "node scripts/subir-env.mjs"
   },
   "dependencies": {

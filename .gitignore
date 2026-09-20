@@ -46,3 +46,4 @@ next-env.d.ts
 
 # generado por scripts/publicar-manual.mjs a partir de docs/GUIA.html
 /public/manual-embudo.html
+/public/manual-capturas/

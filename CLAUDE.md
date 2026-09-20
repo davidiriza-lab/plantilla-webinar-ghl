@@ -7,7 +7,17 @@ Supabase, Postgres ni cron. Next.js hace las páginas y captura; GHL guarda
 contactos, etiquetas y configuración, y dispara correos y WhatsApp.
 
 Lee `README.md` para el funcionamiento completo y `docs/GUIA.html` para el
-cuaderno de trabajo paso a paso. Esto es lo mínimo para ayudar bien.
+manual de trabajo paso a paso (publicado en https://www.mibgi.com/manual-embudo).
+Esto es lo mínimo para ayudar bien.
+
+**El dueño trabaja contigo, no con menús.** El manual le da un prompt por
+módulo y tú corres los comandos: crear la copia, `npm run diagnostico`,
+`npm run instalar -- --token … --location … --password …`, `npm run
+probar:embudo`, `vercel link`, `npm run subir-env`, `npm run edge-config`,
+`vercel --prod`, `vercel git connect`. Cuando te pegue un token o una
+contraseña en el chat, escríbela en `.env.local` sin repetirla en pantalla.
+Lo que no puedes hacer por él (crear el PIT en GHL, workflows, pipeline, tokens
+de Vercel/Meta/Mercado Pago, DNS) díselo con los pasos exactos.
 
 ## Dónde vive cada cosa
 
@@ -54,12 +64,18 @@ cuaderno de trabajo paso a paso. Esto es lo mínimo para ayudar bien.
 ## Comandos
 
 ```bash
-npm run instalar    # prepara la sub-cuenta de GHL y escribe IDs en .env.local
-npm run revisar     # lista el copy de ejemplo que sigue sin cambiar
-npm run dev         # http://localhost:3000  ·  panel en /admin
-npm run verificar   # tipos + pruebas (lo mismo que corre GitHub Actions)
-npm run subir-env   # copia .env.local al proyecto de Vercel (tras `vercel link`)
-vercel --prod       # publica  ·  `vercel git connect` para que cada push publique
+npm run diagnostico     # ¿Node, git, claude, gh, vercel, .env.local, vercel link?
+npm run instalar        # prepara la sub-cuenta de GHL y escribe IDs en .env.local
+                        #   -- --token pit-… --location … --password …  (escribe .env.local)
+npm run revisar         # lista el copy de ejemplo que sigue sin cambiar
+npm run dev             # http://localhost:3000  ·  panel en /admin
+npm run probar:embudo   # registro de prueba de punta a punta, comprobado en GHL
+                        #   [url] · --puerta · --email tu@correo · --limpiar
+npm run verificar       # tipos + pruebas (lo mismo que corre GitHub Actions)
+npm run subir-env       # copia .env.local al proyecto de Vercel (tras `vercel link`)
+npm run edge-config     # crea la copia en Edge Config por API (-- --token <token Vercel>)
+vercel --prod           # publica  ·  `vercel git connect` para que cada push publique
+npm run capturas        # regenera las capturas del manual (docs/assets/capturas)
 ```
 
 ## Cómo llega un prospecto

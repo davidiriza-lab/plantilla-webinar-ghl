@@ -12,13 +12,42 @@
  *
  * Es idempotente: córrelo las veces que quieras, solo crea lo que no existe.
  * Con `--revisar` no escribe nada: solo reporta.
+ *
+ * Para que Claude lo corra de una sola vez, acepta las credenciales como
+ * argumentos y las deja en `.env.local` (creándolo desde `.env.example`):
+ *   npm run instalar -- --token pit-… --location … --password … [--lada 52]
  */
-import { readFileSync, writeFileSync, existsSync } from 'node:fs';
+import { readFileSync, writeFileSync, existsSync, copyFileSync } from 'node:fs';
 import { randomBytes } from 'node:crypto';
 import { CAMPOS, DERIVADOS, POR_DEFECTO } from '../src/lib/campos.ts';
 
 const SOLO_REVISAR = process.argv.includes('--revisar');
 const ENV = '.env.local';
+
+// ── Argumentos → .env.local ──────────────────────────────────────────────────
+
+const ARGS = process.argv.slice(2);
+function argumento(nombre: string): string | undefined {
+  const i = ARGS.indexOf(nombre);
+  return i >= 0 ? ARGS[i + 1] : undefined;
+}
+const DESDE_ARGS: Record<string, string | undefined> = {
+  GHL_API_KEY: argumento('--token'),
+  GHL_LOCATION_ID: argumento('--location'),
+  ADMIN_PASSWORD: argumento('--password'),
+  LADA_POR_DEFECTO: argumento('--lada'),
+};
+const paresNuevos = Object.entries(DESDE_ARGS).filter((par): par is [string, string] => Boolean(par[1]));
+if (paresNuevos.length > 0 && !SOLO_REVISAR) {
+  if (!existsSync(ENV)) copyFileSync('.env.example', ENV);
+  let texto = readFileSync(ENV, 'utf8');
+  for (const [clave, valor] of paresNuevos) {
+    const re = new RegExp(`^${clave}=.*$`, 'm');
+    texto = re.test(texto) ? texto.replace(re, `${clave}=${valor}`) : `${texto.replace(/\s*$/, '')}\n${clave}=${valor}\n`;
+  }
+  writeFileSync(ENV, texto);
+  console.log(`\n  · ${paresNuevos.map(([k]) => k).join(', ')} → escritas en .env.local`);
+}
 const BASE = 'https://services.leadconnectorhq.com';
 const VERSION = '2021-07-28';
 
