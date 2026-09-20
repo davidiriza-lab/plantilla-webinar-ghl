@@ -71,7 +71,7 @@ export default async function Oferta() {
   );
 
   const Etiqueta = ({ children }: { children: React.ReactNode }) => (
-    <p className="mb-5 text-xs font-semibold uppercase tracking-[0.28em] text-acento">
+    <p className="mb-5 text-xs font-bold uppercase tracking-[0.24em] text-acento-claro">
       {children}
     </p>
   );
@@ -89,7 +89,7 @@ export default async function Oferta() {
       </header>
 
       {/* ── 1. Hero ────────────────────────────────────────────────── */}
-      <section className="fondo-hero border-b border-linea px-6 py-22 text-center max-sm:px-5 max-sm:py-15">
+      <section className="fondo-nebulosa border-b border-linea px-6 py-22 text-center max-sm:px-5 max-sm:py-15">
         <div className="contenedor max-w-[860px]">
           <Etiqueta>{MARCA.producto}</Etiqueta>
           <h1 className="titulo mx-auto mb-6 max-w-[760px] text-[46px] leading-[1.08] text-crema max-sm:text-[32px]">
@@ -113,7 +113,7 @@ export default async function Oferta() {
       </section>
 
       {/* ── 2. Problema / continuidad ──────────────────────────────── */}
-      <section className="border-b border-linea bg-superficie px-6 py-22 max-sm:px-5 max-sm:py-15">
+      <section className="fondo-profundo border-b border-linea px-6 py-22 max-sm:px-5 max-sm:py-15">
         <div className="contenedor grid items-center gap-14 md:grid-cols-2">
           <PlaceholderImagen
             numero={5}
@@ -164,9 +164,9 @@ export default async function Oferta() {
 
           <div className="grid gap-5 md:grid-cols-2">
             {O.proceso.etapas.map((e, i) => (
-              <article key={e.nombre} className="rounded-xl border border-linea bg-superficie p-8 max-sm:p-6">
+              <article key={e.nombre} className="panel p-8 max-sm:p-6">
                 <div className="mb-4 flex items-baseline justify-between gap-4">
-                  <p className="text-[11.5px] font-semibold uppercase tracking-[0.22em] text-acento">
+                  <p className="text-[11.5px] font-bold uppercase tracking-[0.22em] text-acento-claro">
                     {e.semana}
                   </p>
                   <span className="font-display text-[34px] leading-none text-acento/40">
@@ -188,7 +188,7 @@ export default async function Oferta() {
       </section>
 
       {/* ── 4. Qué incluye ─────────────────────────────────────────── */}
-      <section className="border-y border-linea bg-superficie px-6 py-22 max-sm:px-5 max-sm:py-15">
+      <section className="fondo-profundo border-y border-linea px-6 py-22 max-sm:px-5 max-sm:py-15">
         <div className="contenedor">
           <div className="mx-auto mb-12 max-w-[640px] text-center max-sm:mb-8">
             <Etiqueta>{O.incluye.etiqueta}</Etiqueta>
@@ -197,7 +197,7 @@ export default async function Oferta() {
 
           <div className="grid gap-5 md:grid-cols-2">
             {O.incluye.partes.map((p) => (
-              <div key={p.nombre} className="rounded-xl border border-linea bg-fondo/55 p-7 max-sm:p-5">
+              <div key={p.nombre} className="panel p-7 max-sm:p-5">
                 <h3 className="titulo mb-3 text-[22px] text-crema">{p.nombre}</h3>
                 <p className="text-[15px] text-texto-tenue">{p.descripcion}</p>
                 {'nota' in p && p.nota && (
@@ -217,7 +217,7 @@ export default async function Oferta() {
       {/* ── 5. Para quién es ───────────────────────────────────────── */}
       <section className="px-6 py-22 max-sm:px-5 max-sm:py-15">
         <div className="contenedor grid gap-8 md:grid-cols-[3fr_2fr]">
-          <div className="rounded-xl border-2 border-acento/50 bg-superficie p-8 max-sm:p-6">
+          <div className="panel border-acento/40 p-8 max-sm:p-6">
             <h2 className="titulo mb-6 text-[30px] text-crema max-sm:text-[25px]">{O.paraQuien.titulo}</h2>
             <ul className="space-y-3">
               {O.paraQuien.lista.map((p) => (
@@ -229,7 +229,7 @@ export default async function Oferta() {
             </ul>
           </div>
 
-          <div className="rounded-xl border border-linea bg-fondo/55 p-8 text-texto-tenue max-sm:p-6">
+          <div className="panel p-8 text-texto-tenue max-sm:p-6">
             <h2 className="titulo mb-6 text-[30px] text-texto-tenue max-sm:text-[25px]">
               {O.paraQuien.noTitulo}
             </h2>
@@ -239,14 +239,14 @@ export default async function Oferta() {
       </section>
 
       {/* ── 6. En vivo ─────────────────────────────────────────────── */}
-      <section className="border-y border-linea bg-superficie px-6 py-22 max-sm:px-5 max-sm:py-15">
+      <section className="fondo-profundo border-y border-linea px-6 py-22 max-sm:px-5 max-sm:py-15">
         <div className="contenedor grid items-center gap-12 md:grid-cols-2">
           <div>
             <h2 className="titulo mb-4 text-[34px] leading-[1.12] text-crema max-sm:text-[27px]">
               {O.enVivo.titulo}
             </h2>
             <p className="mb-8 text-texto-tenue">{O.enVivo.intro}</p>
-            <p className="mb-1 text-xs font-semibold uppercase tracking-[0.28em] text-acento">
+            <p className="mb-1 text-xs font-bold uppercase tracking-[0.24em] text-acento-claro">
               {O.enVivo.etiqueta}
             </p>
             <h3 className="titulo mb-6 text-[28px] text-acento max-sm:text-[24px]">{O.enVivo.subtitulo}</h3>
@@ -274,10 +274,10 @@ export default async function Oferta() {
       <section className="px-6 py-22 max-sm:px-5 max-sm:py-15">
         <div className="contenedor max-w-[760px] text-center">
           <h2 className="titulo mb-3 text-4xl text-crema max-sm:text-[28px]">{O.garantia.titulo}</h2>
-          <p className="mb-10 text-xs font-semibold uppercase tracking-[0.28em] text-acento">
+          <p className="mb-10 text-xs font-bold uppercase tracking-[0.24em] text-acento-claro">
             Garantía · {O.garantia.dias} días
           </p>
-          <div className="rounded-xl border border-linea bg-superficie p-9 text-left max-sm:p-6">
+          <div className="panel p-9 text-left max-sm:p-6">
             <p className="mb-1 text-texto-tenue">{O.garantia.linea1}</p>
             <p className="mb-5 text-[17px] font-semibold text-crema">{O.garantia.linea2}</p>
             <p className="mb-4 text-texto-tenue">{conDias(O.garantia.texto)}</p>

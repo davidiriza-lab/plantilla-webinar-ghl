@@ -10,34 +10,35 @@
  */
 export const MARCA = {
   /** Quién da la clase. Aparece en la landing, la oferta y el pie. */
-  presentador: 'Ana Torres', // EJEMPLO
+  presentador: 'David Iriza', // EJEMPLO
   /** Una línea bajo el nombre: qué eres o qué creaste. */
-  rol: 'Consultora de negocios digitales', // EJEMPLO
+  rol: 'Fundador de Business Growth Intensive', // EJEMPLO
 
   /** El nombre corto del webinar. Es el "logo" en texto si no cargas imagen. */
-  webinar: 'Clase en vivo', // EJEMPLO
+  webinar: 'Business Growth Intensive', // EJEMPLO
   /** Lo que se vende en /oferta. */
-  producto: 'Programa Impulso', // EJEMPLO
+  producto: 'Business Growth Intensive', // EJEMPLO
 
   /** Ruta de tu logo en /public/assets, o '' para usar el nombre en texto. */
-  logo: '',
+  /** La plantilla trae el logo de BGI; cámbialo por el tuyo o deja '' para usar el nombre en texto. */
+  logo: '/assets/bgi/bgi-logo-white.png', // EJEMPLO
   /** Foto del presentador en /public/assets, o '' para mostrar un marcador. */
   retrato: '',
 
   /** Sin barra final. Se usa en metadatos y en el archivo de calendario. */
-  sitio: 'https://tu-dominio.com', // EJEMPLO
+  sitio: 'https://businessgrowthintensive.com', // EJEMPLO
   /** Identificador corto sin espacios, para el calendario (.ics). */
-  slug: 'clase-en-vivo',
+  slug: 'business-growth-intensive', // EJEMPLO
 
   /** Lo que ve Google y lo que se comparte en redes. */
   seo: {
-    titulo: 'Cómo vender tu primer programa en línea | Clase gratuita con Ana Torres', // EJEMPLO
+    titulo: 'Lleva tu negocio más lejos | Clase gratuita de Business Growth Intensive', // EJEMPLO
     descripcion:
-      'Clase online gratuita. El método de 3 pasos para lanzar y vender tu primer programa en línea sin audiencia grande ni equipo.', // EJEMPLO
+      'Clase online gratuita. El sistema de tres partes para diseñar la trayectoria de tu negocio y ejecutar el crecimiento con un equipo de IA.', // EJEMPLO
     /** es_MX, es_ES, es_CO… */
     locale: 'es_MX',
     /** Color de la barra del navegador en móvil. Usa el color `fondo`. */
-    color: '#0f1521',
+    color: '#0b1a3c',
   },
 
   /** El aviso legal del pie de página. Ajústalo a tu giro y a tu país. */

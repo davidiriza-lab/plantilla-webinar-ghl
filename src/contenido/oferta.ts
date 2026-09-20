@@ -5,67 +5,68 @@
  * bonos). La página acomoda estas nueve secciones en orden. El precio y el
  * enlace de pago NO van aquí: se editan en /admin.
  *
- * Todo lo marcado «EJEMPLO» es copy de muestra.
+ * Todo lo marcado «EJEMPLO» es el copy de muestra de Business Growth
+ * Intensive: reemplázalo con el tuyo.
  */
 
 export const OFERTA = {
   seo: {
-    titulo: 'Programa Impulso | Un proceso guiado de 30 días', // EJEMPLO
-    descripcion: 'De la idea a tu primera venta en 30 días, con implementación en vivo.', // EJEMPLO
+    titulo: 'Business Growth Intensive | Un intensivo guiado de 30 días', // EJEMPLO
+    descripcion: 'Diseña la trayectoria de tu negocio y ejecuta el crecimiento con tu primer equipo de IA, con implementación en vivo.', // EJEMPLO
   },
 
   hero: {
-    titulo: 'Deja de acumular ideas y lanza tu primer programa con un sistema que puedas sostener.', // EJEMPLO
+    titulo: 'Deja de operar solo y construye el sistema que lleva tu negocio más lejos.', // EJEMPLO
     subtitulo:
-      'Un proceso guiado de 30 días para personas que ya saben qué enseñar, pero todavía no tienen una oferta clara ni una forma de venderla.', // EJEMPLO
-    lineas: ['No se trata de tener más contenido.', 'No se trata de esperar el momento perfecto.'], // EJEMPLO
-    remate: 'Se trata de lanzar con estructura.', // EJEMPLO
+      'Un intensivo guiado de 30 días para dueños de negocio que ya venden, pero siguen siendo el cuello de botella de su propio crecimiento.', // EJEMPLO
+    lineas: ['No se trata de trabajar más horas.', 'No se trata de contratar a más gente.'], // EJEMPLO
+    remate: 'Se trata de construir el sistema.', // EJEMPLO
     cta: 'Quiero empezar mis 30 días',
   },
 
   problema: {
-    titulo: 'Puedes saber muchísimo y seguir sin vender nada.', // EJEMPLO
+    titulo: 'Puedes tener la estrategia clara y seguir sin despegar.', // EJEMPLO
     parrafos: [
-      'Tal vez ya sabes qué quieres enseñar.',
-      'Tal vez ya tienes hasta el nombre.',
-      'Tal vez grabaste videos, abriste una cuenta, hiciste una lista de temas y hasta compraste un curso sobre cómo hacer cursos.',
+      'Tal vez ya sabes qué tendrías que hacer.',
+      'Tal vez ya lo escribiste en un plan.',
+      'Tal vez compraste herramientas, viste tutoriales, contrataste a alguien que no funcionó y volviste a hacerlo tú.',
       'Y aun así, algo ocurre:',
     ], // EJEMPLO
-    detonante: 'abres el documento, ves la lista, sientes que falta algo…', // EJEMPLO
-    consecuencia: 'y lo vuelves a cerrar.', // EJEMPLO
+    detonante: 'llega el lunes, se llena la agenda de operación…', // EJEMPLO
+    consecuencia: 'y el plan se queda en el documento.', // EJEMPLO
     /** Palabras cortas en cajas: lo que hace la persona cuando se traba. */
-    reacciones: ['Investigas.', 'Comparas.', 'Reescribes.', 'Pospones.', 'Consumes.', 'Dudas.'], // EJEMPLO
-    puntoDeTrabajo: 'Ese es el punto que trabajamos en el Programa Impulso.', // EJEMPLO
+    reacciones: ['Apagas fuegos.', 'Pospones.', 'Delegas mal.', 'Retomas.', 'Te frustras.', 'Vuelves a empezar.'], // EJEMPLO
+    puntoDeTrabajo: 'Ese es el punto que trabajamos en Business Growth Intensive.', // EJEMPLO
     cierre: 'No buscamos que sepas más. Buscamos que',
-    cierreAcento: 'salga a la venta.', // EJEMPLO
+    cierreAcento: 'tu negocio ejecute sin ti.', // EJEMPLO
     descripcionImagen: 'Ilustración del problema, formato 4:5',
   },
 
   proceso: {
-    etiqueta: 'Qué es el Programa Impulso', // EJEMPLO
-    titulo: 'Un proceso de 30 días. No otro curso para acumular.', // EJEMPLO
+    etiqueta: 'Qué es Business Growth Intensive', // EJEMPLO
+    titulo: 'Un intensivo de 30 días. No otro curso para acumular.', // EJEMPLO
     parrafo:
-      'Durante 30 días vas a recorrer una ruta concreta para definir tu oferta, validarla con gente real y vender las primeras plazas. El proceso está dividido en cuatro etapas.', // EJEMPLO
+      'Durante 30 días vas a recorrer una ruta concreta para diseñar la trayectoria de tu negocio, montar tu primer equipo de IA y dejarlo ejecutando cada semana. El proceso está dividido en cuatro etapas.', // EJEMPLO
     etapas: [
-      { semana: 'Semana 1', nombre: 'Definir', descripcion: 'Elige el problema, el cliente y la promesa. Sale una oferta de una página.' }, // EJEMPLO
-      { semana: 'Semana 2', nombre: 'Validar', descripcion: 'Conversaciones reales con 10 personas antes de construir nada.' }, // EJEMPLO
-      { semana: 'Semana 3', nombre: 'Vender', descripcion: 'Tu primera clase en vivo con este mismo embudo: registro, recordatorios y oferta.' }, // EJEMPLO
-      { semana: 'Semana 4', nombre: 'Entregar y repetir', descripcion: 'Entregas la primera cohorte y dejas el sistema listo para la siguiente.' }, // EJEMPLO
+      { semana: 'Semana 1', nombre: 'Trayectoria', descripcion: 'Diagnóstico, números y el siguiente nivel concreto. Sale un mapa de una página.' }, // EJEMPLO
+      { semana: 'Semana 2', nombre: 'Propulsión', descripcion: 'Tu primer equipo de IA conectado a tu CRM: captura, seguimiento y agenda.' }, // EJEMPLO
+      { semana: 'Semana 3', nombre: 'Órbita', descripcion: 'Tu primera clase en vivo con este mismo embudo: registro, recordatorios y oferta.' }, // EJEMPLO
+      { semana: 'Semana 4', nombre: 'Altitud', descripcion: 'El ritmo semanal que sostiene el crecimiento, con métricas y responsables.' }, // EJEMPLO
     ],
-    frase: 'El objetivo no es que en 30 días tengas el programa perfecto. Es que tengas uno vendido.', // EJEMPLO
+    frase: 'El objetivo no es que en 30 días tengas el negocio perfecto. Es que tengas un sistema que ejecuta sin ti.', // EJEMPLO
   },
 
   incluye: {
     etiqueta: 'Qué incluye',
-    titulo: 'Todo lo que necesitas para lanzar', // EJEMPLO
+    titulo: 'Todo lo que necesitas para ejecutar', // EJEMPLO
     partes: [
-      { nombre: 'Proceso guiado de 30 días', descripcion: 'Cuatro etapas diseñadas para pasar de la idea a la primera venta.' }, // EJEMPLO
-      { nombre: 'Academia', descripcion: 'Acceso durante 12 meses para volver al contenido, las herramientas y los ejercicios cuando lo necesites.' }, // EJEMPLO
-      { nombre: 'Plantillas y herramientas', descripcion: 'La página de oferta, el guion de la clase y este mismo embudo, listos para adaptar.' }, // EJEMPLO
+      { nombre: 'Intensivo guiado de 30 días', descripcion: 'Cuatro etapas diseñadas para pasar de la estrategia a un sistema ejecutando.' }, // EJEMPLO
+      { nombre: 'Academia', descripcion: 'Acceso durante 12 meses para volver al contenido, las plantillas y los ejercicios cuando lo necesites.' }, // EJEMPLO
+      { nombre: 'Plantillas y sistemas', descripcion: 'Este embudo, el CRM configurado y los agentes de IA, listos para adaptar a tu negocio.' }, // EJEMPLO
       {
         nombre: 'Sesiones en vivo',
-        descripcion: 'Durante tus primeros 30 días, una sesión grupal semanal conmigo para trabajar tu caso: la oferta, el precio, la clase, las objeciones.', // EJEMPLO
-        nota: 'No es otra clase. Es el espacio donde llevamos el método a lo que realmente te está pasando.',
+        descripcion: 'Durante tus primeros 30 días, una sesión grupal semanal conmigo para trabajar tu caso: tu embudo, tus números, tu equipo de IA.', // EJEMPLO
+        nota: 'No es otra clase. Es el espacio donde llevamos el método a lo que realmente está pasando en tu negocio.',
       },
     ],
     cta: 'Quiero empezar mis 30 días',
@@ -74,14 +75,14 @@ export const OFERTA = {
   paraQuien: {
     titulo: 'Es para ti si…',
     lista: [
-      'Sabes hacer algo valioso y quieres cobrarlo en línea.', // EJEMPLO
-      'Ya intentaste lanzar algo y no vendió, o nunca lo terminaste.', // EJEMPLO
+      'Diriges un negocio que ya vende y quieres crecer sin duplicar el equipo.', // EJEMPLO
+      'Ya intentaste automatizar con herramientas sueltas y no cambió nada.', // EJEMPLO
       'Prefieres un proceso corto y concreto a otra biblioteca de videos.', // EJEMPLO
-      'Estás dispuesto a hablar con gente real antes de construir.', // EJEMPLO
+      'Estás dispuesto a tocar tu operación durante 30 días.', // EJEMPLO
       'Quieres un sistema que puedas repetir cada mes.', // EJEMPLO
     ],
     noTitulo: 'No es para ti si…',
-    no: 'Buscas ingresos sin ofrecer nada real, quieres que alguien lo haga por ti o esperas resultados sin aplicar el proceso.', // EJEMPLO
+    no: 'Buscas resultados sin tocar tu operación, quieres que alguien lo haga por ti sin entenderlo, o esperas crecer sin ejecutar el proceso.', // EJEMPLO
   },
 
   enVivo: {
@@ -91,11 +92,11 @@ export const OFERTA = {
     subtitulo: 'Implementación con tu caso',
     parrafo: 'Un espacio para traer aquello que realmente está pasando:',
     frases: [
-      'No sé qué precio ponerle.',
-      'Hablé con tres personas y ninguna quiso.',
-      'Tengo la oferta pero me da miedo publicarla.',
-      'Se registraron 40 y llegaron 6.',
-      'Vendí uno y no sé cómo entregarlo.',
+      'No sé por dónde empezar a automatizar.',
+      'Mi CRM es un desorden y no confío en los datos.',
+      'Se registraron 80 y llegaron 12.',
+      'Tengo el sistema pero mi equipo no lo usa.',
+      'Vendí y no sé cómo escalar la entrega.',
     ], // EJEMPLO
     cierre: 'No necesitas llegar con todo resuelto.',
     cierreAcento: 'Llegas con el punto exacto donde estás atorado y trabajamos desde ahí.',
@@ -113,30 +114,30 @@ export const OFERTA = {
   },
 
   inversion: {
-    titulo: 'Tu proceso comienza hoy.',
-    etiqueta: 'Acceso al Programa Impulso', // EJEMPLO
+    titulo: 'Tu trayectoria comienza hoy.', // EJEMPLO
+    etiqueta: 'Acceso a Business Growth Intensive', // EJEMPLO
     unPago: 'Un solo pago.',
     resumen: [
-      '30 días de proceso guiado',
+      '30 días de intensivo guiado',
       '4 etapas de implementación',
       'Sesión en vivo semanal durante tus primeros 30 días',
-      'Plantillas y herramientas',
+      'Plantillas y sistemas listos para adaptar',
       '12 meses de acceso a la academia',
     ], // EJEMPLO
-    cta: 'Quiero entrar al Programa Impulso', // EJEMPLO
+    cta: 'Quiero entrar a Business Growth Intensive', // EJEMPLO
     /** Lo que ve la persona bajo el botón. Menciona tu pasarela real. */
     pago: 'Pago seguro con Mercado Pago. Las formas de pago disponibles se muestran al entrar al checkout.',
   },
 
   cierre: {
-    titulo: 'Puedes seguir preparándote… o lanzar con lo que ya sabes.', // EJEMPLO
+    titulo: 'Puedes seguir operando solo… o construir el sistema que te lleva más lejos.', // EJEMPLO
     parrafos: [
-      'Probablemente ya sabes más de lo que necesitas para empezar.',
+      'Probablemente ya sabes más de lo que necesitas para crecer.',
       'La pregunta ahora no es qué más necesitas aprender.',
       'La pregunta es:',
     ], // EJEMPLO
-    pregunta: '¿Qué vas a hacer distinto esta vez?', // EJEMPLO
-    despues: ['No necesitas más contenido.', 'Necesitas una secuencia y alguien que te acompañe mientras la ejecutas.'], // EJEMPLO
+    pregunta: '¿Quién va a ejecutar la estrategia esta semana?', // EJEMPLO
+    despues: ['No necesitas más información.', 'Necesitas un sistema y alguien que te acompañe mientras lo pones a funcionar.'], // EJEMPLO
     remate: 'Tus próximos 30 días pueden empezar hoy.',
     /** {precio} se reemplaza por el precio configurado en /admin. */
     cta: 'Empezar hoy — {precio}',

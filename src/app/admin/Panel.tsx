@@ -201,7 +201,7 @@ export default function Panel({ config, campos, corregidos, resumen }: Props) {
         </header>
 
         {/* Resumen del estado actual */}
-        <div className="mb-9 rounded-xl border border-linea bg-superficie px-6 py-5">
+        <div className="mb-9 panel px-6 py-5">
           <div className="mb-1 text-[11.5px] uppercase tracking-[0.22em] text-acento">
             {resumen.enVivo
               ? 'Transmitiendo ahora'
@@ -250,7 +250,7 @@ export default function Panel({ config, campos, corregidos, resumen }: Props) {
 
         {corregidos.length > 0 && (
           <div className="mb-9 rounded-xl border border-acento/40 bg-acento/10 px-6 py-5">
-            <div className="mb-2 text-[11.5px] font-semibold uppercase tracking-[0.22em] text-acento">
+            <div className="mb-2 text-[11.5px] font-bold uppercase tracking-[0.22em] text-acento-claro">
               Se corrigieron al vuelo
             </div>
             <p className="mb-3 text-sm text-texto">
@@ -275,10 +275,10 @@ export default function Panel({ config, campos, corregidos, resumen }: Props) {
 
           return (
             <section key={grupo} className="mb-9">
-              <h2 className="mb-4 text-[11.5px] font-semibold uppercase tracking-[0.22em] text-acento">
+              <h2 className="mb-4 text-[11.5px] font-bold uppercase tracking-[0.22em] text-acento-claro">
                 {grupo}
               </h2>
-              <div className="space-y-5 rounded-xl border border-linea bg-superficie px-6 py-6 max-sm:px-4">
+              <div className="space-y-5 panel px-6 py-6 max-sm:px-4">
                 {delGrupo.filter(aplica).map((campo) => (
                   <Campo
                     key={campo.clave}
@@ -292,7 +292,7 @@ export default function Panel({ config, campos, corregidos, resumen }: Props) {
           );
         })}
 
-        <div className="sticky bottom-4 rounded-xl border border-linea bg-superficie/95 px-6 py-4 backdrop-blur max-sm:px-4">
+        <div className="sticky bottom-4 panel/95 px-6 py-4 backdrop-blur max-sm:px-4">
           <button
             type="button"
             onClick={guardar}

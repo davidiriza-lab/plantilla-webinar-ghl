@@ -1,21 +1,20 @@
 import type { Metadata, Viewport } from 'next';
-import { Fraunces, Manrope } from 'next/font/google';
+import { Space_Grotesk, Inter } from 'next/font/google';
 import { MARCA } from '@/contenido/marca';
 import './globals.css';
 
-// Dos tipografías para todo el embudo: una con carácter para los titulares y
-// una limpia para el resto. Cámbialas aquí (next/font las descarga solas).
-const display = Fraunces({
+// Tipografías del kit Business Growth Intensive: Space Grotesk para titulares,
+// Inter para todo lo demás. Cámbialas aquí (next/font las descarga solas).
+const display = Space_Grotesk({
   subsets: ['latin'],
-  weight: ['400', '600', '700'],
-  style: ['normal', 'italic'],
+  weight: ['500', '600', '700'],
   variable: '--fuente-display',
   display: 'swap',
 });
 
-const sans = Manrope({
+const sans = Inter({
   subsets: ['latin'],
-  weight: ['300', '400', '500', '600', '700'],
+  weight: ['400', '500', '600', '700'],
   variable: '--fuente-sans',
   display: 'swap',
 });

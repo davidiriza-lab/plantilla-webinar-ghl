@@ -90,7 +90,7 @@ export default function FormularioRegistro({ activo, frase }: Props) {
 
   if (!activo) {
     return (
-      <div className="rounded-[14px] border border-linea bg-fondo/70 p-9 text-center shadow-[0_24px_60px_rgba(0,0,0,0.45)]">
+      <div className="panel p-9 text-center shadow-[0_24px_60px_rgba(0,0,0,0.45)]">
         <h3 className="titulo mb-3 text-[25px] text-crema">
           Registros cerrados por ahora
         </h3>
@@ -104,7 +104,7 @@ export default function FormularioRegistro({ activo, frase }: Props) {
   const enviando = estado === 'enviando';
 
   return (
-    <div className="rounded-[14px] border border-linea bg-fondo/70 p-9 shadow-[0_24px_60px_rgba(0,0,0,0.45)] max-sm:p-6">
+    <div className="panel p-9 shadow-[0_24px_60px_rgba(0,0,0,0.45)] max-sm:p-6">
       <h3 className="titulo mb-2 text-center text-[25px] text-crema">
         Aparta tu lugar
       </h3>

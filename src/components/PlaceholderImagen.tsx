@@ -29,7 +29,7 @@ export default function PlaceholderImagen({
 
   return (
     <div
-      className={`${proporcion} relative overflow-hidden rounded-xl border border-linea bg-fondo/70 ${className}`}
+      className={`${proporcion} relative overflow-hidden panel ${className}`}
     >
       <div className="flex h-full flex-col justify-between p-6">
         <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-acento">

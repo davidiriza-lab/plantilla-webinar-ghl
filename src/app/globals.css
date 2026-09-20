@@ -1,33 +1,36 @@
 @import "tailwindcss";
 
 /* ---------------------------------------------------------------------------
-   Paleta y tipografía de la plantilla.
+   Identidad visual: Business Growth Intensive (kit v2).
+   Navy profundo como base, blancos limpios, azul eléctrico para acción,
+   cian para etiquetas y dorado solo como acento excepcional.
 
-   Cinco colores hacen toda la identidad. Cámbialos aquí y el sitio entero
-   cambia: no hay colores sueltos en las páginas, solo estos nombres.
+   Nueve nombres hacen toda la paleta. Cámbialos aquí y el sitio entero cambia:
+   no hay colores sueltos en las páginas, solo estos nombres.
 
-     fondo          el color de la página
-     superficie     tarjetas y secciones alternas
-     fondo-claro    bandas destacadas (detalles, precio)
-     acento         botones, etiquetas, énfasis
-     acento-claro   texto sobre el acento oscuro, marcas suaves
-     crema          titulares
-     texto          párrafos
-     texto-tenue    secundario
-     linea          bordes (el acento con transparencia)
+     fondo          Navy Core: el color de la página
+     superficie     Deep Space: tarjetas y secciones alternas
+     fondo-claro    bandas destacadas (detalles, inversión)
+     acento         Electric Blue: botones, enlaces, énfasis
+     acento-claro   Stellar Cyan: etiquetas pequeñas, marcas suaves
+     crema          blanco: titulares
+     texto          gris claro: párrafos
+     texto-tenue    Space Gray: secundario
+     linea          bordes translúcidos
    --------------------------------------------------------------------------- */
 @theme {
-  --color-fondo: #0f1521;
-  --color-superficie: #171f2e;
-  --color-fondo-claro: #1f2a3d;
-  --color-acento: #e0a458;
-  --color-acento-claro: #f3d9ab;
-  --color-crema: #f5f1e8;
-  --color-texto: #dfe3ea;
-  --color-texto-tenue: #9aa5b6;
-  --color-linea: rgba(224, 164, 88, 0.22);
+  --color-fondo: #0b1a3c;
+  --color-superficie: #102e6b;
+  --color-fondo-claro: #14367a;
+  --color-acento: #3882f6;
+  --color-acento-claro: #22d3ee;
+  --color-crema: #ffffff;
+  --color-texto: #cbd5e1;
+  --color-texto-tenue: #94a3b8;
+  --color-linea: rgba(148, 163, 184, 0.22);
+  --color-oro: #fbbf24;
 
-  --font-display: var(--fuente-display), Georgia, serif;
+  --font-display: var(--fuente-display), system-ui, sans-serif;
   --font-sans: var(--fuente-sans), system-ui, sans-serif;
 }
 
@@ -36,7 +39,7 @@ html {
 }
 
 body {
-  background: var(--color-fondo);
+  background: linear-gradient(180deg, #061022 0%, var(--color-fondo) 55%, #07162f 100%);
   color: var(--color-texto);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
@@ -51,57 +54,87 @@ textarea {
 
 @utility contenedor {
   width: 100%;
-  max-width: 71.25rem; /* 1140px */
+  max-width: 77.5rem; /* 1240px */
   margin-inline: auto;
 }
 
 @utility titulo {
   font-family: var(--font-display);
-  font-weight: 600;
-  line-height: 1.15;
+  font-weight: 700;
+  line-height: 1.02;
+  letter-spacing: -0.035em;
 }
 
-/* Fondos que antes eran fotografías: ahora son degradados sobre la paleta,
-   para que la plantilla se vea bien sin una sola imagen cargada. */
+/* ── Fondos con la fotografía del kit. Siempre con velo navy encima para que
+   el texto se lea; en móvil el velo es más denso. ────────────────────────── */
 @utility fondo-hero {
   background:
-    radial-gradient(ellipse 70% 60% at 20% 0%, rgba(224, 164, 88, 0.14), transparent 60%),
-    radial-gradient(ellipse 60% 50% at 100% 100%, rgba(224, 164, 88, 0.08), transparent 60%),
-    var(--color-fondo);
+    linear-gradient(90deg, rgba(6, 16, 34, 0.96) 0%, rgba(6, 16, 34, 0.78) 45%, rgba(6, 16, 34, 0.35) 100%),
+    url('/assets/bgi/bg-hero-earth.webp') center / cover no-repeat;
 }
 
 @utility fondo-banda {
   background:
-    linear-gradient(135deg, rgba(224, 164, 88, 0.1), transparent 55%),
-    var(--color-fondo-claro);
+    linear-gradient(rgba(6, 16, 34, 0.82), rgba(6, 16, 34, 0.92)),
+    url('/assets/bgi/orbital-lines-overlay.webp') center / cover no-repeat,
+    url('/assets/bgi/bg-starfield.webp') center / cover no-repeat;
 }
 
+@utility fondo-profundo {
+  background:
+    linear-gradient(180deg, rgba(6, 16, 34, 0.6), rgba(6, 16, 34, 0.94)),
+    url('/assets/bgi/bg-deep-gradient.webp') center / cover no-repeat;
+}
+
+@utility fondo-nebulosa {
+  background:
+    linear-gradient(180deg, rgba(6, 16, 34, 0.55), rgba(6, 16, 34, 0.9)),
+    url('/assets/bgi/bg-nebula.webp') center / cover no-repeat;
+}
+
+/* Tarjeta tipo panel oscuro translúcido, como manda el kit. */
+@utility panel {
+  background: rgba(8, 24, 54, 0.68);
+  border: 1px solid var(--color-linea);
+  border-radius: 22px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(16px);
+}
+
+/* Botón primario: azul eléctrico, píldora, glow suave. */
 @utility boton-acento {
   display: block;
   width: 100%;
   text-align: center;
-  background: linear-gradient(180deg, var(--color-acento), color-mix(in srgb, var(--color-acento) 78%, black));
-  color: #1a1206;
+  background: linear-gradient(135deg, #2f7cf6 0%, #4a9bff 100%);
+  color: #ffffff;
   border: 0;
-  border-radius: 0.5rem;
-  padding: 1.25rem 1.75rem;
+  border-radius: 999px;
+  padding: 1.05rem 1.75rem;
   font-weight: 700;
-  font-size: 0.9375rem;
-  letter-spacing: 0.09em;
-  text-transform: uppercase;
-  box-shadow: 0 10px 30px color-mix(in srgb, var(--color-acento) 28%, transparent);
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  font-size: 1rem;
+  letter-spacing: 0.01em;
+  box-shadow: 0 8px 30px rgba(56, 130, 246, 0.24);
+  transition: transform 0.22s ease, box-shadow 0.22s ease, filter 0.22s ease;
   cursor: pointer;
 }
 
 .boton-acento:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 14px 38px color-mix(in srgb, var(--color-acento) 40%, transparent);
+  filter: brightness(1.08);
+  box-shadow: 0 12px 38px rgba(56, 130, 246, 0.34);
 }
 
 .boton-acento:disabled {
   opacity: 0.55;
   cursor: not-allowed;
+}
+
+.boton-acento:focus-visible,
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid rgba(34, 211, 238, 0.55);
+  outline-offset: 3px;
 }
 
 @utility cifra {

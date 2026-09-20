@@ -35,7 +35,7 @@ export default function BotonCalendario({
     `&location=${encodeURIComponent('En línea')}`;
 
   const claseBoton =
-    'flex-1 rounded-lg border border-acento/50 px-5 py-4 text-center text-[13.5px] font-semibold uppercase tracking-[0.08em] text-acento transition-colors hover:bg-acento/10';
+    'flex-1 rounded-full border border-crema/35 bg-crema/[0.03] px-5 py-4 text-center text-[14px] font-semibold text-crema transition-colors hover:bg-crema/10';
 
   return (
     <div className="flex gap-3 max-sm:flex-col">

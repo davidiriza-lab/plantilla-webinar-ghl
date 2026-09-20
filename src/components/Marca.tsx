@@ -20,8 +20,8 @@ export default function Marca({
       <Image
         src={MARCA.logo}
         alt={texto}
-        width={1200}
-        height={400}
+        width={1400}
+        height={614}
         priority={tamano === 'grande'}
         className={className}
       />

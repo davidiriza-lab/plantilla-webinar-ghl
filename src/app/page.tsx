@@ -62,7 +62,7 @@ export default async function Landing() {
       {/* ── Intro: lo que dicen, y su respuesta ────────────────────── */}
       <section className="px-6 py-22 text-center max-sm:px-5 max-sm:py-15">
         <div className="contenedor">
-          <p className="mb-4 text-xs font-semibold uppercase tracking-[0.28em] text-acento">
+          <p className="mb-4 text-xs font-bold uppercase tracking-[0.24em] text-acento-claro">
             {L.intro.etiqueta}
           </p>
 
@@ -87,7 +87,7 @@ export default async function Landing() {
       {/* ── Los 3 secretos ─────────────────────────────────────────── */}
       <section className="border-t border-linea bg-fondo px-6 py-22 text-center max-sm:px-5 max-sm:py-15">
         <div className="contenedor">
-          <p className="mb-4.5 text-xs font-semibold uppercase tracking-[0.28em] text-acento">
+          <p className="mb-4.5 text-xs font-bold uppercase tracking-[0.24em] text-acento-claro">
             {L.secretos.etiqueta}
           </p>
           <h2 className="titulo mb-3.5 text-4xl text-crema max-sm:text-[28px]">
@@ -101,7 +101,7 @@ export default async function Landing() {
             {L.secretos.lista.map((s, i) => (
               <article
                 key={s.numero}
-                className="overflow-hidden rounded-xl border border-linea bg-superficie text-left"
+                className="overflow-hidden panel text-left"
               >
                 {s.imagen ? (
                   <Image
@@ -135,7 +135,7 @@ export default async function Landing() {
       </section>
 
       {/* ── El presentador ─────────────────────────────────────────── */}
-      <section className="bg-superficie px-6 py-22 max-sm:px-5 max-sm:py-15">
+      <section className="fondo-profundo px-6 py-22 max-sm:px-5 max-sm:py-15">
         <div className="contenedor grid items-center gap-14 md:grid-cols-2">
           <div className="max-md:order-2">
             <h2 className="titulo text-[30px] uppercase tracking-wider text-crema">
@@ -215,7 +215,7 @@ export default async function Landing() {
             ].map(({ etiqueta, valor, icono }) => (
               <div
                 key={etiqueta}
-                className="rounded-xl border border-linea bg-fondo/80 px-6 py-8.5"
+                className="panel px-6 py-8.5"
               >
                 <svg
                   aria-hidden="true"
@@ -263,7 +263,7 @@ export default async function Landing() {
       </section>
 
       {/* ── Para quién es y para quién no ──────────────────────────── */}
-      <section className="bg-superficie px-6 py-22 max-sm:px-5 max-sm:py-15">
+      <section className="fondo-profundo px-6 py-22 max-sm:px-5 max-sm:py-15">
         <div className="contenedor grid gap-10 md:grid-cols-2">
           <div>
             <h2 className="titulo mb-7 text-[28px] text-crema max-sm:text-[24px]">
@@ -315,7 +315,7 @@ export default async function Landing() {
       {L.casos.lista.length > 0 && (
         <section className="px-6 py-22 text-center max-sm:px-5 max-sm:py-15">
           <div className="contenedor">
-            <p className="mb-4.5 text-xs font-semibold uppercase tracking-[0.28em] text-acento">
+            <p className="mb-4.5 text-xs font-bold uppercase tracking-[0.24em] text-acento-claro">
               {L.casos.etiqueta}
             </p>
             <h2 className="titulo mb-3.5 text-4xl text-crema max-sm:text-[28px]">
@@ -327,7 +327,7 @@ export default async function Landing() {
               {L.casos.lista.map((c) => (
                 <article
                   key={c.quien}
-                  className="overflow-hidden rounded-xl border border-linea bg-superficie text-left"
+                  className="overflow-hidden panel text-left"
                 >
                   {c.video ? (
                     <video

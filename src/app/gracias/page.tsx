@@ -54,7 +54,7 @@ export default async function Gracias({
         <div className="contenedor max-w-[820px]">
           <Marca className="mx-auto mb-9 w-[240px] max-w-full" />
 
-          <p className="mb-4 text-xs font-semibold uppercase tracking-[0.28em] text-acento">
+          <p className="mb-4 text-xs font-bold uppercase tracking-[0.24em] text-acento-claro">
             {GRACIAS.etiqueta}
           </p>
 
@@ -74,8 +74,8 @@ export default async function Gracias({
 
           <div className="mb-12 space-y-5 text-left">
             {hayGrupo && (
-              <section className="rounded-xl border border-linea bg-superficie/70 px-8 py-7 max-sm:px-5">
-                <div className="mb-2 text-[11.5px] font-semibold uppercase tracking-[0.22em] text-acento">
+              <section className="panel/70 px-8 py-7 max-sm:px-5">
+                <div className="mb-2 text-[11.5px] font-bold uppercase tracking-[0.22em] text-acento-claro">
                   Paso 1 de {totalPasos}
                 </div>
                 <h2 className="titulo mb-2.5 text-[24px] text-crema max-sm:text-[20px]">
@@ -103,8 +103,8 @@ export default async function Gracias({
               </section>
             )}
 
-            <section className="rounded-xl border border-linea bg-superficie/70 px-8 py-7 max-sm:px-5">
-              <div className="mb-2 text-[11.5px] font-semibold uppercase tracking-[0.22em] text-acento">
+            <section className="panel/70 px-8 py-7 max-sm:px-5">
+              <div className="mb-2 text-[11.5px] font-bold uppercase tracking-[0.22em] text-acento-claro">
                 Paso {totalPasos} de {totalPasos}
               </div>
               <h2 className="titulo mb-2.5 text-[24px] text-crema max-sm:text-[20px]">
@@ -123,7 +123,7 @@ export default async function Gracias({
           </div>
 
           {/* Cuándo es */}
-          <div className="rounded-xl border border-linea bg-fondo/70 px-8 py-8 max-sm:px-5">
+          <div className="panel px-8 py-8 max-sm:px-5">
             <div className="mb-2 text-[11.5px] uppercase tracking-[0.22em] text-acento">
               La clase empieza en
             </div>

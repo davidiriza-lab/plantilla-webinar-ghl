@@ -73,7 +73,7 @@ export default function FormularioInteres({
 
   if (estado === 'hecho') {
     return (
-      <div className="rounded-xl border border-linea bg-fondo/70 px-6 py-8">
+      <div className="panel px-6 py-8">
         <h2 className="titulo mb-3 text-[26px] text-acento">Recibido</h2>
         <p className="text-texto-tenue">
           {textoRecibido ??
@@ -88,7 +88,7 @@ export default function FormularioInteres({
   const enviando = estado === 'enviando';
 
   return (
-    <div className="rounded-xl border border-linea bg-fondo/70 px-6 py-7 max-sm:px-5">
+    <div className="panel px-6 py-7 max-sm:px-5">
       <form onSubmit={enviar} noValidate>
         {(
           [

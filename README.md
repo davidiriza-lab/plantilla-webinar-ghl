@@ -91,8 +91,9 @@ sesión).
 | Quién eres, qué vendes, logo, SEO, aviso legal | `src/contenido/marca.ts` |
 | Copy de la landing y de gracias | `src/contenido/landing.ts` |
 | Copy de la oferta | `src/contenido/oferta.ts` |
-| Colores | `src/app/globals.css` (9 variables en `@theme`) |
-| Tipografías | `src/app/layout.tsx` |
+| Colores | `src/app/globals.css` (9 variables en `@theme`; trae la paleta de Business Growth Intensive) |
+| Tipografías | `src/app/layout.tsx` (Space Grotesk + Inter, del kit BGI) |
+| Fondos y logo del kit | `public/assets/bgi/` (WebP optimizados; los PNG master viven en el kit) |
 | Fecha, hora, zona, enlaces, precio, pixel, etiquetas | **`/admin`** (viven en GHL, no en código) |
 
 Las imágenes van en `public/assets/` y se referencian desde los archivos de

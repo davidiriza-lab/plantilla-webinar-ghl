@@ -150,7 +150,7 @@ export default function PuertaSala({
   // ── Ya entró ──────────────────────────────────────────────────────────────
   if (envio === 'dentro') {
     return (
-      <div className="rounded-[14px] border border-linea bg-fondo/70 p-9 text-center max-sm:p-6">
+      <div className="panel p-9 text-center max-sm:p-6">
         <h2 className="titulo mb-3 text-[26px] text-crema">Listo, quedas dentro</h2>
         {enlace ? (
           <>
@@ -179,7 +179,7 @@ export default function PuertaSala({
   // ── La clase ya terminó ───────────────────────────────────────────────────
   if (decision.estado === 'terminada') {
     return (
-      <div className="rounded-[14px] border border-linea bg-fondo/70 p-9 text-center max-sm:p-6">
+      <div className="panel p-9 text-center max-sm:p-6">
         <h2 className="titulo mb-3 text-[26px] text-crema">
           Esta clase ya terminó
         </h2>
@@ -194,7 +194,7 @@ export default function PuertaSala({
   // ── Todavía no abre ───────────────────────────────────────────────────────
   if (decision.estado === 'esperando') {
     return (
-      <div className="rounded-[14px] border border-linea bg-fondo/70 p-9 text-center max-sm:p-6">
+      <div className="panel p-9 text-center max-sm:p-6">
         <h2 className="titulo mb-3 text-[26px] text-crema">
           La sala todavía no abre
         </h2>
@@ -223,7 +223,7 @@ export default function PuertaSala({
   const aunNoEmpieza = faltaMs > 0;
 
   return (
-    <div className="rounded-[14px] border border-acento/40 bg-fondo/70 p-9 max-sm:p-6">
+    <div className="panel border-acento/40 p-9 max-sm:p-6">
       <h2 className="titulo mb-2 text-center text-[26px] text-crema">
         Confirma tus datos y accede
       </h2>
