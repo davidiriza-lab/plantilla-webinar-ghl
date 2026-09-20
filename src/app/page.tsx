@@ -39,10 +39,9 @@ export default async function Landing() {
         className="fondo-hero scroll-mt-4 px-6 pb-22 pt-14 max-sm:px-5 max-sm:pb-16 max-sm:pt-10"
       >
         <div className="contenedor">
-          <Marca className="mx-auto mb-13 w-[340px] max-w-full max-sm:mb-8 max-sm:w-[250px]" />
-
           <div className="grid items-center gap-14 md:grid-cols-2">
             <div>
+              <Marca className="mb-10 w-[300px] max-w-full max-sm:mb-7 max-sm:w-[220px]" />
               <h1 className="titulo mb-5.5 text-[47px] text-crema max-sm:text-[33px]">
                 {L.hero.titulo}
               </h1>

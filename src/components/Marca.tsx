@@ -28,7 +28,7 @@ export default function Marca({
     );
   }
   return (
-    <div className={`text-center ${className}`}>
+    <div className={className}>
       <span
         className={`titulo block text-crema ${
           tamano === 'grande' ? 'text-[34px] max-sm:text-[26px]' : 'text-[20px]'
