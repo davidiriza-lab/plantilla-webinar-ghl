@@ -65,6 +65,8 @@ export interface ConfigWebinar {
   enlaceSoporte: string;
   enlaceOferta: string;
   enlaceRepeticion: string;
+  /** La URL pública de /ingreso. Es la que mandan los recordatorios de GHL. */
+  enlacePuerta: string;
   enlaceCheckout: string;
   enlaceApartado: string;
   precio: string;
@@ -229,6 +231,16 @@ export const CAMPOS: readonly CampoConfig[] = [
     grupo: 'Enlaces',
   },
   {
+    clave: 'enlacePuerta',
+    nombre: 'Enlace de la puerta',
+    slug: 'enlace_de_la_puerta',
+    etiqueta: 'Enlace de la puerta (tu dominio + /ingreso)',
+    tipo: 'url',
+    grupo: 'Enlaces',
+    ayuda:
+      'La página /ingreso de tu sitio, por ejemplo https://mi-dominio.com/ingreso. Es el enlace que mandan tus recordatorios: si mandas el Zoom directo, nadie pasa lista y el workflow de la oferta no se dispara.',
+  },
+  {
     clave: 'enlaceSoporte',
     nombre: 'Enlace de Whatsapp de Soporte',
     slug: 'enlace_de_whatsapp_de_soporte',
@@ -340,6 +352,7 @@ export const POR_DEFECTO: ConfigWebinar = {
   enlaceSoporte: '',
   enlaceOferta: '',
   enlaceRepeticion: '',
+  enlacePuerta: '',
   enlaceCheckout: '',
   enlaceApartado: '',
   precio: '397',
