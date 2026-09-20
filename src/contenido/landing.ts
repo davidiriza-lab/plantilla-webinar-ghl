@@ -83,6 +83,12 @@ export const LANDING = {
     titulo: 'Detalles de la clase',
     donde: '100% en línea\ny gratis',
     nota: 'Se transmite una sola vez. No queda grabada para todos.',
+    /** Iconos 3D de las tres tarjetas (cuándo, hora, dónde). Vacío = icono lineal. */
+    iconos: {
+      cuando: '/assets/bgi/icono3d-calendario.webp' as string, // EJEMPLO
+      hora: '/assets/bgi/icono3d-reloj.webp' as string, // EJEMPLO
+      donde: '/assets/bgi/icono3d-en-linea.webp' as string, // EJEMPLO
+    },
   },
 
   metodo: {

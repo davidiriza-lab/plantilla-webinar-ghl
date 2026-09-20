@@ -187,6 +187,7 @@ export default async function Landing() {
               {
                 etiqueta: 'Cuándo',
                 valor: ocurrencia.fechaLegible,
+                imagen: L.detalles.iconos.cuando,
                 icono: (
                   <>
                     <rect x="3" y="5" width="18" height="16" rx="2" />
@@ -197,6 +198,7 @@ export default async function Landing() {
               {
                 etiqueta: 'A qué hora',
                 valor: `${ocurrencia.horaLegible}\n${ocurrencia.etiquetaZona}`,
+                imagen: L.detalles.iconos.hora,
                 icono: (
                   <>
                     <circle cx="12" cy="12" r="9" />
@@ -207,6 +209,7 @@ export default async function Landing() {
               {
                 etiqueta: 'Dónde',
                 valor: L.detalles.donde,
+                imagen: L.detalles.iconos.donde,
                 icono: (
                   <>
                     <rect x="3" y="4" width="18" height="13" rx="2" />
@@ -214,24 +217,37 @@ export default async function Landing() {
                   </>
                 ),
               },
-            ].map(({ etiqueta, valor, icono }) => (
-              <div
-                key={etiqueta}
-                className="panel px-6 py-8.5"
-              >
-                <svg
-                  aria-hidden="true"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.6"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="mx-auto mb-4 h-7 w-7 text-acento"
-                >
-                  {icono}
-                </svg>
-                <div className="mb-2.5 text-[11.5px] uppercase tracking-[0.22em] text-acento">
+            ].map(({ etiqueta, valor, imagen, icono }) => (
+              <div key={etiqueta} className="panel px-6 py-8.5">
+                {imagen ? (
+                  <div className="relative mx-auto mb-5 flex h-[112px] w-[112px] items-center justify-center">
+                    <span
+                      aria-hidden
+                      className="absolute inset-[-24px] rounded-full bg-[radial-gradient(circle,rgba(56,130,246,0.28)_0%,rgba(56,130,246,0)_68%)]"
+                    />
+                    <Image
+                      src={imagen}
+                      alt=""
+                      width={384}
+                      height={384}
+                      className="relative h-full w-auto drop-shadow-[0_14px_24px_rgba(3,10,28,0.55)]"
+                    />
+                  </div>
+                ) : (
+                  <svg
+                    aria-hidden="true"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.6"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="mx-auto mb-4 h-7 w-7 text-acento"
+                  >
+                    {icono}
+                  </svg>
+                )}
+                <div className="mb-2.5 text-[11.5px] uppercase tracking-[0.22em] text-acento-claro">
                   {etiqueta}
                 </div>
                 <div className="whitespace-pre-line font-display text-[25px] leading-[1.25] text-crema">
