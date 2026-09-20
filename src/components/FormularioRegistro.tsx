@@ -44,6 +44,7 @@ export default function FormularioRegistro({ activo, frase }: Props) {
           nombre: String(datos.get('nombre') ?? ''),
           email: String(datos.get('email') ?? ''),
           telefono: componerTelefono(lada, numero),
+          sitioWeb: String(datos.get('sitioWeb') ?? ''),
           utm: {
             source: params.get('utm_source') ?? '',
             medium: params.get('utm_medium') ?? '',
@@ -114,6 +115,14 @@ export default function FormularioRegistro({ activo, frase }: Props) {
       </p>
 
       <form onSubmit={enviar} noValidate>
+        {/* Campo trampa: una persona no lo ve ni llega a él con el tabulador;
+            un bot que rellena todo sí. El servidor descarta lo que lo traiga. */}
+        <div aria-hidden="true" style={{ position: 'absolute', left: '-9999px', width: 1, height: 1, overflow: 'hidden' }}>
+          <label>
+            No llenes este campo
+            <input type="text" name="sitioWeb" tabIndex={-1} autoComplete="off" defaultValue="" />
+          </label>
+        </div>
         <Campo
           id="nombre"
           nombre="nombre"

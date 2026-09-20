@@ -24,16 +24,22 @@ export async function POST(request: Request): Promise<NextResponse> {
 
   let contrasena = '';
   try {
-    const cuerpo = (await request.json()) as { contrasena?: string };
-    contrasena = cuerpo.contrasena ?? '';
+    const cuerpo = (await request.json()) as { contrasena?: unknown };
+    if (typeof cuerpo.contrasena !== 'string') {
+      return NextResponse.json({ ok: false }, { status: 400 });
+    }
+    contrasena = cuerpo.contrasena;
   } catch {
     return NextResponse.json({ ok: false }, { status: 400 });
   }
 
+  // El intento se cuenta ANTES de la espera: si se contara después, una ráfaga
+  // de peticiones en paralelo pasaría toda el chequeo de arriba antes de que
+  // se registrara el primer fallo. Un acierto borra la cuenta más abajo.
+  registrarFallo(ip);
   await new Promise((r) => setTimeout(r, ESPERA_MS));
 
   if (!contrasenaCorrecta(contrasena)) {
-    registrarFallo(ip);
     return NextResponse.json(
       { ok: false, error: 'Contraseña incorrecta.' },
       { status: 401 },

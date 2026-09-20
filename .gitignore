@@ -47,3 +47,6 @@ next-env.d.ts
 # generado por scripts/publicar-manual.mjs a partir de docs/GUIA.html
 /public/manual-embudo.html
 /public/manual-capturas/
+
+# bitácora interna del autor de la plantilla: no viaja a las copias de los alumnos
+STATE.md

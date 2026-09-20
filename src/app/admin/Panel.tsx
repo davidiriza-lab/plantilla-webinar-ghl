@@ -472,7 +472,9 @@ function Campo({
       {(campo.tipo === 'texto' || campo.tipo === 'url') && (
         <input
           id={id}
-          type={campo.tipo === 'url' ? 'url' : 'text'}
+          // El token de Meta no se enseña en claro: el panel se comparte en pantalla.
+          type={campo.tipo === 'url' ? 'url' : /token/i.test(campo.clave) ? 'password' : 'text'}
+          autoComplete={/token/i.test(campo.clave) ? 'off' : undefined}
           value={valor}
           placeholder={campo.tipo === 'url' ? 'https://…' : ''}
           onChange={(e) => onChange(e.target.value)}

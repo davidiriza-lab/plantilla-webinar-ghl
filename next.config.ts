@@ -11,13 +11,23 @@ const nextConfig: NextConfig = {
   basePath,
   env: { NEXT_PUBLIC_BASE_PATH: basePath },
   async rewrites() {
+    // El manual de trabajo (docs/GUIA.html) solo se publica donde se pide con
+    // PUBLICAR_MANUAL=1: la demo de BGI, que lo sirve como
+    // www.mibgi.com/manual-embudo. scripts/publicar-manual.mjs lo genera.
+    if (process.env.PUBLICAR_MANUAL !== '1') return [];
+    return [{ source: '/manual-embudo', destination: '/manual-embudo.html' }];
+  },
+  async headers() {
     return [
       {
-        // El cuaderno de trabajo (docs/GUIA.html) se publica como página
-        // estática autocontenida; scripts/publicar-manual.mjs la genera en
-        // cada build. En BGI se sirve como www.mibgi.com/manual-embudo.
-        source: '/manual-embudo',
-        destination: '/manual-embudo.html',
+        source: '/(.*)',
+        headers: [
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
+          // El Zoom y el WhatsApp viajan en enlaces: que no se filtren como referrer.
+          { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+          { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
+          { key: 'Content-Security-Policy', value: "frame-ancestors 'self'" },
+        ],
       },
     ];
   },

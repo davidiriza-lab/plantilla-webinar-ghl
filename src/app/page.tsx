@@ -417,7 +417,7 @@ export default async function Landing() {
                 variante="linea"
                 inicioMs={ocurrencia.inicioMs}
                 finMs={ocurrencia.finMs}
-                enlaceIngreso={config.enlaceIngreso}
+                rutaPuerta={ruta('/ingreso')}
                 seRepite={ocurrencia.modo === 'recurrente'}
               />
             </div>

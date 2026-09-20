@@ -44,7 +44,9 @@ if (paresNuevos.length > 0 && !SOLO_REVISAR) {
   let texto = readFileSync(ENV, 'utf8');
   for (const [clave, valor] of paresNuevos) {
     const re = new RegExp(`^${clave}=.*$`, 'm');
-    texto = re.test(texto) ? texto.replace(re, `${clave}=${valor}`) : `${texto.replace(/\s*$/, '')}\n${clave}=${valor}\n`;
+    // Con función y no con cadena: en `replace`, "$&" y "$$" dentro del valor
+    // se interpretan, y una contraseña como Pa$$word quedaría escrita distinta.
+    texto = re.test(texto) ? texto.replace(re, () => `${clave}=${valor}`) : `${texto.replace(/\s*$/, '')}\n${clave}=${valor}\n`;
   }
   writeFileSync(ENV, texto);
   console.log(`\n  · ${paresNuevos.map(([k]) => k).join(', ')} → escritas en .env.local`);
@@ -79,7 +81,7 @@ function guardarEnv(): void {
     // .env.example), se rellena en su sitio; si no, se agrega al final.
     const m = bloque.match(/\n([A-Z0-9_]+)=(.*)$/);
     const re = m ? new RegExp(`^${m[1]}=.*$`, 'm') : null;
-    if (m && re && re.test(actual)) actual = actual.replace(re, `${m[1]}=${m[2]}`);
+    if (m && re && re.test(actual)) actual = actual.replace(re, () => `${m[1]}=${m[2]}`);
     else sueltas.push(bloque);
   }
   writeFileSync(ENV, actual.replace(/\s*$/, '') + (sueltas.length ? '\n' + sueltas.join('\n') : '') + '\n');
@@ -291,8 +293,18 @@ if (!env.ADMIN_SESSION_SECRET || env.ADMIN_SESSION_SECRET.length < 24) {
   agregarEnv('ADMIN_SESSION_SECRET', secreto, 'Secreto de la cookie del panel (lo generó el instalador).');
   aviso('ADMIN_SESSION_SECRET generado → se escribe en .env.local');
 } else ok('ADMIN_SESSION_SECRET presente');
-if (!env.ADMIN_PASSWORD) falta('Falta ADMIN_PASSWORD en .env.local: la contraseña con la que entrarás a /admin.');
-else ok('ADMIN_PASSWORD presente');
+if (!env.ADMIN_PASSWORD) {
+  falta('Falta ADMIN_PASSWORD en .env.local: la contraseña con la que entrarás a /admin.');
+} else if (/[\s$#"'\\`]/.test(env.ADMIN_PASSWORD)) {
+  // Next lee .env.local cortando en # y expandiendo $: la contraseña local y la
+  // de producción acabarían siendo distintas sin que nadie lo note.
+  falta('ADMIN_PASSWORD tiene espacios o alguno de estos caracteres: $ # " \' \\ `. Usa letras, números y - _ . ! * + = @ para que sea la misma en tu computadora y en Vercel.');
+} else {
+  ok('ADMIN_PASSWORD presente');
+  if (env.ADMIN_PASSWORD.length < 12) {
+    aviso('ADMIN_PASSWORD tiene menos de 12 caracteres. El panel edita tu embudo y descarga tus contactos: usa una frase larga.');
+  }
+}
 if (!env.LADA_POR_DEFECTO) aviso('LADA_POR_DEFECTO no está: se asume 52 (México).');
 
 guardarEnv();

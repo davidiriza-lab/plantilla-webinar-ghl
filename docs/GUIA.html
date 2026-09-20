@@ -242,6 +242,8 @@
       </svg>
     </div>
 
+    <div class="nota"><span class="t">Dónde vive la plantilla</span><p>En GitHub: <a href="https://github.com/davidiriza-lab/plantilla-webinar-ghl" target="_blank" rel="noopener">github.com/davidiriza-lab/plantilla-webinar-ghl</a>. Es un repositorio <em>template</em>: no lo modificas, sacas tu propia copia privada (módulo 03) y trabajas sobre ella. Si al abrir el enlace GitHub dice que no existe, tu usuario todavía no tiene acceso: pídelo en la formación con tu nombre de usuario de GitHub.</p></div>
+
     <h3>Lo que necesitas tener antes de empezar</h3>
     <div class="tabla"><table>
       <thead><tr><th>Cuenta</th><th>Para qué</th><th>Costo</th></tr></thead>
@@ -330,7 +332,7 @@
     <div class="tu"><span class="t">Lo único que haces tú</span>
       <ol>
         <li><strong>Visual Studio Code:</strong> descárgalo de <a href="https://code.visualstudio.com" target="_blank" rel="noopener">code.visualstudio.com</a> e instálalo.</li>
-        <li><strong>Node.js</strong> (20 o más nuevo): <a href="https://nodejs.org" target="_blank" rel="noopener">nodejs.org</a>, la versión marcada LTS.</li>
+        <li><strong>Node.js</strong> (22.18 o más nuevo): <a href="https://nodejs.org" target="_blank" rel="noopener">nodejs.org</a>, la versión marcada LTS. Si ya tenías uno viejo instalado, instala la LTS encima.</li>
         <li><strong>La extensión Claude Code:</strong> en VS Code, Extensiones (Cmd+Shift+X / Ctrl+Shift+X), busca <em>Claude Code</em> (de Anthropic), instálala. Aparece el icono de Claude en la barra lateral: ábrelo e inicia sesión en el navegador con tu cuenta.</li>
         <li><strong>La terminal de Claude</strong>, para que pueda correr comandos. Terminal → Nueva terminal, y pega:</li>
       </ol>
@@ -343,7 +345,7 @@ irm https://claude.ai/install.ps1 | iex</code></pre>
 
     <h3>Pídele a Claude</h3>
     <p>En VS Code, Archivo → Abrir carpeta, y elige la carpeta donde guardas tus proyectos (por ejemplo <code>Documentos/proyectos</code>). Abre el chat de Claude y pega:</p>
-    <div class="prompt"><b>Prompt · conectar GitHub y Vercel</b><span class="texto">Revisa que tengo Node 20 o más nuevo y Git. Instala la CLI de GitHub (gh) y la CLI de Vercel si faltan (en Mac con Homebrew, en Windows con winget). Luego conéctalas a mis cuentas: corre gh auth login (GitHub.com, HTTPS, con el navegador) y vercel login, y avísame cada vez que tenga que aprobar algo en el navegador. Al final dime qué quedó conectado.</span></div>
+    <div class="prompt"><b>Prompt · conectar GitHub y Vercel</b><span class="texto">Revisa que tengo Node 22.18 o más nuevo y Git. Instala la CLI de GitHub (gh) y la CLI de Vercel si faltan (en Mac con Homebrew, en Windows con winget). Luego conéctalas a mis cuentas: corre gh auth login (GitHub.com, HTTPS, con el navegador) y vercel login, y avísame cada vez que tenga que aprobar algo en el navegador. Al final dime qué quedó conectado.</span></div>
     <p>Se va a abrir el navegador una o dos veces: entras a GitHub, aceptas; entras a Vercel, aceptas (si tienes verificación en dos pasos, te pide el código). Eso es todo.</p>
 
     <h4>Si algo falla</h4>
@@ -355,7 +357,7 @@ irm https://claude.ai/install.ps1 | iex</code></pre>
 
     <div class="lista" data-modulo="m2">
       <div class="cab"><b>Módulo 02</b><span></span></div>
-      <label><input type="checkbox" id="c-2-1"><span>VS Code y Node (20+) instalados</span></label>
+      <label><input type="checkbox" id="c-2-1"><span>VS Code y Node (22.18+) instalados</span></label>
       <label><input type="checkbox" id="c-2-2"><span>Extensión Claude Code con sesión iniciada y <code>claude</code> responde en la terminal</span></label>
       <label><input type="checkbox" id="c-2-3"><span>Claude me confirmó que GitHub y Vercel quedaron conectados</span></label>
     </div>
@@ -370,7 +372,7 @@ irm https://claude.ai/install.ps1 | iex</code></pre>
 
     <h3>Pídele a Claude</h3>
     <p>Cambia <code>webinar-mi-programa</code> por el nombre de tu webinar, en minúsculas y sin espacios.</p>
-    <div class="prompt"><b>Prompt · crear mi copia</b><span class="texto">Crea mi copia de la plantilla davidiriza-lab/plantilla-webinar-ghl como repositorio privado llamado webinar-mi-programa en mi cuenta de GitHub, clónalo dentro de esta carpeta, instala las dependencias y corre npm run diagnostico. Dime qué salió y qué falta.</span></div>
+    <div class="prompt"><b>Prompt · crear mi copia</b><span class="texto">Crea mi copia de la plantilla https://github.com/davidiriza-lab/plantilla-webinar-ghl como repositorio PRIVADO llamado webinar-mi-programa en mi cuenta de GitHub (es un repositorio template: usa gh repo create con --template davidiriza-lab/plantilla-webinar-ghl --private --clone). Clónalo dentro de esta carpeta, instala las dependencias con npm install y corre npm run diagnostico. Dime qué salió y qué falta.</span></div>
     <p>Claude va a correr, más o menos, esto (apruébalo cuando te lo muestre):</p>
 <pre><code>gh repo create webinar-mi-programa --template davidiriza-lab/plantilla-webinar-ghl --private --clone
 cd webinar-mi-programa
@@ -386,7 +388,7 @@ npm run diagnostico</code></pre>
   ✓ Vercel conectado como tu-usuario
   ✓ Dependencias instaladas
   ✗ No existe .env.local
-      → Módulo 04: npm run instalar -- --token pit-… --location … --password …
+      → Módulo 04: conecta GoHighLevel
   ✗ La carpeta no está ligada a Vercel
       → Módulo 11: npx vercel link
 
@@ -400,8 +402,9 @@ Herramientas listas. Lo marcado con ✗ (si hay) son módulos que aún no tocan.
 
     <h4>Si algo falla</h4>
     <ul>
-      <li><strong>"repository not found"</strong> al crear la copia. Tu cuenta de GitHub no tiene acceso a la plantilla. Pide el enlace de nuevo o que te agreguen.</li>
-      <li><strong>npm install falla.</strong> Casi siempre es Node viejo: el diagnóstico lo dice. Instala la LTS.</li>
+      <li><strong>"repository not found"</strong> al crear la copia. Tu cuenta de GitHub no tiene acceso a la plantilla. Abre <a href="https://github.com/davidiriza-lab/plantilla-webinar-ghl" target="_blank" rel="noopener">el enlace</a> con tu sesión de GitHub: si da 404, pide acceso en la formación con tu nombre de usuario.</li>
+      <li><strong>Tu copia quedó pública.</strong> Pídele a Claude: "cambia mi repositorio a privado con gh repo edit --visibility private". Tu copy y tu configuración no tienen por qué estar a la vista.</li>
+      <li><strong>npm install o npm run instalar fallan con un error de sintaxis.</strong> Es Node viejo: el diagnóstico lo dice. Instala la LTS.</li>
     </ul>
 
     <div class="lista" data-modulo="m3">
@@ -435,11 +438,9 @@ Herramientas listas. Lo marcado con ✗ (si hay) son módulos que aún no tocan.
     <div class="ojo-con"><span class="t">Trampa conocida</span><p>Los workflows de GHL (recordatorios por correo y WhatsApp) usan la zona horaria de la sub-cuenta, no la del panel del sitio. Si la sub-cuenta está en Los Ángeles y tu clase es en Ciudad de México, los recordatorios salen dos horas tarde. El instalador te avisa si la zona se ve rara.</p></div>
 
     <h3>Pídele a Claude</h3>
-    <p>Elige también la contraseña con la que vas a entrar a tu panel. Pega las tres cosas:</p>
-    <div class="prompt"><b>Prompt · instalar en mi sub-cuenta</b><span class="texto">Este es el Private Integration Token de mi sub-cuenta de GoHighLevel: [pit-…], y este el Location ID: [……]. Corre el instalador con ellos y con [mi-contraseña] como contraseña del panel:
-npm run instalar -- --token [pit-…] --location [……] --password [mi-contraseña]
-Si algo sale con ✗, explícame qué tengo que hacer en GHL y vuelve a correrlo cuando te diga.</span></div>
-    <p>Claude escribe las tres variables en <code>.env.local</code> y corre el instalador. Vas a ver algo así:</p>
+    <p>Elige también la contraseña con la que vas a entrar a tu panel: <strong>una frase de 12 caracteres o más</strong>, con letras, números y <code>- _ . ! * + = @</code>. Sin espacios ni <code>$ # " '</code>, que se leen distinto en tu computadora y en Vercel. Ese panel edita tu embudo y descarga tus contactos: trátala como la de tu banco. Pega las tres cosas:</p>
+    <div class="prompt"><b>Prompt · instalar en mi sub-cuenta</b><span class="texto">Este es el Private Integration Token de mi sub-cuenta de GoHighLevel: [pit-…], y este el Location ID: [……]. La contraseña de mi panel será: [mi-frase-larga]. Crea .env.local a partir de .env.example si no existe, escribe ahí GHL_API_KEY, GHL_LOCATION_ID y ADMIN_PASSWORD editando el archivo (no los pases como argumentos de un comando ni los repitas en pantalla) y luego corre npm run instalar. Si algo sale con ✗, explícame qué tengo que hacer en GHL y vuelve a correrlo cuando te diga.</span></div>
+    <p>Claude escribe las tres variables en <code>.env.local</code> (un archivo que nunca se sube a GitHub) y corre el instalador. Vas a ver algo así:</p>
 <pre><code>1. GoHighLevel
   ✓ Sub-cuenta "Mi negocio" · zona horaria America/Mexico_City
 2. Custom values (la configuración que edita /admin)
@@ -755,8 +756,8 @@ El embudo escribe bien en GoHighLevel.</code></pre>
     <p>Al terminar tienes una URL <code>.vercel.app</code>. Ábrela y entra a <code>/admin</code> con tu contraseña.</p>
 
     <h3>Pídele a Claude · B. La copia (Edge Config)</h3>
-    <div class="tu"><span class="t">Lo único que haces tú</span><p>En <a href="https://vercel.com/account/tokens" target="_blank" rel="noopener">vercel.com → tu foto → Account Settings → Tokens</a> → Create. Nombre: el de tu proyecto. Alcance: tu cuenta (o tu equipo, si el proyecto vive en uno). Copia el token: solo se muestra una vez.</p></div>
-    <div class="prompt"><b>Prompt · crear la copia</b><span class="texto">Este es mi token de la API de Vercel: [……]. Corre npm run edge-config con él para crear la copia en Edge Config, vuelve a subir las variables con npm run subir-env y publica con vercel --prod. No muestres el token en pantalla.</span></div>
+    <div class="tu"><span class="t">Lo único que haces tú</span><p>En <a href="https://vercel.com/account/tokens" target="_blank" rel="noopener">vercel.com → tu foto → Account Settings → Tokens</a> → Create. Nombre: el de tu proyecto. Alcance: <strong>solo</strong> la cuenta o el equipo donde vive este proyecto, no "todos". Ponle vencimiento si lo vas a dejar años. Copia el token: solo se muestra una vez. Este token se queda guardado en tu proyecto (es con el que el panel actualiza la copia), así que que sea uno dedicado a esto.</p></div>
+    <div class="prompt"><b>Prompt · crear la copia</b><span class="texto">Este es mi token de la API de Vercel: [……]. Escríbelo en .env.local como VERCEL_API_TOKEN editando el archivo (no lo pases como argumento ni lo repitas en pantalla), corre npm run edge-config para crear la copia en Edge Config, vuelve a subir las variables con npm run subir-env y publica con vercel --prod.</span></div>
     <p>El comando crea el Edge Config, su token de lectura y deja las cuatro variables en <code>.env.local</code>:</p>
 <pre><code>Copia en Edge Config
 

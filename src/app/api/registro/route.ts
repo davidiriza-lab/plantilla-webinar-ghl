@@ -11,6 +11,7 @@ import { upsertContacto, upsertOportunidad, aE164 } from '@/lib/ghl';
 import { resolverEtapas, etapaDe } from '@/lib/pipeline';
 import {
   leerConfigSegura,
+  enlaceDeLaSala,
   aPublica,
   guardarDerivados,
   reconciliarDesdeGhl,
@@ -22,6 +23,8 @@ import { revalidateTag } from 'next/cache';
 import { CONFIG_CACHE_TAG } from '@/lib/ghl';
 import { calcularOcurrencia } from '@/lib/schedule';
 import { enviarLead } from '@/lib/capi';
+import { cabe } from '@/lib/frecuencia';
+import { ipDe } from '@/lib/intentos';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -40,6 +43,8 @@ interface Cuerpo {
   nombre?: string;
   email?: string;
   telefono?: string;
+  /** Campo trampa: invisible para una persona, irresistible para un bot. */
+  sitioWeb?: string;
   utm?: Utm;
   fbp?: string;
   fbc?: string;
@@ -52,8 +57,8 @@ const EMAIL_VALIDO = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
  * Los valores de UTM a veces llegan como `{{campaign.name}}` sin resolver.
  * Guardar eso ensucia los reportes, así que se descarta.
  */
-function limpiarUtm(valor: string | undefined): string {
-  const v = (valor ?? '').trim();
+function limpiarUtm(valor: unknown): string {
+  const v = (typeof valor === 'string' ? valor : '').trim();
   if (!v || v.includes('{{') || v.includes('}}')) return '';
   return v.slice(0, 120);
 }
@@ -79,9 +84,35 @@ export async function POST(request: Request): Promise<NextResponse> {
     );
   }
 
-  const nombre = (cuerpo.nombre ?? '').trim().slice(0, 120);
-  const email = (cuerpo.email ?? '').trim().toLowerCase().slice(0, 160);
-  const telefono = (cuerpo.telefono ?? '').trim().slice(0, 40);
+  const texto = (v: unknown): string => (typeof v === 'string' ? v : '');
+
+  // Un bot llena todos los campos; una persona nunca ve este. Se le responde
+  // que todo salió bien para que no aprenda nada, y no se hace nada.
+  if (texto(cuerpo.sitioWeb).trim() !== '') {
+    return NextResponse.json({ ok: true, eventId: '' });
+  }
+
+  // Tope por IP: suficiente para una familia o una oficina registrándose, no
+  // para un bucle que use este formulario para bombardear correos ajenos.
+  if (!cabe(`registro:${ipDe(request)}`, 12, 10 * 60 * 1000)) {
+    return NextResponse.json(
+      { ok: false, error: 'Demasiados intentos seguidos. Espera unos minutos.' },
+      { status: 429 },
+    );
+  }
+
+  const nombre = texto(cuerpo.nombre).trim().slice(0, 60);
+  const email = texto(cuerpo.email).trim().toLowerCase().slice(0, 160);
+  const telefono = texto(cuerpo.telefono).trim().slice(0, 40);
+
+  // El nombre sale en los correos del dueño: un enlace ahí es phishing enviado
+  // desde su dominio.
+  if (/:\/\/|www\.|[<>]|\.(com|net|org|io|ly|me)\b/i.test(nombre)) {
+    return NextResponse.json(
+      { ok: false, error: 'Escribe solo tu nombre, por favor.' },
+      { status: 400 },
+    );
+  }
 
   if (!EMAIL_VALIDO.test(email)) {
     return NextResponse.json(
@@ -120,7 +151,15 @@ export async function POST(request: Request): Promise<NextResponse> {
     fechaClase = o.fechaLegible;
     diaClase = o.fechaIso;
     etiquetas = etiquetasDe(tipo, config.etiquetas, o.etiquetaFecha);
-    enlaceIngreso = config.enlaceIngreso;
+
+    // "Registro cerrado" no puede ser solo un letrero en la página.
+    if (tipo === 'registro' && (!config.activo || (o.modo === 'fecha' && o.estado === 'pasado'))) {
+      return NextResponse.json(
+        { ok: false, error: 'El registro a esta clase ya cerró.' },
+        { status: 409 },
+      );
+    }
+    enlaceIngreso = enlaceDeLaSala(crudo);
 
     // La puerta también se comprueba aquí, no solo en la página: nadie debería
     // sacar el enlace de acceso llamando a la API antes de tiempo.
@@ -154,7 +193,9 @@ export async function POST(request: Request): Promise<NextResponse> {
   let contacto;
   try {
     contacto = await upsertContacto({
-      nombre: nombre || email.split('@')[0],
+      // Solo al registrarse se inventa un nombre con el correo; en la puerta y
+      // en la oferta un nombre vacío no debe pisar el que ya tiene el contacto.
+      nombre: nombre || (tipo === 'registro' ? email.split('@')[0] : ''),
       email,
       telefono: e164,
       fuente,

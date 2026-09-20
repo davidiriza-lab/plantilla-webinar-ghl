@@ -231,7 +231,7 @@ export async function upsertContacto(
 
   const cuerpo: Record<string, unknown> = {
     locationId,
-    name: datos.nombre,
+    ...(datos.nombre ? { name: datos.nombre } : {}),
     email: datos.email.trim().toLowerCase(),
     phone: aE164(datos.telefono, process.env.LADA_POR_DEFECTO ?? '52'),
     source: datos.fuente ?? 'Landing webinar',
@@ -336,6 +336,14 @@ export async function agregarEtiquetas(
       (t) => !puestas.some((p) => p.toLowerCase() === t.toLowerCase()),
     );
     if (yaEstaban.length === 0) return true;
+
+    // Si NINGUNA era nueva, esta persona ya hizo exactamente esto para esta
+    // misma clase (la etiqueta con fecha ya estaba): no se redispara nada. Sin
+    // este freno, repetir el POST con el correo de alguien le manda el correo
+    // de confirmación una y otra vez (y Mercado Pago, que avisa varias veces del
+    // mismo pago, redispararía la bienvenida). Se recicla solo cuando la
+    // etiqueta con fecha sí es nueva: una edición distinta.
+    if (puestas.length === 0) return true;
 
     const res = await fetchGhl(`${BASE_URL}/contacts/${contactId}/tags`, {
       method: 'DELETE',

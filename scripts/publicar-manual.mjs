@@ -5,9 +5,17 @@
 //     ruta absoluta bajo BASE_PATH (en BGI, /plantilla/manual-capturas/…).
 // Corre antes de `next build` (ver package.json). El fuente que se edita es
 // docs/GUIA.html; las capturas se regeneran con `npm run capturas`.
+//
+// Solo publica si PUBLICAR_MANUAL=1 (así está en la demo de BGI). En la copia
+// de un alumno no hace nada: su dominio no tiene por qué servir este manual.
 import { readFileSync, writeFileSync, mkdirSync, readdirSync, copyFileSync, rmSync, existsSync } from 'node:fs';
 import { resolve, dirname, extname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+
+if (process.env.PUBLICAR_MANUAL !== '1' && !process.argv.includes('--forzar')) {
+  console.log('manual → no se publica en este sitio (PUBLICAR_MANUAL no está en 1)');
+  process.exit(0);
+}
 
 const raiz = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const fuente = resolve(raiz, 'docs/GUIA.html');

@@ -18,7 +18,9 @@ function secreto(): string {
       'ADMIN_SESSION_SECRET falta o es muy corto (mínimo 24 caracteres).',
     );
   }
-  return s;
+  // La contraseña entra en la clave de firma: cambiarla invalida las sesiones
+  // abiertas, que es lo que uno espera al cambiarla porque se filtró.
+  return `${s}:${process.env.ADMIN_PASSWORD ?? ''}`;
 }
 
 async function firmar(mensaje: string): Promise<string> {

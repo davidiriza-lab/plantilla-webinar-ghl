@@ -39,7 +39,7 @@ function fijarEnv(pares) {
   let texto = readFileSync(ENV, 'utf8');
   for (const [k, v] of Object.entries(pares)) {
     const re = new RegExp(`^${k}=.*$`, 'm');
-    texto = re.test(texto) ? texto.replace(re, `${k}=${v}`) : `${texto.replace(/\s*$/, '')}\n${k}=${v}\n`;
+    texto = re.test(texto) ? texto.replace(re, () => `${k}=${v}`) : `${texto.replace(/\s*$/, '')}\n${k}=${v}\n`;
   }
   writeFileSync(ENV, texto);
 }

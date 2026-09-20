@@ -24,9 +24,11 @@ const falta = (t, arreglo, base = true) => {
 };
 
 // 1. Herramientas base
-const nodeMayor = Number(process.versions.node.split('.')[0]);
-if (nodeMayor >= 20) ok(`Node ${process.versions.node}`);
-else falta(`Node ${process.versions.node} es viejo`, 'Instala la versión LTS desde nodejs.org (20 o más nueva).');
+// 22.18 es el primer Node que corre archivos .ts sin banderas, y el instalador
+// (scripts/instalar-ghl.ts) es TypeScript.
+const [nodeMayor, nodeMenor] = process.versions.node.split('.').map(Number);
+if (nodeMayor > 22 || (nodeMayor === 22 && nodeMenor >= 18)) ok(`Node ${process.versions.node}`);
+else falta(`Node ${process.versions.node} es viejo`, 'Instala la versión LTS desde nodejs.org (22.18 o más nueva).');
 
 const git = correr('git', ['--version']);
 if (git.ok) ok(git.salida);
@@ -65,17 +67,17 @@ if (existsSync('.env.local')) {
   const tiene = (k) => new RegExp(`^${k}=.+$`, 'm').test(env);
   const faltantes = ['GHL_API_KEY', 'GHL_LOCATION_ID', 'ADMIN_PASSWORD'].filter((k) => !tiene(k));
   if (faltantes.length === 0) ok('.env.local con GHL y contraseña del panel');
-  else falta(`.env.local sin ${faltantes.join(', ')}`, 'Módulo 03: npm run instalar -- --token pit-… --location … --password …', false);
+  else falta(`.env.local sin ${faltantes.join(', ')}`, 'Módulo 04: llena .env.local y corre  npm run instalar', false);
   if (tiene('EDGE_CONFIG') && tiene('EDGE_CONFIG_ID')) ok('Copia en Edge Config configurada');
-  else falta('Sin copia en Edge Config todavía', 'Módulo 10: npm run edge-config -- --token <token de Vercel>', false);
+  else falta('Sin copia en Edge Config todavía', 'Módulo 11: pon VERCEL_API_TOKEN en .env.local y corre  npm run edge-config', false);
 } else {
-  falta('No existe .env.local', 'Módulo 03: npm run instalar -- --token pit-… --location … --password …', false);
+  falta('No existe .env.local', 'Módulo 04: conecta GoHighLevel (copia .env.example a .env.local, llénalo y corre  npm run instalar)', false);
 }
 
 if (existsSync('.vercel/project.json')) {
   const p = JSON.parse(readFileSync('.vercel/project.json', 'utf8'));
   ok(`Carpeta ligada al proyecto de Vercel "${p.projectName}"`);
-} else falta('La carpeta no está ligada a Vercel', 'Módulo 10: npx vercel link', false);
+} else falta('La carpeta no está ligada a Vercel', 'Módulo 11: npx vercel link', false);
 
 // Salida
 console.log('\nDiagnóstico del taller\n');

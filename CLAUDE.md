@@ -12,10 +12,13 @@ Esto es lo mínimo para ayudar bien.
 
 **El dueño trabaja contigo, no con menús.** El manual le da un prompt por
 módulo y tú corres los comandos: crear la copia, `npm run diagnostico`,
-`npm run instalar -- --token … --location … --password …`, `npm run
+`npm run instalar`, `npm run
 probar:embudo`, `vercel link`, `npm run subir-env`, `npm run edge-config`,
 `vercel --prod`, `vercel git connect`. Cuando te pegue un token o una
-contraseña en el chat, escríbela en `.env.local` sin repetirla en pantalla.
+contraseña en el chat, **escríbela en `.env.local` editando el archivo** y corre
+el comando sin argumentos (`npm run instalar`, `npm run edge-config`): npm
+imprime la línea de comandos completa, así que un secreto pasado con `--token`
+o `--password` acaba en pantalla y en el historial. No la repitas al responder.
 Lo que no puedes hacer por él (crear el PIT en GHL, workflows, pipeline, tokens
 de Vercel/Meta/Mercado Pago, DNS) díselo con los pasos exactos.
 
@@ -74,14 +77,14 @@ de Vercel/Meta/Mercado Pago, DNS) díselo con los pasos exactos.
 ```bash
 npm run diagnostico     # ¿Node, git, claude, gh, vercel, .env.local, vercel link?
 npm run instalar        # prepara la sub-cuenta de GHL y escribe IDs en .env.local
-                        #   -- --token pit-… --location … --password …  (escribe .env.local)
+                        #   (lee GHL_API_KEY, GHL_LOCATION_ID y ADMIN_PASSWORD de .env.local)
 npm run revisar         # lista el copy de ejemplo que sigue sin cambiar
 npm run dev             # http://localhost:3000  ·  panel en /admin
 npm run probar:embudo   # registro de prueba de punta a punta, comprobado en GHL
                         #   [url] · --puerta · --email tu@correo · --limpiar
 npm run verificar       # tipos + pruebas (lo mismo que corre GitHub Actions)
 npm run subir-env       # copia .env.local al proyecto de Vercel (tras `vercel link`)
-npm run edge-config     # crea la copia en Edge Config por API (-- --token <token Vercel>)
+npm run edge-config     # crea la copia en Edge Config por API (lee VERCEL_API_TOKEN de .env.local)
 vercel --prod           # publica  ·  `vercel git connect` para que cada push publique
 npm run capturas        # regenera las capturas del manual (docs/assets/capturas)
 ```

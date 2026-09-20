@@ -115,6 +115,10 @@ const email =
     : `prueba-embudo-${sello}@example.com`;
 console.log(`\nPrueba del embudo contra ${BASE}\n  contacto de prueba: ${email}\n`);
 
+// Con --email puede ser un contacto real que ya existía: ese NO se borra al final.
+const yaExistia = Boolean(await buscarContacto(email));
+if (yaExistia) console.log('  · Ese correo ya era un contacto de la sub-cuenta: se usa, pero --limpiar no lo va a borrar.\n');
+
 // 1. Registro
 console.log('1. Registro (/api/registro, tipo registro)');
 const reg = await enviar('registro', email);
@@ -209,7 +213,9 @@ if (PUERTA) {
 }
 
 // 4. Limpieza
-if (LIMPIAR) {
+if (LIMPIAR && yaExistia) {
+  console.log('\n  · No se borra: el contacto existía antes de la prueba. Quítale a mano las etiquetas de prueba si estorban.');
+} else if (LIMPIAR) {
   const del = await ghl(`/contacts/${contacto.id}`, { method: 'DELETE' });
   if (del.ok) ok('Contacto de prueba borrado');
   else falla(`No se pudo borrar el contacto (HTTP ${del.status})`);

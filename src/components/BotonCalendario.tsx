@@ -10,7 +10,8 @@ interface Props {
   inicioMs: number;
   finMs: number;
   titulo: string;
-  enlaceIngreso: string;
+  /** URL absoluta de /ingreso. Nunca el Zoom directo. */
+  enlacePuerta: string;
 }
 
 /** Formato que espera Google Calendar: 20260821T020000Z */
@@ -22,11 +23,9 @@ export default function BotonCalendario({
   inicioMs,
   finMs,
   titulo,
-  enlaceIngreso,
+  enlacePuerta,
 }: Props) {
-  const detalles = enlaceIngreso
-    ? `Entra aquí: ${enlaceIngreso}`
-    : 'El enlace de acceso te llega por correo y por WhatsApp.';
+  const detalles = `Entra aquí: ${enlacePuerta}`;
 
   const google =
     'https://calendar.google.com/calendar/render?action=TEMPLATE' +

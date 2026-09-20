@@ -246,6 +246,13 @@ export function calcularOcurrencia(
     const diferenciaDias = (objetivo - hoy.diaSemana + 7) % 7;
     inicioMs = paredAUtc(hoy.anio, hoy.mes, hoy.dia + diferenciaDias, h, m, zona);
 
+    // Una clase que cruza la medianoche (jueves 23:00, 2 horas) sigue en vivo
+    // el viernes a las 00:20, pero "hoy" ya es viernes y el cálculo de arriba
+    // salta al jueves siguiente: la puerta se cerraría a media clase. Si la
+    // ocurrencia de hace una semana de esa aún no termina, es la vigente.
+    const anterior = paredAUtc(hoy.anio, hoy.mes, hoy.dia + diferenciaDias - 7, h, m, zona);
+    if (ahoraMs < anterior + duracionMs) inicioMs = anterior;
+
     // Si ya terminó, la siguiente es dentro de siete días.
     if (ahoraMs >= inicioMs + duracionMs) {
       inicioMs = paredAUtc(

@@ -101,7 +101,7 @@ export async function revisarSalud(): Promise<Salud> {
     }
 
     const faltan: string[] = [];
-    if (!publica.enlaceIngreso) faltan.push('el enlace de la sala (Zoom)');
+    if (!publica.haySala) faltan.push('el enlace de la sala (Zoom)');
     if (publica.precio > 0 && !publica.enlaceCheckout) faltan.push('el enlace de pago');
     revisiones.push({
       clave: 'enlaces',

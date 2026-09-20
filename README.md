@@ -40,7 +40,8 @@ Config evita que el sitio dependa de que GHL esté vivo.
 
 ## Empezar (resumen; la guía lo lleva paso a paso)
 
-Todo se hace desde VS Code con Claude Code abierto: el manual da, módulo por
+Requiere **Node 22.18 o más nuevo** (los scripts `.ts` corren con `node` a secas) y una
+sub-cuenta de GoHighLevel. Todo se hace desde VS Code con Claude Code abierto: el manual da, módulo por
 módulo, el prompt que se le pega a Claude y lo único que queda fuera (crear
 una llave en GHL, un token en Vercel, un registro DNS). Estos son los comandos
 que Claude corre por debajo:
@@ -52,7 +53,8 @@ cd webinar-mi-programa && npm install
 npm run diagnostico               # ¿Node, git, claude, gh y vercel listos?
 
 # 2. Prepara tu sub-cuenta de GHL (custom values, campos, revisa el pipeline)
-npm run instalar -- --token pit-… --location … --password …   # escribe .env.local y corre
+cp .env.example .env.local        # llena GHL_API_KEY, GHL_LOCATION_ID y ADMIN_PASSWORD
+npm run instalar
 
 # 3. Arranca y configura desde el panel
 npm run dev                       # http://localhost:3000/admin
@@ -63,7 +65,7 @@ npm run probar:embudo -- --email tu@correo.com   # un registro real, comprobado 
 
 # 5. Publica
 vercel link && npm run subir-env && vercel --prod
-npm run edge-config -- --token <token de la API de Vercel>   # crea la copia
+npm run edge-config               # con VERCEL_API_TOKEN en .env.local: crea la copia
 npm run subir-env && vercel --prod
 vercel git connect                # cada push a main publica solo
 ```
@@ -469,7 +471,7 @@ Desde la terminal, con `vercel login` hecho:
    Preview (usa `--value`: por stdin Vercel guarda la variable vacía).
 3. `vercel --prod` publica. Entra a `/admin` con tu contraseña.
 4. Crea un token en **vercel.com → Account Settings → Tokens** y corre
-   `npm run edge-config -- --token <token>`: crea el Edge Config por API, su
+   `npm run edge-config` (con `VERCEL_API_TOKEN` en `.env.local`): crea el Edge Config por API, su
    token de lectura, y deja `EDGE_CONFIG`, `EDGE_CONFIG_ID`, `VERCEL_API_TOKEN`
    (y `VERCEL_TEAM_ID` si el proyecto vive en un equipo) en `.env.local`. Es
    idempotente. Vuelve a `npm run subir-env && vercel --prod`.

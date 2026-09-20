@@ -172,6 +172,17 @@ const UNICA: EntradaHorario = {
   verificar('  y da una fecha válida', o.fechaCorta, 'jueves 20');
 }
 
+console.log('\nClase que cruza la medianoche\n');
+{
+  // Jueves 23:00, dos horas: el viernes a las 00:20 la clase sigue en vivo.
+  const nocturna: EntradaHorario = { ...SEMANAL, hora: '23:00', duracionMinutos: 120 };
+  const o = calcularOcurrencia(nocturna, en('2026-08-21T00:20:00-06:00'));
+  verificar('viernes 00:20 → sigue en vivo', o.estado, 'en_vivo');
+  verificar('  y sigue siendo la del jueves 20', o.fechaIso, '2026-08-20');
+  const fin = calcularOcurrencia(nocturna, en('2026-08-21T01:05:00-06:00'));
+  verificar('  al terminar pasa a la del jueves 27', fin.fechaIso, '2026-08-27');
+}
+
 console.log(
   fallos === 0
     ? '\nTodas las pruebas pasaron.\n'

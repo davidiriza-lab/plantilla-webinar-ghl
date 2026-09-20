@@ -10,6 +10,7 @@
 import { leerConfig, aPublica } from '@/lib/config';
 import { calcularOcurrencia } from '@/lib/schedule';
 import { MARCA } from '@/contenido/marca';
+import { urlPuerta } from '@/lib/ruta';
 import { GRACIAS } from '@/contenido/landing';
 
 export const runtime = 'nodejs';
@@ -45,19 +46,18 @@ function plegar(linea: string): string {
   return trozos.join('\r\n');
 }
 
-export async function GET(request: Request): Promise<Response> {
+export async function GET(): Promise<Response> {
   const config = aPublica(await leerConfig());
   const o = calcularOcurrencia(config);
 
-  const origen = new URL(request.url).origin;
-  const enlace = config.enlaceIngreso || origen;
+  // Al calendario va la puerta (/ingreso), no el Zoom: este archivo es público
+  // y quien entra por la puerta es quien queda con asistencia.
+  const enlace = urlPuerta(config.enlacePuerta, MARCA.sitio);
 
   const descripcion = [
     `${config.tituloWebinar}.`,
     '',
-    config.enlaceIngreso
-      ? `Entra aquí: ${config.enlaceIngreso}`
-      : 'El enlace de acceso te llega por correo y por WhatsApp.',
+    `Entra aquí: ${enlace}`,
     '',
     GRACIAS.puntualidad,
   ].join('\n');
@@ -80,7 +80,7 @@ export async function GET(request: Request): Promise<Response> {
     `SUMMARY:${escapar(config.tituloWebinar)}`,
     `DESCRIPTION:${escapar(descripcion)}`,
     `URL:${escapar(enlace)}`,
-    `LOCATION:${escapar(config.enlaceIngreso ? 'En línea' : 'En línea')}`,
+    `LOCATION:${escapar('En línea')}`,
     'STATUS:CONFIRMED',
     'BEGIN:VALARM',
     'TRIGGER:-PT30M',

@@ -10,6 +10,7 @@ import { readFileSync, existsSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
 
 const SOLO_VER = process.argv.includes('--ver');
+const ES_WINDOWS = process.platform === 'win32';
 const NO_SUBIR = new Set([]);
 
 if (!existsSync('.env.local')) {
@@ -43,13 +44,25 @@ for (const [clave, valor] of vars) {
     // En preview la CLI exige decir la rama aunque lleve --yes; la rama vacía
     // significa "todas las ramas de Preview" y evita que se quede preguntando.
     const destino = entorno === 'preview' ? [entorno, ''] : [entorno];
-    const r = spawnSync('npx', ['vercel', 'env', 'add', clave, ...destino, '--value', valor, '--force', '--yes'], {
-      encoding: 'utf8',
-    });
+    const args = ['vercel', 'env', 'add', clave, ...destino, '--value', valor, '--force', '--yes'];
+    let r;
+    if (ES_WINDOWS) {
+      // En Windows npx es npx.cmd y Node no lo lanza sin shell. Con shell, cmd
+      // interpreta % y " dentro del valor: esos se suben a mano.
+      if (/[%"]/.test(valor)) {
+        fallos++;
+        console.log(`  ✗ ${clave} → ${entorno}: el valor tiene % o comillas; súbela a mano en vercel.com → Settings → Environment Variables.`);
+        continue;
+      }
+      r = spawnSync('npx', args.map((a) => `"${a}"`), { encoding: 'utf8', shell: true });
+    } else {
+      r = spawnSync('npx', args, { encoding: 'utf8' });
+    }
     if (r.status === 0) console.log(`  ✓ ${clave} → ${entorno}`);
     else {
       fallos++;
-      console.log(`  ✗ ${clave} → ${entorno}: ${(r.stderr || r.stdout).trim().split('\n').pop()}`);
+      const detalle = r.error?.message ?? `${r.stderr ?? ''}${r.stdout ?? ''}`.trim().split('\n').pop();
+      console.log(`  ✗ ${clave} → ${entorno}: ${detalle}`);
     }
   }
 }

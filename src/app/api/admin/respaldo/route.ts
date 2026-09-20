@@ -16,7 +16,10 @@ export const dynamic = 'force-dynamic';
 export const maxDuration = 60;
 
 const celda = (v: unknown): string => {
-  const t = v === undefined || v === null ? '' : String(v);
+  let t = v === undefined || v === null ? '' : String(v);
+  // El nombre y la fuente vienen de un formulario público. Excel ejecuta como
+  // fórmula lo que empieza con = + - @: el apóstrofo lo vuelve texto.
+  if (/^[=+\-@\t\r]/.test(t)) t = `'${t}`;
   return /[",\n;]/.test(t) ? `"${t.replace(/"/g, '""')}"` : t;
 };
 

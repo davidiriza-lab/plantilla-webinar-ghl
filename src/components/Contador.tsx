@@ -6,7 +6,8 @@ import { useRouter } from 'next/navigation';
 interface Props {
   inicioMs: number;
   finMs: number;
-  enlaceIngreso: string;
+  /** Ruta de la puerta (/ingreso). Nunca el Zoom directo: la puerta pasa lista. */
+  rutaPuerta: string;
   /**
    * Si la clase se repite, al terminar se le pide al servidor la siguiente.
    * En una fecha única no hay siguiente: pedirla sería un bucle de recargas.
@@ -43,7 +44,7 @@ const dos = (n: number): string => String(n).padStart(2, '0');
 export default function Contador({
   inicioMs,
   finMs,
-  enlaceIngreso,
+  rutaPuerta,
   seRepite,
   variante = 'cajas',
 }: Props) {
@@ -73,20 +74,9 @@ export default function Contador({
         <p className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-acento">
           Estamos en vivo ahora
         </p>
-        {enlaceIngreso ? (
-          <a
-            href={enlaceIngreso}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="boton-acento"
-          >
-            Entrar al webinar
-          </a>
-        ) : (
-          <p className="text-texto-tenue">
-            Revisa tu correo y tu WhatsApp: ahí está el enlace de acceso.
-          </p>
-        )}
+        <a href={rutaPuerta} className="boton-acento">
+          Entrar al webinar
+        </a>
       </div>
     );
   }

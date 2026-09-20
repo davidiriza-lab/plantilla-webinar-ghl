@@ -7,6 +7,7 @@ import VideoBienvenida from '@/components/VideoBienvenida';
 import BotonCalendario from '@/components/BotonCalendario';
 import Marca from '@/components/Marca';
 import { MARCA } from '@/contenido/marca';
+import { ruta, urlPuerta } from '@/lib/ruta';
 import { GRACIAS } from '@/contenido/landing';
 
 export const revalidate = 60;
@@ -117,7 +118,7 @@ export default async function Gracias({
                 inicioMs={o.inicioMs}
                 finMs={o.finMs}
                 titulo={config.tituloWebinar}
-                enlaceIngreso={config.enlaceIngreso}
+                enlacePuerta={urlPuerta(config.enlacePuerta, MARCA.sitio)}
               />
             </section>
           </div>
@@ -134,7 +135,7 @@ export default async function Gracias({
             <Contador
               inicioMs={o.inicioMs}
               finMs={o.finMs}
-              enlaceIngreso={config.enlaceIngreso}
+              rutaPuerta={ruta('/ingreso')}
               seRepite={o.modo === 'recurrente'}
             />
           </div>

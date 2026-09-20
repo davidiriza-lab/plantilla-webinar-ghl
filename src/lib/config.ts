@@ -284,7 +284,14 @@ export interface ConfigPublica {
   antelacionMinutos: number;
   puerta: 'auto' | 'abierta' | 'cerrada';
   etiquetas: EtiquetasGenerales;
-  enlaceIngreso: string;
+  /**
+   * Si hay enlace de sala cargado. El enlace en sí NO es público: todo lo que
+   * está en esta interfaz puede acabar en el HTML de una página, y la llave de
+   * la sala solo la entrega la puerta cuando está abierta (`enlaceDeLaSala`).
+   */
+  haySala: boolean;
+  /** La URL pública de /ingreso, si el dueño la cargó en el panel. */
+  enlacePuerta: string;
   enlaceGrupoWhatsapp: string;
   enlaceSoporte: string;
   enlaceOferta: string;
@@ -294,6 +301,20 @@ export interface ConfigPublica {
   minutosOferta: number;
   pixelFacebook: string;
   videoGracias: string;
+}
+
+/**
+ * La llave de la sala (Zoom). Solo para el servidor: la usa la puerta al
+ * responder a quien ya pasó lista, nunca una página ni el calendario.
+ *
+ * Respaldo por variable de entorno: si GHL no responde a la hora de la clase
+ * no hay de dónde sacarla.
+ */
+export function enlaceDeLaSala(config: ConfigWebinar): string {
+  return (
+    parsearUrl(config.enlaceIngreso) ||
+    parsearUrl(process.env.ENLACE_SALA_RESPALDO ?? '')
+  );
 }
 
 /**
@@ -321,11 +342,8 @@ export function aPublica(config: ConfigWebinar): ConfigPublica {
       interesado: parsearEtiqueta(config.etiquetaInteresado, 'Interesado webinar'),
       oferta: parsearEtiqueta(config.etiquetaOferta, 'Carrito webinar'),
     },
-    // Respaldo por variable de entorno: es la llave de la sala, y si GHL no
-    // responde a la hora de la clase no hay de dónde sacarla.
-    enlaceIngreso:
-      parsearUrl(config.enlaceIngreso) ||
-      parsearUrl(process.env.ENLACE_SALA_RESPALDO ?? ''),
+    haySala: enlaceDeLaSala(config) !== '',
+    enlacePuerta: parsearUrl(config.enlacePuerta),
     enlaceGrupoWhatsapp: parsearUrl(config.enlaceGrupoWhatsapp),
     enlaceSoporte: parsearUrl(config.enlaceSoporte),
     enlaceOferta: parsearUrl(config.enlaceOferta),
@@ -333,7 +351,9 @@ export function aPublica(config: ConfigWebinar): ConfigPublica {
     enlaceApartado: parsearUrl(config.enlaceApartado),
     precio: parsearEntero(config.precio, 397, 1, 100000),
     minutosOferta: parsearEntero(config.minutosOferta, 30, 1, 1440),
-    pixelFacebook: config.pixelFacebook.trim(),
+    // Solo dígitos: el id se interpola en un <script>, así que cualquier otra
+    // cosa (el snippet entero pegado por error, o algo peor) se descarta.
+    pixelFacebook: /^\d{5,20}$/.test(config.pixelFacebook.trim()) ? config.pixelFacebook.trim() : '',
     videoGracias: parsearUrl(config.videoGracias),
   };
 }

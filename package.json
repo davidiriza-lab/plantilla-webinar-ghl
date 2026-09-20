@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "node scripts/publicar-manual.mjs && next build",
-    "manual": "node scripts/publicar-manual.mjs",
+    "manual": "node scripts/publicar-manual.mjs --forzar",
     "capturas": "node scripts/capturas-manual.mjs",
     "start": "next start",
     "instalar": "node scripts/instalar-ghl.ts",
@@ -25,7 +25,7 @@
   "dependencies": {
     "@vercel/edge-config": "^1.5.1",
     "mercadopago": "^3.6.1",
-    "next": "16.3.1",
+    "next": "16.3.5",
     "react": "19.2.8",
     "react-dom": "19.2.8",
     "server-only": "^0.0.1"
@@ -39,5 +39,8 @@
     "tailwindcss": "^4",
     "typescript": "^5"
   },
-  "description": "Embudo de webinar en vivo: Next.js + GoHighLevel como única base. Registro, recordatorios, puerta de la sala, oferta y panel."
+  "description": "Embudo de webinar en vivo: Next.js + GoHighLevel como única base. Registro, recordatorios, puerta de la sala, oferta y panel.",
+  "engines": {
+    "node": ">=22.18"
+  }
 }
