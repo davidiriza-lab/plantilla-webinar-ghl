@@ -73,7 +73,7 @@ async function enviar(tipo, email) {
       tipo,
       nombre: 'Prueba del embudo',
       email,
-      telefono: '5500000001',
+      telefono: TELEFONO,
       utm: { source: 'prueba', medium: 'cuaderno', campaign: 'probar-embudo' },
     }),
     signal: AbortSignal.timeout(20_000),
@@ -88,18 +88,27 @@ async function enviar(tipo, email) {
 }
 
 async function buscarContacto(email) {
-  const r = await ghl('/contacts/search', {
-    method: 'POST',
-    body: JSON.stringify({
-      locationId: LOCATION,
-      pageLimit: 5,
-      filters: [{ field: 'email', operator: 'eq', value: email }],
-    }),
-  });
-  return r.ok ? (r.data?.contacts?.[0] ?? null) : null;
+  // /contacts/search se indexa con retraso de varios segundos; el endpoint de
+  // duplicados lee directo y encuentra al contacto recién creado.
+  const r = await ghl(`/contacts/search/duplicate?locationId=${LOCATION}&email=${encodeURIComponent(email)}`);
+  return r.ok ? (r.data?.contact ?? null) : null;
+}
+
+async function etiquetasDe(id, prefijo, intentos = 5) {
+  let tags = [];
+  for (let i = 0; i < intentos; i++) {
+    const r = await ghl(`/contacts/${id}`);
+    tags = (r.data?.contact?.tags ?? []).map((t) => String(t).toLowerCase());
+    if (tags.some((t) => t.startsWith(prefijo))) break;
+    await espera(2000);
+  }
+  return tags;
 }
 
 const sello = Date.now().toString(36);
+// GHL fusiona contactos por teléfono: uno distinto en cada corrida para no
+// pisar una prueba anterior (ni, peor, a un contacto real).
+const TELEFONO = `55${String(Date.now()).slice(-8)}`;
 const email =
   args.includes('--email') && EMAIL_PROPIO && EMAIL_PROPIO.includes('@')
     ? EMAIL_PROPIO.toLowerCase()
@@ -138,9 +147,23 @@ if (fuente) ok('Custom fields (Fuente / Fecha de su clase) escritos');
 else console.log('  · Sin custom fields en el contacto (revisa GHL_CAMPO_FUENTE_ID en .env.local)');
 
 // 2. Pipeline
-const opp = await ghl(`/opportunities/search?location_id=${LOCATION}&contact_id=${contacto.id}`);
-const oportunidad = opp.ok ? opp.data?.opportunities?.[0] : null;
-if (oportunidad) ok(`Oportunidad en el pipeline: etapa "${oportunidad.pipelineStageName ?? oportunidad.pipelineStageId}"`);
+// La oportunidad se crea en segundo plano: hasta ~8 s de margen.
+let oportunidad = null;
+for (let i = 0; i < 4 && !oportunidad; i++) {
+  const opp = await ghl(`/opportunities/search?location_id=${LOCATION}&contact_id=${contacto.id}`);
+  oportunidad = opp.ok ? (opp.data?.opportunities?.[0] ?? null) : null;
+  if (!oportunidad) await espera(2000);
+}
+let nombreEtapa = oportunidad?.pipelineStageName ?? '';
+if (oportunidad && !nombreEtapa) {
+  // La búsqueda solo devuelve el id de la etapa: el nombre sale de los pipelines.
+  const pls = await ghl(`/opportunities/pipelines?locationId=${LOCATION}`);
+  for (const p of pls.data?.pipelines ?? []) {
+    const e = (p.stages ?? []).find((x) => x.id === oportunidad.pipelineStageId);
+    if (e) nombreEtapa = `${e.name}" del pipeline "${p.name}`;
+  }
+}
+if (oportunidad) ok(`Oportunidad en el pipeline: etapa "${nombreEtapa || oportunidad.pipelineStageId}"`);
 else falla('No hay oportunidad en el pipeline. Revisa que exista "Webinars" con sus 4 etapas (npm run instalar).');
 
 // 3. Puerta
@@ -153,11 +176,27 @@ if (PUERTA) {
     falla(`El sitio respondió HTTP ${ing.status}: ${ing.data?.error ?? 'sin detalle'}`);
   } else {
     ok(`La puerta abrió${ing.data?.enlaceIngreso ? ` y devolvió el enlace de la sala` : ''}`);
-    await espera(2500);
-    const c2 = await buscarContacto(email);
-    const t2 = (c2?.tags ?? []).map((t) => String(t).toLowerCase());
+    const t2 = await etiquetasDe(contacto.id, 'ingreso');
     if (t2.some((t) => t.startsWith('ingreso'))) ok(`Etiqueta de ingreso puesta: ${t2.filter((t) => t.startsWith('ingreso')).join(', ')}`);
     else falla(`Sin etiqueta de ingreso. Tiene: ${t2.join(', ')}`);
+    // El sitio mueve la oportunidad en segundo plano: se le da hasta ~12 s.
+    const pls = await ghl(`/opportunities/pipelines?locationId=${LOCATION}`);
+    let n = '';
+    for (let i = 0; i < 6; i++) {
+      const o2 = await ghl(`/opportunities/search?location_id=${LOCATION}&contact_id=${contacto.id}`);
+      const op2 = o2.ok ? o2.data?.opportunities?.[0] : null;
+      n = op2?.pipelineStageId ?? '';
+      for (const p of pls.data?.pipelines ?? []) {
+        const e = (p.stages ?? []).find((x) => x.id === op2?.pipelineStageId);
+        if (e) n = e.name;
+      }
+      if (/asisti/i.test(n)) break;
+      await espera(2000);
+    }
+    {
+      if (/asisti/i.test(n)) ok(`La oportunidad se movió a "${n}"`);
+      else falla(`La oportunidad sigue en "${n}", se esperaba Asistió al Webinar`);
+    }
   }
 }
 

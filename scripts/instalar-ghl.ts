@@ -71,8 +71,17 @@ function agregarEnv(clave: string, valor: string, comentario: string): void {
 }
 function guardarEnv(): void {
   if (pendientesEnv.length === 0 || SOLO_REVISAR) return;
-  const actual = existsSync(ENV) ? readFileSync(ENV, 'utf8') : '';
-  writeFileSync(ENV, actual.replace(/\s*$/, '') + '\n' + pendientesEnv.join('\n') + '\n');
+  let actual = existsSync(ENV) ? readFileSync(ENV, 'utf8') : '';
+  const sueltas: string[] = [];
+  for (const bloque of pendientesEnv) {
+    // Si la clave ya está en el archivo (aunque vacía, como la deja
+    // .env.example), se rellena en su sitio; si no, se agrega al final.
+    const m = bloque.match(/\n([A-Z0-9_]+)=(.*)$/);
+    const re = m ? new RegExp(`^${m[1]}=.*$`, 'm') : null;
+    if (m && re && re.test(actual)) actual = actual.replace(re, `${m[1]}=${m[2]}`);
+    else sueltas.push(bloque);
+  }
+  writeFileSync(ENV, actual.replace(/\s*$/, '') + (sueltas.length ? '\n' + sueltas.join('\n') : '') + '\n');
 }
 
 // ── GHL ──────────────────────────────────────────────────────────────────────
