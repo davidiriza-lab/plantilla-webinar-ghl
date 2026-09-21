@@ -139,6 +139,22 @@
   .prompt{background:rgba(6,16,34,.55);border:1px dashed rgba(56,130,246,.5);border-radius:16px;padding:14px 18px;margin:10px 0 16px;font-size:15px}
   .prompt b{display:block;font:700 11px var(--body);letter-spacing:.18em;text-transform:uppercase;color:var(--blue-hover);margin-bottom:5px}
 
+  /* Enlaces que se arman con tu ficha (tu GHL, tu sitio, tu repo) */
+  a.vivo{white-space:nowrap}
+  a.vivo::after{content:" ↗";font-size:.85em;opacity:.8}
+  a.vivo.sin-dato{color:var(--gray-light);text-decoration:underline dotted;cursor:help}
+  .enlaces{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin:14px 0 22px}
+  .enlaces .grupo{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:14px 16px;backdrop-filter:blur(12px)}
+  .enlaces .grupo b{display:block;font:700 11px var(--body);letter-spacing:.18em;text-transform:uppercase;color:var(--cyan);margin-bottom:8px}
+  .enlaces .grupo a{display:block;padding:4px 0;font-size:14.5px;text-decoration:none}
+  .enlaces .grupo a:hover{text-decoration:underline}
+  .enlaces .grupo small{display:block;color:var(--gray);font-size:12.5px;margin-top:6px;line-height:1.45}
+  nav.lado .rapidos{margin-top:14px;padding-top:14px;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:7px}
+  nav.lado .rapidos b{font:700 10.5px var(--body);letter-spacing:.18em;text-transform:uppercase;color:var(--gray)}
+  nav.lado .rapidos a{display:block;padding:0;border:0;border-radius:0;color:var(--blue-hover);font-size:13.5px;font-weight:500;text-decoration:none}
+  nav.lado .rapidos a:hover{background:none;text-decoration:underline}
+  @media (max-width:900px){nav.lado .rapidos{display:none}}
+  .pie-doc a{color:var(--blue-hover)}
   .pie-doc{grid-column:1/-1;padding-top:28px;color:var(--gray);font-size:13px;border-top:1px solid var(--border)}
 
   /* ── Capturas de pantalla reales ── */
@@ -188,6 +204,15 @@
   <nav class="lado" aria-label="Módulos">
     <ol id="nav-lista"></ol>
     <div class="ficha-link"><a href="#ficha" style="font-size:14px;font-weight:600">Mi ficha del proyecto →</a></div>
+    <div class="rapidos">
+      <b>Enlaces</b>
+      <a href="https://github.com/davidiriza-lab/plantilla-webinar-ghl" target="_blank" rel="noopener">La plantilla en GitHub ↗</a>
+      <a href="https://www.mibgi.com/plantilla" target="_blank" rel="noopener">La demo en vivo ↗</a>
+      <a href="https://github.com/davidiriza-lab/plantilla-webinar-ghl/blob/main/docs/WORKFLOWS.md" target="_blank" rel="noopener">Workflows y sus correos ↗</a>
+      <a class="vivo" data-ghl="" target="_blank" rel="noopener">Mi GoHighLevel</a>
+      <a class="vivo" data-sitio="/admin" target="_blank" rel="noopener">Mi panel</a>
+      <a class="vivo" data-sitio="/api/salud" target="_blank" rel="noopener">La salud de mi sitio</a>
+    </div>
   </nav>
 
   <main>
@@ -240,6 +265,33 @@
     </div>
 
     <div class="nota"><span class="t">Dónde vive la plantilla</span><p>En GitHub: <a href="https://github.com/davidiriza-lab/plantilla-webinar-ghl" target="_blank" rel="noopener">github.com/davidiriza-lab/plantilla-webinar-ghl</a>. Es un repositorio público y <em>template</em>: no lo modificas, sacas tu propia copia (módulo 03) y trabajas sobre ella. La plantilla es pública; <strong>tu copia va privada</strong>, porque ahí van a vivir tu copy y tu configuración.</p></div>
+
+    <h3>Todos los enlaces, en un lugar</h3>
+    <div class="enlaces">
+      <div class="grupo"><b>La plantilla</b>
+        <a href="https://github.com/davidiriza-lab/plantilla-webinar-ghl" target="_blank" rel="noopener">El repositorio en GitHub ↗</a>
+        <a href="https://github.com/davidiriza-lab/plantilla-webinar-ghl/blob/main/docs/WORKFLOWS.md" target="_blank" rel="noopener">Los 4 workflows y sus 9 correos ↗</a>
+        <a href="https://github.com/davidiriza-lab/plantilla-webinar-ghl#readme" target="_blank" rel="noopener">La documentación técnica (README) ↗</a>
+        <small>Es pública. Tu copia va privada: se crea en el módulo 03.</small>
+      </div>
+      <div class="grupo"><b>La demo en vivo</b>
+        <a href="https://www.mibgi.com/plantilla" target="_blank" rel="noopener">Registro ↗</a>
+        <a href="https://www.mibgi.com/plantilla/gracias" target="_blank" rel="noopener">Gracias ↗</a>
+        <a href="https://www.mibgi.com/plantilla/ingreso" target="_blank" rel="noopener">La puerta de la sala ↗</a>
+        <a href="https://www.mibgi.com/plantilla/oferta" target="_blank" rel="noopener">La oferta por módulos ↗</a>
+        <a href="https://www.mibgi.com/plantilla/admin" target="_blank" rel="noopener">El panel ↗</a>
+        <small>Es lo que vas a tener tú, con tu copy. La oferta que muestra es ficticia y la página lo dice. La contraseña del panel se da en la formación.</small>
+      </div>
+      <div class="grupo"><b>Las cuentas que vas a usar</b>
+        <a href="https://claude.ai" target="_blank" rel="noopener">Claude ↗</a>
+        <a href="https://github.com/signup" target="_blank" rel="noopener">GitHub: crear cuenta ↗</a>
+        <a href="https://vercel.com/signup" target="_blank" rel="noopener">Vercel: crear cuenta ↗</a>
+        <a href="https://app.gohighlevel.com" target="_blank" rel="noopener">GoHighLevel ↗</a>
+        <a href="https://business.facebook.com/events_manager2" target="_blank" rel="noopener">Meta: Administrador de eventos ↗</a>
+        <small>En Vercel, entra con tu cuenta de GitHub: así quedan ligadas desde el principio.</small>
+      </div>
+    </div>
+    <div class="nota"><span class="t">Los enlaces con flecha hacia TU cuenta</span><p>Varios enlaces de este manual abren la pantalla exacta de <strong>tu</strong> GoHighLevel, de <strong>tu</strong> sitio o de <strong>tu</strong> repositorio. Se arman con lo que escribas en <a href="#ficha">tu ficha</a> (Location ID, dominio y repositorio), que se guarda solo en este navegador. Mientras un dato falte, el enlace aparece punteado y te dice cuál.</p></div>
 
     <h3>Lo que necesitas tener antes de empezar</h3>
     <div class="tabla"><table>
@@ -330,7 +382,7 @@
       <ol>
         <li><strong>Visual Studio Code:</strong> descárgalo de <a href="https://code.visualstudio.com" target="_blank" rel="noopener">code.visualstudio.com</a> e instálalo.</li>
         <li><strong>Node.js</strong> (22.18 o más nuevo): <a href="https://nodejs.org" target="_blank" rel="noopener">nodejs.org</a>, la versión marcada LTS. Si ya tenías uno viejo instalado, instala la LTS encima.</li>
-        <li><strong>La extensión Claude Code:</strong> en VS Code, Extensiones (Cmd+Shift+X / Ctrl+Shift+X), busca <em>Claude Code</em> (de Anthropic), instálala. Aparece el icono de Claude en la barra lateral: ábrelo e inicia sesión en el navegador con tu cuenta.</li>
+        <li><strong>La extensión <a href="https://marketplace.visualstudio.com/items?itemName=anthropic.claude-code" target="_blank" rel="noopener">Claude Code</a>:</strong> ábrela desde ese enlace y toca <em>Install</em>, o búscala en VS Code, Extensiones (Cmd+Shift+X / Ctrl+Shift+X), como <em>Claude Code</em> (de Anthropic). Aparece el icono de Claude en la barra lateral: ábrelo e inicia sesión en el navegador con tu cuenta.</li>
         <li><strong>La terminal de Claude</strong>, para que pueda correr comandos. Terminal → Nueva terminal, y pega:</li>
       </ol>
 <pre><code><span class="c"># Mac</span>
@@ -370,6 +422,7 @@ irm https://claude.ai/install.ps1 | iex</code></pre>
     <h3>Pídele a Claude</h3>
     <p>Cambia <code>webinar-mi-programa</code> por el nombre de tu webinar, en minúsculas y sin espacios.</p>
     <div class="prompt"><b>Prompt · crear mi copia</b><span class="texto">Crea mi copia de la plantilla https://github.com/davidiriza-lab/plantilla-webinar-ghl como repositorio PRIVADO llamado webinar-mi-programa en mi cuenta de GitHub (es un repositorio template: usa gh repo create con --template davidiriza-lab/plantilla-webinar-ghl --private --clone). Clónalo dentro de esta carpeta, instala las dependencias con npm install y corre npm run diagnostico. Dime qué salió y qué falta.</span></div>
+    <p>Si prefieres crear la copia desde el navegador: <a href="https://github.com/davidiriza-lab/plantilla-webinar-ghl/generate" target="_blank" rel="noopener">crear mi repositorio desde la plantilla ↗</a>, elige <em>Private</em>, y luego pídele a Claude que lo clone. El resultado es el mismo.</p>
     <p>Claude va a correr, más o menos, esto (apruébalo cuando te lo muestre):</p>
 <pre><code>gh repo create webinar-mi-programa --template davidiriza-lab/plantilla-webinar-ghl --private --clone
 cd webinar-mi-programa
@@ -406,7 +459,7 @@ Herramientas listas. Lo marcado con ✗ (si hay) son módulos que aún no tocan.
 
     <div class="lista" data-modulo="m3">
       <div class="cab"><b>Módulo 03</b><span></span></div>
-      <label><input type="checkbox" id="c-3-1"><span>Mi repositorio existe en GitHub, privado, creado desde la plantilla</span></label>
+      <label><input type="checkbox" id="c-3-1"><span><a class="vivo" data-repo="" target="_blank" rel="noopener">Mi repositorio</a> existe en GitHub, privado, creado desde la plantilla</span></label>
       <label><input type="checkbox" id="c-3-2"><span><code>npm run diagnostico</code> dice "Herramientas listas"</span></label>
       <label><input type="checkbox" id="c-3-3"><span>Abrí la carpeta nueva en VS Code y el sitio se ve en localhost</span></label>
     </div>
@@ -425,12 +478,14 @@ Herramientas listas. Lo marcado con ✗ (si hay) son módulos que aún no tocan.
 
     <div class="tu"><span class="t">Lo único que haces tú (en GHL, dentro de tu sub-cuenta)</span>
       <ol>
-        <li><strong>Zona horaria.</strong> Configuración → Perfil de la empresa → Zona horaria: la de tu audiencia (por ejemplo <code>America/Mexico_City</code>).</li>
-        <li><strong>El token.</strong> Configuración → Integraciones privadas → Crear nueva integración. Nombre: <em>Embudo webinar</em>. Permisos: <em>Contacts</em> (ver y editar), <em>Opportunities</em> (ver y editar), <em>Locations</em> con <em>Custom Values</em> y <em>Custom Fields</em> (ver y editar), y <em>Tags</em> si aparece aparte. Copia el token: empieza con <code>pit-</code> y solo se muestra una vez.</li>
+        <li><strong>Zona horaria.</strong> <a class="vivo" data-ghl="settings/company" target="_blank" rel="noopener">Configuración → Perfil de la empresa</a> → Zona horaria: la de tu audiencia (por ejemplo <code>America/Mexico_City</code>).</li>
+        <li><strong>El token.</strong> <a class="vivo" data-ghl="settings/private-integrations" target="_blank" rel="noopener">Configuración → Integraciones privadas</a> → Crear nueva integración. Nombre: <em>Embudo webinar</em>. Permisos: <em>Contacts</em> (ver y editar), <em>Opportunities</em> (ver y editar), <em>Locations</em> con <em>Custom Values</em> y <em>Custom Fields</em> (ver y editar), y <em>Tags</em> si aparece aparte. Copia el token: empieza con <code>pit-</code> y solo se muestra una vez.</li>
         <li><strong>El Location ID.</strong> En la misma pantalla de Perfil de la empresa. Son unos 20 caracteres; también aparece en la URL cuando estás dentro de la sub-cuenta: <code>…/location/AQUÍ/…</code></li>
-        <li><strong>El pipeline.</strong> Oportunidades → Pipelines → Crear pipeline. Nombre: <em>Webinars</em>. Cuatro etapas, en este orden y con estos nombres: <em>Nuevo Registro</em>, <em>Asistió al Webinar</em>, <em>Cliente Potencial</em>, <em>Cliente Ganado</em>. La API de GHL no crea pipelines, por eso es a mano. El sitio las encuentra por nombre, sin copiar IDs.</li>
+        <li><strong>El pipeline.</strong> <a class="vivo" data-ghl="opportunities/list" target="_blank" rel="noopener">Oportunidades</a> → pestaña Pipelines → Crear pipeline. Nombre: <em>Webinars</em>. Cuatro etapas, en este orden y con estos nombres: <em>Nuevo Registro</em>, <em>Asistió al Webinar</em>, <em>Cliente Potencial</em>, <em>Cliente Ganado</em>. La API de GHL no crea pipelines, por eso es a mano. El sitio las encuentra por nombre, sin copiar IDs.</li>
       </ol>
     </div>
+
+    <div class="nota"><span class="t">Apunta tu Location ID en tu ficha</span><p>En cuanto lo tengas, escríbelo en <a href="#ficha">tu ficha</a>. Desde ese momento los enlaces a GoHighLevel de este manual, como los tres de arriba, abren la pantalla exacta de tu sub-cuenta en vez de la portada.</p></div>
 
     <div class="ojo-con"><span class="t">Trampa conocida</span><p>Los workflows de GHL (recordatorios por correo y WhatsApp) usan la zona horaria de la sub-cuenta, no la del panel del sitio. Si la sub-cuenta está en Los Ángeles y tu clase es en Ciudad de México, los recordatorios salen dos horas tarde. El instalador te avisa si la zona se ve rara.</p></div>
 
@@ -497,7 +552,7 @@ Todo listo del lado de GoHighLevel.</code></pre>
           <tr><td>Programación</td><td>Modo recurrente (cada jueves) o fecha única; día, hora, zona, duración</td><td>Recurrente si vas a dar la clase cada semana. Fecha única cierra el registro sola cuando pasa.</td></tr>
           <tr><td>La sala</td><td>Cuántos minutos antes abre la puerta; mando manual (auto / abierta / cerrada)</td><td>15 minutos. Deja el mando en <em>auto</em> salvo el día de la clase si quieres abrir antes.</td></tr>
           <tr><td>Enlaces</td><td>Zoom, enlace de la puerta, grupo de WhatsApp, WhatsApp de soporte, enlace de la oferta</td><td>El Zoom con la contraseña incluida (<code>?pwd=…</code>). El <strong>enlace de la puerta</strong> es tu dominio + <code>/ingreso</code> y el de la oferta tu dominio + <code>/oferta</code>: son los que mandan tus correos. Mientras no tengas dominio (módulo 11), déjalos vacíos y vuelve.</td></tr>
-          <tr><td>Contenido</td><td>Título del webinar y video de bienvenida de la página de gracias</td><td><strong>Sube el video a GoHighLevel</strong>, que ya lo pagas: en tu sub-cuenta, <em>Media Storage</em> → sube el archivo → en el video, <em>copiar enlace</em> → pégalo aquí. Comprímelo antes (720p, menos de 50 MB) para que cargue rápido en el teléfono. También acepta YouTube o Vimeo. Vacío = no aparece el bloque.</td></tr>
+          <tr><td>Contenido</td><td>Título del webinar y video de bienvenida de la página de gracias</td><td><strong>Sube el video a GoHighLevel</strong>, que ya lo pagas: en tu sub-cuenta, <a class="vivo" data-ghl="media-storage" target="_blank" rel="noopener">Media Storage</a> → sube el archivo → en el video, <em>copiar enlace</em> → pégalo aquí. Comprímelo antes (720p, menos de 50 MB) para que cargue rápido en el teléfono. También acepta YouTube o Vimeo. Vacío = no aparece el bloque.</td></tr>
           <tr><td>La oferta</td><td>Precio (solo el número) y moneda (MXN, USD, EUR, COP…)</td><td>Se muestran juntos: <code>$9,997 USD</code>. El enlace de pago déjalo vacío por ahora: el método de pago se ve más adelante en la formación, y mientras tanto el botón avisa que falta.</td></tr>
           <tr><td>Etiquetas</td><td>Los nombres de las etiquetas generales</td><td>Déjalas como vienen. Son las que disparan tus workflows (módulo 07).</td></tr>
           <tr><td>Seguimiento</td><td>Pixel de Meta y token de conversiones</td><td>Módulo 10. Puede quedar vacío hasta entonces.</td></tr>
@@ -590,12 +645,12 @@ Todo listo del lado de GoHighLevel.</code></pre>
         <tr><td>4 · Compró</td><td><code>pago webinar</code></td><td>Saca al comprador del workflow 3 y le manda la bienvenida. Déjalo creado: empieza a dispararse cuando conectes tu método de pago, más adelante en la formación.</td></tr>
       </tbody>
     </table></div>
-    <p>La estructura completa y el copy de ejemplo de los nueve correos están en <code>docs/WORKFLOWS.md</code> de tu repositorio. Todos los datos que cambian salen de custom values o del contacto (<code>{{contact.fecha_de_su_clase}}</code>, <code>{{custom_values.webinar_proxima_hora}}</code>, <code>{{custom_values.enlace_de_la_puerta}}</code>…): cambias la fecha en el panel y los correos de la semana siguiente ya la dicen bien.</p>
+    <p>La estructura completa y el copy de ejemplo de los nueve correos están en <a href="https://github.com/davidiriza-lab/plantilla-webinar-ghl/blob/main/docs/WORKFLOWS.md" target="_blank" rel="noopener"><code>docs/WORKFLOWS.md</code> ↗</a> (también viene en tu copia). Todos los datos que cambian salen de custom values o del contacto (<code>{{contact.fecha_de_su_clase}}</code>, <code>{{custom_values.webinar_proxima_hora}}</code>, <code>{{custom_values.enlace_de_la_puerta}}</code>…): cambias la fecha en el panel y los correos de la semana siguiente ya la dicen bien.</p>
 
     <h3>Pídele a Claude · el copy</h3>
     <div class="prompt"><b>Prompt · mis correos</b><span class="texto">Lee docs/WORKFLOWS.md y mi copy en src/contenido/. Reescribe los nueve correos con mi voz, mi clase y mi oferta, conservando tal cual todo lo que va entre llaves dobles (custom values y campos del contacto). Entrégamelos en un archivo docs/MIS-CORREOS.md, cada uno con su asunto, listos para pegar en GoHighLevel.</span></div>
 
-    <div class="tu"><span class="t">Lo único que haces tú (en GHL → Automatizaciones)</span>
+    <div class="tu"><span class="t">Lo único que haces tú (en <a class="vivo" data-ghl="automation/workflows" target="_blank" rel="noopener">GHL → Automatizaciones</a>)</span>
       <p>GHL no permite crear workflows con su API oficial, por eso este paso es tuyo. Si en la formación recibiste el <strong>snapshot</strong> de la sub-cuenta, los cuatro ya están creados en borrador: abre cada uno, pega tu copy y publícalo. Si no, créalos con la estructura de <code>docs/WORKFLOWS.md</code>:</p>
       <ol>
         <li>Disparador <em>Contact Tag → Tag Added</em> con la etiqueta general, en minúsculas.</li>
@@ -730,7 +785,7 @@ El embudo escribe bien en GoHighLevel.</code></pre>
 
     <div class="tu"><span class="t">Lo único que haces tú</span>
       <ol>
-        <li>Meta Business → Administrador de eventos → tu pixel → Configuración → <strong>Generar token de acceso</strong> (API de conversiones). Copia el id del pixel y el token.</li>
+        <li><a href="https://business.facebook.com/events_manager2" target="_blank" rel="noopener">Meta Business → Administrador de eventos ↗</a> → tu pixel → Configuración → <strong>Generar token de acceso</strong> (API de conversiones). Copia el id del pixel y el token.</li>
         <li>En el panel, grupo <em>Seguimiento</em>: id del pixel y token. Guarda.</li>
         <li>En tus anuncios, la URL de destino con UTMs:</li>
       </ol>
@@ -740,7 +795,7 @@ El embudo escribe bien en GoHighLevel.</code></pre>
     <h3>Pídele a Claude</h3>
     <p>Con el sitio ya publicado (módulo 11), un registro de prueba contra tu dominio dispara el Lead por los dos caminos:</p>
     <div class="prompt"><b>Prompt · disparar un Lead de prueba</b><span class="texto">Corre npm run probar:embudo -- https://[mi-dominio.com] --email [mi@correo.com] --limpiar para que Meta reciba un Lead desde mi sitio publicado, y dime si el registro entró.</span></div>
-    <p>Luego, en el Administrador de eventos, pestaña <em>Probar eventos</em>, confirma que llegó un Lead "desde navegador y servidor". Esa pantalla es de Meta: no hay forma de leerla desde Claude.</p>
+    <p>Luego, en el <a href="https://business.facebook.com/events_manager2" target="_blank" rel="noopener">Administrador de eventos ↗</a>, pestaña <em>Probar eventos</em>, confirma que llegó un Lead "desde navegador y servidor". Esa pantalla es de Meta: no hay forma de leerla desde Claude.</p>
 
     <div class="ojo-con"><span class="t">Nombres de campaña</span><p>Si pones la fecha en el nombre de la campaña, esa fecha se queda grabada como fuente en cada contacto aunque cambies la clase. Para un webinar recurrente, nombra la campaña sin fecha.</p></div>
 
@@ -775,11 +830,11 @@ El embudo escribe bien en GoHighLevel.</code></pre>
   · EDGE_CONFIG, EDGE_CONFIG_ID, VERCEL_API_TOKEN → escritas en .env.local
 
 Listo. Ahora súbelas y publica:  npm run subir-env && npx vercel --prod</code></pre>
-    <div class="tu"><span class="t">Y una cosa más tuya</span><p>Entra a <code>/admin</code> en tu URL y <strong>guarda una vez</strong>: eso siembra la copia. El banner de salud debe quedar sin avisos.</p></div>
+    <div class="tu"><span class="t">Y una cosa más tuya</span><p>Entra a <a class="vivo" data-sitio="/admin" target="_blank" rel="noopener">tu panel</a> y <strong>guarda una vez</strong>: eso siembra la copia. El banner de salud debe quedar sin avisos.</p></div>
 
     <h3>Pídele a Claude · C. Que cada cambio se publique solo</h3>
     <div class="prompt"><b>Prompt · ligar GitHub</b><span class="texto">Conecta este proyecto de Vercel con mi repositorio de GitHub (vercel git connect) para que cada push a main publique. Si me pide autorizar la app de Vercel en GitHub, dime cuándo.</span></div>
-    <p>Prueba: pídele a Claude que cambie una frase en <code>landing.ts</code> y la suba. En un par de minutos está en tu URL. El repositorio trae además un flujo de GitHub Actions que corre las pruebas en cada push (pestaña <em>Actions</em>): si algo falla, aparece en rojo antes de que lo vea nadie.</p>
+    <p>Prueba: pídele a Claude que cambie una frase en <code>landing.ts</code> y la suba. En un par de minutos está en tu URL. El repositorio trae además un flujo de GitHub Actions que corre las pruebas en cada push (<a class="vivo" data-repo="/actions" target="_blank" rel="noopener">pestaña Actions de tu repositorio</a>): si algo falla, aparece en rojo antes de que lo vea nadie.</p>
 
     <h3>Pídele a Claude · D. Tu dominio</h3>
     <div class="prompt"><b>Prompt · agregar el dominio</b><span class="texto">Agrega mi dominio [mi-dominio.com] al proyecto de Vercel (vercel domains add) y dime exactamente qué registros DNS tengo que poner en mi proveedor. Cuando te diga que ya están, actualiza "sitio" en src/contenido/marca.ts con el dominio y súbelo.</span></div>
@@ -796,7 +851,7 @@ Listo. Ahora súbelas y publica:  npm run subir-env && npx vercel --prod</code><
       <label><input type="checkbox" id="c-11-3"><span>Guardé una vez en <code>/admin</code> en producción y el banner de salud está limpio</span></label>
       <label><input type="checkbox" id="c-11-4"><span><code>vercel git connect</code> hecho: un push publicó solo</span></label>
       <label><input type="checkbox" id="c-11-5"><span>Mi dominio apunta al proyecto y <code>marca.ts</code> lo tiene</span></label>
-      <label><input type="checkbox" id="c-11-6"><span><code>/api/salud</code> responde <code>"ok": true</code></span></label>
+      <label><input type="checkbox" id="c-11-6"><span><a class="vivo" data-sitio="/api/salud" target="_blank" rel="noopener">La salud de mi sitio</a> responde <code>"ok": true</code></span></label>
     </div>
   </section>
 
@@ -855,7 +910,7 @@ Listo. Ahora súbelas y publica:  npm run subir-env && npx vercel --prod</code><
       <tbody>
         <tr><td>El formulario dice "No pudimos guardar tu registro"</td><td>GHL no responde con el token, o el token fue borrado</td><td>Si la revisión <em>ghl</em> falla: genera un token nuevo en GHL y pídele a Claude que lo ponga en <code>.env.local</code>, lo suba con <code>npm run subir-env</code> y publique</td></tr>
         <tr><td>La landing muestra una fecha vieja o "por defecto"</td><td>La copia en Edge Config no se actualizó</td><td>Entra a <code>/admin</code>, toca <strong>Re-sincronizar la web</strong>. Si el banner dice que no hay copia, módulo 11 B</td></tr>
-        <tr><td>Los recordatorios llegan dos horas tarde</td><td>Zona horaria de la sub-cuenta distinta a la de la clase</td><td>GHL → Configuración → Perfil de la empresa → Zona horaria</td></tr>
+        <tr><td>Los recordatorios llegan dos horas tarde</td><td>Zona horaria de la sub-cuenta distinta a la de la clase</td><td><a class="vivo" data-ghl="settings/company" target="_blank" rel="noopener">GHL → Configuración → Perfil de la empresa</a> → Zona horaria</td></tr>
         <tr><td>Alguien se registró y no le llegó el correo</td><td>Workflow en borrador, o sin Allow Re-Entry y la persona ya se había registrado antes</td><td>Publica el workflow y activa Allow Re-Entry. <code>npm run probar:embudo</code> te dice si el sitio hizo su parte</td></tr>
         <tr><td>La puerta no abre a la hora</td><td>Mando en <em>cerrada</em>, o fecha única ya pasada</td><td>Panel → La sala → mando en <em>auto</em>; revisa la fecha</td></tr>
         <tr><td>La puerta está abierta todo el tiempo</td><td>Mando quedó en <em>abierta</em> desde la última clase</td><td>Panel → La sala → <em>auto</em></td></tr>
@@ -868,7 +923,7 @@ Listo. Ahora súbelas y publica:  npm run subir-env && npx vercel --prod</code><
 
     <div class="lista" data-modulo="m13">
       <div class="cab"><b>Módulo 13</b><span></span></div>
-      <label><input type="checkbox" id="c-13-1"><span>Sé abrir <code>/api/salud</code> y leer qué revisión falla</span></label>
+      <label><input type="checkbox" id="c-13-1"><span>Sé abrir <a class="vivo" data-sitio="/api/salud" target="_blank" rel="noopener">la salud de mi sitio</a> y leer qué revisión falla</span></label>
       <label><input type="checkbox" id="c-13-2"><span>Sé dónde está el botón Re-sincronizar y para qué sirve</span></label>
       <label><input type="checkbox" id="c-13-3"><span>Sé pedirle a Claude que cambie el token de GHL o la contraseña del panel y publique</span></label>
     </div>
@@ -882,19 +937,20 @@ Listo. Ahora súbelas y publica:  npm run subir-env && npx vercel --prod</code><
         <label>Nombre del webinar<input id="f-webinar" placeholder="Clase en vivo"></label>
         <label>Mi dominio<input id="f-dominio" placeholder="https://mi-dominio.com"></label>
         <label>Repositorio en GitHub<input id="f-repo" placeholder="usuario/webinar-mi-programa"></label>
-        <label>Location ID de GHL<input id="f-location" placeholder="20 caracteres"></label>
+        <label>Location ID de GHL<input id="f-location" placeholder="20 caracteres" autocomplete="off" spellcheck="false"></label>
+        <label>Dominio de mi GHL<input id="f-ghl-host" placeholder="app.gohighlevel.com" autocomplete="off" spellcheck="false"></label>
         <label>Nombre del pipeline<input id="f-pipeline" placeholder="Webinars"></label>
         <label>Día y hora de la clase<input id="f-horario" placeholder="Jueves 8:00 pm CDMX"></label>
-        <label>Precio del programa<input id="f-precio" placeholder="4,997 MXN"></label>
+        <label>Precio del programa<input id="f-precio" placeholder="9,997 USD"></label>
         <label>Id del pixel de Meta<input id="f-pixel" placeholder="15 dígitos"></label>
       </div>
-      <p class="pie">Lo que escribes aquí se queda en tu navegador. Sirve para tener a la mano lo que vas a pegar en los prompts.</p>
+      <p class="pie">Lo que escribes aquí se queda en tu navegador. Sirve para tener a la mano lo que vas a pegar en los prompts, y con <em>Mi dominio</em>, <em>Repositorio</em> y <em>Location ID</em> se arman los enlaces de este manual que llevan a tus propias pantallas. Si tu agencia usa un dominio propio para GoHighLevel, ponlo en <em>Dominio de mi GHL</em>; si no, déjalo vacío.</p>
     </div>
   </section>
 
   </main>
 
-  <footer class="pie-doc">Manual del embudo de webinar · Business Growth Intensive · Las casillas y la ficha se guardan solo en este navegador.</footer>
+  <footer class="pie-doc">Manual del embudo de webinar · Business Growth Intensive · <a href="https://github.com/davidiriza-lab/plantilla-webinar-ghl" target="_blank" rel="noopener">Plantilla en GitHub</a> · <a href="https://www.mibgi.com/plantilla" target="_blank" rel="noopener">Demo</a> · <a href="https://github.com/davidiriza-lab/plantilla-webinar-ghl/blob/main/docs/WORKFLOWS.md" target="_blank" rel="noopener">Workflows</a> · Las casillas y la ficha se guardan solo en este navegador.</footer>
 </div>
 
 <script>
@@ -945,8 +1001,37 @@ Listo. Ahora súbelas y publica:  npm run subir-env && npx vercel --prod</code><
   // Ficha
   document.querySelectorAll('.ficha input').forEach(function(i){
     if(estado[i.id]) i.value=estado[i.id];
-    i.addEventListener('input',function(){ estado[i.id]=i.value; guardar(); });
+    i.addEventListener('input',function(){ estado[i.id]=i.value; guardar(); pintarEnlaces(); });
   });
+
+  // Enlaces que se arman con la ficha: tu GHL, tu sitio, tu repositorio.
+  function limpiarHost(v){ return String(v||'').trim().replace(/^https?:\/\//,'').replace(/\/.*$/,''); }
+  function pintarEnlaces(){
+    var loc=String(estado['f-location']||'').trim();
+    var host=limpiarHost(estado['f-ghl-host'])||'app.gohighlevel.com';
+    var sitio=String(estado['f-dominio']||'').trim().replace(/\/+$/,'');
+    if(sitio&&!/^https?:\/\//.test(sitio)) sitio='https://'+sitio;
+    var repo=String(estado['f-repo']||'').trim().replace(/^https?:\/\/github\.com\//,'').replace(/\/+$/,'');
+    document.querySelectorAll('a.vivo').forEach(function(a){
+      var url='', falta='';
+      if(a.hasAttribute('data-ghl')){
+        var ruta=a.getAttribute('data-ghl');
+        if(/^[A-Za-z0-9]{15,30}$/.test(loc)) url='https://'+host+'/v2/location/'+loc+(ruta?'/'+ruta:'/dashboard');
+        else { url='https://'+host+'/'; falta='Escribe tu Location ID en tu ficha y este enlace abrirá esta pantalla en tu sub-cuenta. Por ahora abre la portada de GoHighLevel.'; }
+      } else if(a.hasAttribute('data-sitio')){
+        if(/^https?:\/\/[^\s/]+\.[^\s/]+/.test(sitio)) url=sitio+a.getAttribute('data-sitio');
+        else falta='Escribe tu dominio en tu ficha (o tu URL de Vercel) y este enlace abrirá tu sitio.';
+      } else if(a.hasAttribute('data-repo')){
+        if(/^[\w.-]+\/[\w.-]+$/.test(repo)) url='https://github.com/'+repo+a.getAttribute('data-repo');
+        else falta='Escribe tu repositorio en tu ficha (usuario/nombre) y este enlace lo abrirá.';
+      }
+      if(url) a.setAttribute('href',url); else a.setAttribute('href','#ficha');
+      if(!url) a.removeAttribute('target'); else a.setAttribute('target','_blank');
+      a.classList.toggle('sin-dato', !!falta);
+      if(falta) a.setAttribute('title',falta); else a.removeAttribute('title');
+    });
+  }
+  pintarEnlaces();
 
   // Prompts copiables
   document.querySelectorAll('.prompt').forEach(function(p){
