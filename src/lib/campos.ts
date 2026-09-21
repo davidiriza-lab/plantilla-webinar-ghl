@@ -70,6 +70,8 @@ export interface ConfigWebinar {
   enlaceCheckout: string;
   enlaceApartado: string;
   precio: string;
+  /** Código de la moneda junto al precio: MXN, USD, EUR, COP… */
+  moneda: string;
   minutosOferta: string;
   pixelFacebook: string;
   tokenFacebook: string;
@@ -288,9 +290,18 @@ export const CAMPOS: readonly CampoConfig[] = [
     clave: 'precio',
     nombre: 'Precio de la Oferta',
     slug: 'precio_de_la_oferta',
-    etiqueta: 'Precio en pesos',
-    ayuda: 'Solo el número. Se muestra como $4,997 MXN.',
+    etiqueta: 'Precio',
+    ayuda: 'Solo el número, sin comas ni signos. Se muestra como $9,997 USD, con la moneda de abajo.',
     tipo: 'numero',
+    grupo: 'La oferta',
+  },
+  {
+    clave: 'moneda',
+    nombre: 'Moneda de la Oferta',
+    slug: 'moneda_de_la_oferta',
+    etiqueta: 'Moneda',
+    ayuda: 'El código de tres letras: MXN, USD, EUR, COP… Sale junto al precio en la página y en tus correos.',
+    tipo: 'texto',
     grupo: 'La oferta',
   },
   {
@@ -356,7 +367,8 @@ export const POR_DEFECTO: ConfigWebinar = {
   enlacePuerta: '',
   enlaceCheckout: '',
   enlaceApartado: '',
-  precio: '397',
+  precio: '9997',
+  moneda: 'USD',
   minutosOferta: '30',
   pixelFacebook: '',
   tokenFacebook: '',

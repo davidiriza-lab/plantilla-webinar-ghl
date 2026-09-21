@@ -279,18 +279,25 @@ lanza.** El panel avisa arriba qué campos reinterpretó.
 
 ## La oferta (`/oferta`)
 
-La oferta se presenta como **un proceso guiado por etapas**, no como una lista
-de módulos y bonos: nueve secciones (hero, problema, etapas, qué incluye, para
-quién es, sesiones en vivo, garantía, inversión y cierre). Todo el copy vive en
-`src/contenido/oferta.ts`; la página solo lo acomoda. No hay valores tachados,
-contador ni urgencia: si los quieres, es una decisión tuya, no del sistema.
+Presenta el programa **módulo por módulo**. Todo el copy sale de
+`src/contenido/oferta.ts`; el precio, la **moneda** (MXN, USD, EUR, COP…) y el
+enlace de pago, del panel.
 
-Precio (en MXN) y enlace de pago se editan desde el panel. **Si no hay enlace de
-pago, el botón lo dice** en vez de fingir.
+| Sección | De dónde sale |
+|---|---|
+| Hero, problema, para quién, acompañamiento en vivo, garantía, cierre | `OFERTA.*` |
+| El programa | `OFERTA.programa.modulos`: por módulo `cuando`, `fase`, `nombre`, `frase`, `promesa`, `detalle`, `teLlevas[]`, `imagen` (caja 2:3 con fondo transparente, WebP 640 px) y `valor` |
+| Bonos | `OFERTA.bonos.lista`: vacía = la sección no aparece |
+| Inversión | escalera de precio: `valorTotal` y `precioRegular` tachados (0 = no salen) y el precio del panel |
 
-Quien llega sin cookie de identidad llena nombre, correo y WhatsApp antes de ir a
-pagar (queda con la etiqueta de carrito); quien ya se registró desde ese navegador
-va directo al checkout.
+Convenciones: una imagen en `''` muestra un marcador; un valor en `0` o una
+lista vacía ocultan ese dato o esa sección.
+
+Quien ya se registró o entró a la sala (cookie de 30 días) va directo al pago y
+queda con `carrito webinar`; quien no, llena antes nombre, correo y WhatsApp.
+Sin enlace de pago el botón avisa que falta y nadie puede pagar: se puede
+publicar y llenar salas antes de conectar el cobro (`/api/salud` lo anota sin
+marcarlo como falla).
 
 ---
 

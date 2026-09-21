@@ -206,7 +206,7 @@
     <p>La decisión que lo hace distinto: <strong>GoHighLevel es la única base de datos.</strong> No hay Supabase, no hay Postgres, no hay cron. Los prospectos son contactos de tu sub-cuenta. La configuración vive en los custom values de esa sub-cuenta. Los correos y WhatsApp los manda GHL con sus workflows. El sitio solo hace las páginas y captura.</p>
     <p>Y la decisión que hace distinto a <em>este manual</em>: <strong>casi todo lo haces desde Claude Code.</strong> Crear tu copia, instalar, conectar GHL, escribir el copy, probar el embudo, publicar. Lo que queda fuera son pantallas de terceros que no tienen API para eso: crear una llave, generar un token, poner un registro DNS. En cada módulo verás una caja dorada, <em>Lo único que haces tú</em>, con exactamente eso y nada más.</p>
 
-    <div class="diagrama" role="img" aria-label="Mapa del sistema: el visitante llega al sitio en Vercel; el sitio escribe prospectos en GoHighLevel y lee la configuración de una copia en Edge Config; el panel escribe en los dos lados; Meta y Mercado Pago se conectan al sitio por API.">
+    <div class="diagrama" role="img" aria-label="Mapa del sistema: el visitante llega al sitio en Vercel; el sitio escribe prospectos en GoHighLevel y lee la configuración de una copia en Edge Config; el panel escribe en los dos lados; Meta se conecta al sitio por API.">
       <svg viewBox="0 0 760 300">
         <defs><marker id="flecha" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#94a3b8"/></marker></defs>
         <rect class="caja" x="16" y="118" width="120" height="64" rx="10"/>
@@ -226,10 +226,8 @@
         <rect class="caja" x="520" y="168" width="220" height="64" rx="10"/>
         <text x="630" y="194" text-anchor="middle" class="t">Copia en Edge Config</text>
         <text x="630" y="214" text-anchor="middle" class="s">lo que leen las páginas, rápido</text>
-        <rect class="caja" x="210" y="246" width="94" height="40" rx="8"/>
-        <text x="257" y="271" text-anchor="middle">Meta (pixel)</text>
-        <rect class="caja" x="316" y="246" width="94" height="40" rx="8"/>
-        <text x="363" y="271" text-anchor="middle">Mercado Pago</text>
+        <rect class="caja" x="232" y="246" width="156" height="40" rx="8"/>
+        <text x="310" y="271" text-anchor="middle">Meta (pixel y conversiones)</text>
         <path class="fl" d="M136 150 L208 150"/>
         <path class="fl p" d="M410 120 C460 120 470 76 518 76"/>
         <text x="455" y="88" class="s" text-anchor="middle">escribe</text>
@@ -237,8 +235,7 @@
         <text x="462" y="196" class="s" text-anchor="middle">lee</text>
         <path class="fl" d="M630 132 L630 166"/>
         <text x="662" y="154" class="s">el panel copia</text>
-        <path class="fl" d="M257 244 L290 212"/>
-        <path class="fl" d="M363 244 L340 212"/>
+        <path class="fl" d="M310 244 L310 212"/>
       </svg>
     </div>
 
@@ -252,8 +249,7 @@
         <tr><td><strong>GoHighLevel</strong>, de preferencia con <strong>agencia propia</strong></td><td>Guardar prospectos, configuración y mandar recordatorios, en una sub-cuenta solo para el webinar</td><td>Tu plan de GHL</td></tr>
         <tr><td><strong>GitHub</strong></td><td>Tu copia del código y los despliegues automáticos</td><td>Gratis</td></tr>
         <tr><td><strong>Vercel</strong></td><td>Donde vive el sitio</td><td>Gratis para empezar</td></tr>
-        <tr><td>Meta Business (opcional)</td><td>Pixel y API de conversiones para que tus anuncios aprendan</td><td>Gratis</td></tr>
-        <tr><td>Mercado Pago (opcional)</td><td>Cobrar la oferta y marcar ventas en el pipeline</td><td>Comisión por venta</td></tr>
+        <tr><td><strong>Meta Business</strong>, con un pixel</td><td>Pixel y API de conversiones: es lo que le dice a tus anuncios quién se registró y quién asistió. Sin esto la pauta optimiza a ciegas</td><td>Gratis</td></tr>
       </tbody>
     </table></div>
 
@@ -263,7 +259,7 @@
     <div class="ritmo">
       <div class="paso"><div class="k">1 · QUÉ ES</div><div class="r">La pieza</div><div class="e">Qué hace y por qué está así. Dos párrafos.</div></div>
       <div class="paso"><div class="k">2 · PÍDELE A CLAUDE</div><div class="r">El prompt</div><div class="e">Texto listo para copiar. Cambias lo que va entre corchetes y lo pegas en Claude Code.</div></div>
-      <div class="paso"><div class="k">3 · LO ÚNICO QUE HACES TÚ</div><div class="r">La caja dorada</div><div class="e">Los clics en GHL, Vercel, Meta o Mercado Pago que nadie puede dar por ti.</div></div>
+      <div class="paso"><div class="k">3 · LO ÚNICO QUE HACES TÚ</div><div class="r">La caja dorada</div><div class="e">Los clics en GHL, Vercel o Meta que nadie puede dar por ti.</div></div>
       <div class="paso"><div class="k">4 · COMPRUEBA</div><div class="r">Las casillas</div><div class="e">Cómo saber que quedó. Se guardan en este navegador.</div></div>
     </div>
 
@@ -274,6 +270,7 @@
       <label><input type="checkbox" id="c-0-1"><span>Tengo una sub-cuenta de GoHighLevel donde voy a trabajar <small>Lo ideal: una nueva, dentro de tu propia agencia. Si usas una que ya existe, el instalador no borra nada.</small></span></label>
       <label><input type="checkbox" id="c-0-2"><span>Tengo cuenta en GitHub y en Vercel con el mismo correo</span></label>
       <label><input type="checkbox" id="c-0-3"><span>Tengo suscripción de Claude</span></label>
+      <label><input type="checkbox" id="c-0-5"><span>Tengo Meta Business con un pixel creado (o acceso de administrador al de mi negocio)</span></label>
       <label><input type="checkbox" id="c-0-4"><span>Sé qué voy a enseñar en la clase y qué voy a ofrecer al final <small>No hace falta el copy final. Hace falta saber el tema y el precio aproximado.</small></span></label>
     </div>
   </section>
@@ -482,13 +479,13 @@ Todo listo del lado de GoHighLevel.</code></pre>
     <p><code>/admin</code> es la única pantalla que vas a abrir cada semana. Desde ahí fijas el día y la hora de la clase, el enlace de Zoom, el grupo de WhatsApp, el precio, el enlace de pago y el pixel. Nada de eso está en el código: todo son custom values de tu sub-cuenta, y el panel es la forma cómoda de editarlos. Es la parte del sistema que <em>no</em> pasa por Claude, a propósito: es tu tablero de operación.</p>
 
     <div class="dos-capturas">
-      <figure class="captura"><img src="assets/capturas/admin-panel.jpg" alt="El panel de control por dentro: la próxima clase arriba, un banner de salud en rojo con dos avisos y el grupo Programación" width="1440" height="900" loading="lazy"><figcaption><b>El panel por dentro.</b> Arriba, la próxima clase calculada. Debajo, el banner de salud: en la demo está en rojo porque no hay GoHighLevel conectado. En el tuyo, después del módulo 04, debe estar vacío.</figcaption></figure>
+      <figure class="captura"><img src="assets/capturas/admin-panel.jpg" alt="El panel de control por dentro: la próxima clase arriba, el banner de salud con dos avisos y el grupo Programación" width="1440" height="900" loading="lazy"><figcaption><b>El panel por dentro.</b> Arriba, la próxima clase calculada. Debajo, el banner de salud: aquí avisa que todavía no hay copia de seguridad (módulo 11) ni enlace de la sala. Cuando termines el manual, en el tuyo no debe decir nada.</figcaption></figure>
       <figure class="captura"><img src="assets/capturas/admin-login.jpg" alt="La pantalla de entrada al panel, con un solo campo de contraseña" width="1440" height="900" loading="lazy"><figcaption>La entrada. La contraseña es la que le diste a Claude en el módulo 04.</figcaption></figure>
     </div>
 
     <h3>Cómo funciona</h3>
     <p>Cuando guardas en el panel, el sitio escribe en dos lugares: en GHL (la fuente de verdad) y en una copia en Vercel Edge Config (lo que leen las páginas). Las páginas nunca le preguntan a GHL en cada visita; leen la copia, que responde en milisegundos y no se cae con GHL. Hasta el módulo 11 no hay copia todavía: el sitio lee GHL directo. Funciona igual; solo el banner te lo recuerda.</p>
-    <p>El banner de salud es lo primero que miras. Si dice algo en rojo, es lo primero que hay que arreglar: "GoHighLevel no responde con el token actual", "Falta el enlace de pago", "La fecha única ya pasó". Si no dice nada, todo está bien.</p>
+    <p>El banner de salud es lo primero que miras. Si dice algo en rojo, es lo primero que hay que arreglar: "GoHighLevel no responde con el token actual", "Falta el enlace de la sala", "La fecha única ya pasó". Si no dice nada, todo está bien.</p>
 
     <h3>Pídele a Claude</h3>
     <div class="prompt"><b>Prompt · abrir el panel</b><span class="texto">Arranca el sitio con npm run dev y dame la URL del panel de administración. Cuando lo abra, explícame en una línea qué decide cada grupo del panel.</span></div>
@@ -501,7 +498,7 @@ Todo listo del lado de GoHighLevel.</code></pre>
           <tr><td>La sala</td><td>Cuántos minutos antes abre la puerta; mando manual (auto / abierta / cerrada)</td><td>15 minutos. Deja el mando en <em>auto</em> salvo el día de la clase si quieres abrir antes.</td></tr>
           <tr><td>Enlaces</td><td>Zoom, enlace de la puerta, grupo de WhatsApp, WhatsApp de soporte, enlace de la oferta</td><td>El Zoom con la contraseña incluida (<code>?pwd=…</code>). El <strong>enlace de la puerta</strong> es tu dominio + <code>/ingreso</code> y el de la oferta tu dominio + <code>/oferta</code>: son los que mandan tus correos. Mientras no tengas dominio (módulo 11), déjalos vacíos y vuelve.</td></tr>
           <tr><td>Contenido</td><td>Título del webinar y video de bienvenida de la página de gracias</td><td><strong>Sube el video a GoHighLevel</strong>, que ya lo pagas: en tu sub-cuenta, <em>Media Storage</em> → sube el archivo → en el video, <em>copiar enlace</em> → pégalo aquí. Comprímelo antes (720p, menos de 50 MB) para que cargue rápido en el teléfono. También acepta YouTube o Vimeo. Vacío = no aparece el bloque.</td></tr>
-          <tr><td>La oferta</td><td>Precio (solo el número, en MXN), enlace de pago</td><td>Sin enlace de pago el botón se ve, pero avisa que falta. Lo llenas en el módulo 09.</td></tr>
+          <tr><td>La oferta</td><td>Precio (solo el número) y moneda (MXN, USD, EUR, COP…)</td><td>Se muestran juntos: <code>$9,997 USD</code>. El enlace de pago déjalo vacío por ahora: el método de pago se ve más adelante en la formación, y mientras tanto el botón avisa que falta.</td></tr>
           <tr><td>Etiquetas</td><td>Los nombres de las etiquetas generales</td><td>Déjalas como vienen. Son las que disparan tus workflows (módulo 07).</td></tr>
           <tr><td>Seguimiento</td><td>Pixel de Meta y token de conversiones</td><td>Módulo 10. Puede quedar vacío hasta entonces.</td></tr>
         </tbody>
@@ -579,7 +576,7 @@ Todo listo del lado de GoHighLevel.</code></pre>
       <div class="paso"><div class="k">/ · registro</div><div class="r">Se registró</div><div class="e"><i>registro webinar</i><i>registro 24-septiembre</i><i>→ Nuevo Registro</i></div></div>
       <div class="paso"><div class="k">/ingreso · puerta</div><div class="r">Entró a la sala</div><div class="e"><i>ingreso webinar</i><i>ingreso 24-septiembre</i><i>→ Asistió al Webinar</i></div></div>
       <div class="paso"><div class="k">/oferta · comprar</div><div class="r">Fue a pagar</div><div class="e"><i>carrito webinar</i><i>carrito 24-septiembre</i><i>→ Cliente Potencial</i></div></div>
-      <div class="paso"><div class="k">webhook de pago</div><div class="r">Pagó</div><div class="e"><i>pago webinar</i><i>pago 24-septiembre</i><i>→ Cliente Ganado</i></div></div>
+      <div class="paso"><div class="k">al cobrar · más adelante</div><div class="r">Pagó</div><div class="e"><i>pago webinar</i><i>pago 24-septiembre</i><i>→ Cliente Ganado</i></div></div>
     </div>
     <p>Además, cada contacto lleva tres campos: <em>Fuente</em> (de qué anuncio vino, armado con los parámetros UTM del enlace), <em>Fecha de su clase</em> (el texto "jueves 24 de septiembre", para que tus correos lo digan sin calcular nada) y <em>Dia de su clase</em> (ese mismo día como fecha: a él apuntan las esperas de los recordatorios, porque una espera de GHL no puede apuntar a un texto).</p>
 
@@ -590,7 +587,7 @@ Todo listo del lado de GoHighLevel.</code></pre>
         <tr><td>1 · Confirmación de registro</td><td><code>registro webinar</code></td><td>Correo inmediato: fecha y hora de su clase, grupo de WhatsApp, enlace de la puerta.</td></tr>
         <tr><td>2 · Recordatorios</td><td><code>registro webinar</code></td><td>Espera al <em>Dia de su clase</em> y manda tres correos: 9:00 am, una hora antes y diez minutos antes. Si alguien se registra tarde, los que ya pasaron se saltan.</td></tr>
         <tr><td>3 · Oferta post-clase</td><td><code>ingreso webinar</code></td><td>Solo a quien entró a la sala: dos horas después la oferta, y un correo más cada día por dos días. Sin contadores ni urgencia falsa.</td></tr>
-        <tr><td>4 · Compró</td><td><code>pago webinar</code></td><td>Saca al comprador del workflow 3 y le manda la bienvenida.</td></tr>
+        <tr><td>4 · Compró</td><td><code>pago webinar</code></td><td>Saca al comprador del workflow 3 y le manda la bienvenida. Déjalo creado: empieza a dispararse cuando conectes tu método de pago, más adelante en la formación.</td></tr>
       </tbody>
     </table></div>
     <p>La estructura completa y el copy de ejemplo de los nueve correos están en <code>docs/WORKFLOWS.md</code> de tu repositorio. Todos los datos que cambian salen de custom values o del contacto (<code>{{contact.fecha_de_su_clase}}</code>, <code>{{custom_values.webinar_proxima_hora}}</code>, <code>{{custom_values.enlace_de_la_puerta}}</code>…): cambias la fecha en el panel y los correos de la semana siguiente ya la dicen bien.</p>
@@ -667,56 +664,64 @@ El embudo escribe bien en GoHighLevel.</code></pre>
   </section>
 
   <!-- ══════════════════════════════════════════════════════════════ -->
-  <section class="modulo" id="m9" data-titulo="La oferta y el pago">
-    <div class="cabecera"><span class="num">09</span><h2>La oferta y el pago</h2><p class="meta">Treinta minutos con Mercado Pago. Opcional si cobras por otro medio.</p></div>
+  <section class="modulo" id="m9" data-titulo="La oferta">
+    <div class="cabecera"><span class="num">09</span><h2>La oferta</h2><p class="meta">Una o dos horas. Es la página que presenta tu programa módulo por módulo.</p></div>
 
     <h3>Qué es</h3>
-    <p><code>/oferta</code> presenta tu programa y manda a pagar. El cobro no lo hace el sitio: lo hace un enlace de pago (Mercado Pago, Stripe, Hotmart, el que uses) que pones en el panel. Lo que el sitio sí hace es saber quién fue a pagar y, si conectas el webhook de Mercado Pago, quién pagó.</p>
+    <p><code>/oferta</code> es a donde mandas a la gente al final de la clase. No es una lista de beneficios: recorre tu programa <strong>módulo por módulo</strong>, cada uno con su caja, y termina en la inversión. El ejemplo que trae es el de Business Growth Intensive: cámbialo entero por el tuyo.</p>
 
-    <figure class="captura"><div class="ventana"><img src="assets/capturas/oferta-completa.jpg" alt="La página de oferta completa: problema, etapas del programa, qué incluye, garantía, inversión y cierre" width="1440" height="6000" loading="lazy"></div><figcaption><b>La oferta completa</b> (desplázate dentro de la imagen). Nueve secciones, todas en <code>oferta.ts</code>. El botón de comprar lleva al enlace de pago que pongas en el panel.</figcaption></figure>
+    <figure class="captura"><div class="ventana"><img src="assets/capturas/oferta-completa.jpg" alt="La página de oferta completa: hero, problema, el programa módulo por módulo con la caja de cada uno, qué incluye, para quién es, acompañamiento en vivo, garantía, inversión y cierre" width="1440" height="6000" loading="lazy"></div><figcaption><b>La oferta completa</b> (desplázate dentro de la imagen). Todo sale de <code>src/contenido/oferta.ts</code>; el precio y la moneda, del panel.</figcaption></figure>
+
+    <h3>Cómo está armada</h3>
+    <div class="tabla"><table>
+      <thead><tr><th>Sección</th><th>Qué lleva</th></tr></thead>
+      <tbody>
+        <tr><td>Hero</td><td>La promesa, a quién le hablas, y tres datos cortos (duración, modalidad, idioma).</td></tr>
+        <tr><td>El problema</td><td>Lo que le pasa hoy a tu cliente, en sus palabras.</td></tr>
+        <tr><td><strong>El programa, módulo por módulo</strong></td><td>Por cada módulo: su caja (imagen), <em>Módulo 01 / 04</em> con su fase y sus semanas, el nombre, una frase que lo resume, la promesa, el detalle, y la lista de lo que la persona se lleva. Si le pones valor, sale tachado como "por separado" y se suma al final.</td></tr>
+        <tr><td>Qué incluye</td><td>El acompañamiento: sesiones, coach, comunidad, materiales.</td></tr>
+        <tr><td>Bonos</td><td>Opcional. Con la lista vacía, la sección no aparece.</td></tr>
+        <tr><td>Para quién es y para quién no</td><td>Tres a cinco frases, y una honesta de para quién no.</td></tr>
+        <tr><td>Acompañamiento en vivo</td><td>Las frases reales que la gente trae a las sesiones.</td></tr>
+        <tr><td>Garantía</td><td>Los días y las condiciones <strong>reales</strong> de tu garantía. No dejes la del ejemplo.</td></tr>
+        <tr><td>Inversión</td><td>La escalera de precio: valor por separado y precio regular, tachados (opcionales), y tu precio de hoy con su moneda.</td></tr>
+        <tr><td>Cierre</td><td>La última pregunta y el botón.</td></tr>
+      </tbody>
+    </table></div>
 
     <h3>Cómo funciona</h3>
-    <p>Cuando alguien se registra o entra a la sala, el sitio guarda una cookie con su nombre, correo y teléfono (30 días). Si esa persona llega a la oferta desde el mismo navegador, el botón de comprar la manda directo al pago y la etiqueta como carrito en silencio. Si llega de otro navegador, le pide sus datos primero.</p>
-    <p>El webhook de pago (<code>/api/pago/mercadopago</code>) recibe el aviso de Mercado Pago, valida su firma, consulta el pago por su id (nunca confía en el aviso) y, si está aprobado: etiqueta <code>pago webinar</code>, mueve la oportunidad a Cliente Ganado con el monto, y manda un evento Purchase a Meta.</p>
-
-    <div class="tu"><span class="t">Lo único que haces tú (A · el enlace de pago, obligatorio para cobrar)</span>
-      <ol>
-        <li>Crea tu link de pago en tu pasarela. En Mercado Pago: Tu negocio → Link de pago, con el precio del programa.</li>
-        <li>En el panel, grupo <em>La oferta</em>: precio (solo el número) y enlace de pago. Guarda.</li>
-      </ol>
-    </div>
-    <p>Abre <code>/oferta</code> en una ventana privada: debe pedirte datos y luego llevarte al link.</p>
-
-    <div class="tu"><span class="t">Lo único que haces tú (B · el webhook, para ver ventas en el pipeline)</span>
-      <p>Necesitas el sitio publicado (módulo 11), porque Mercado Pago tiene que alcanzar tu URL.</p>
-      <ol>
-        <li>Mercado Pago → Tus integraciones → Crear aplicación (si no tienes) → Producción → Credenciales. Copia el <strong>Access Token</strong> (<code>APP_USR-…</code>).</li>
-        <li>En la misma app: Webhooks → Configurar notificaciones. URL: <code>https://TU-DOMINIO/api/pago/mercadopago</code>. Evento: <em>Pagos</em>. Al guardar, Mercado Pago genera una <strong>clave secreta</strong>: cópiala.</li>
-      </ol>
-    </div>
+    <p>Cuando alguien se registra o entra a la sala, el sitio guarda una cookie con su nombre, correo y teléfono (30 días). Si esa persona llega a la oferta desde el mismo navegador y toca el botón, queda etiquetada como <code>carrito webinar</code> y pasa a <em>Cliente Potencial</em> en tu pipeline. Si llega de otro navegador, el sitio le pide sus datos primero: nadie llega al cobro sin que sepas quién es.</p>
 
     <h3>Pídele a Claude</h3>
-    <div class="prompt"><b>Prompt · conectar el webhook</b><span class="texto">Este es el Access Token de producción de mi app de Mercado Pago: [APP_USR-…] y esta la clave secreta del webhook: [……]. Ponlos en .env.local como MP_ACCESS_TOKEN y MP_WEBHOOK_SECRET, súbelos a Vercel con npm run subir-env y publica con vercel --prod. No los muestres en pantalla.</span></div>
-    <p>Después, haz un pago de prueba de monto mínimo (o con un cupón del 100% si tu pasarela lo permite) y revisa que el contacto llegue a Cliente Ganado.</p>
+    <div class="prompt"><b>Prompt 1 · mis módulos</b><span class="texto">Mi programa se llama [nombre], dura [duración] y tiene estos módulos, en orden: [lista con el nombre de cada módulo y qué se logra en él]. Reescribe la lista de módulos de src/contenido/oferta.ts: para cada uno llena cuando, fase, nombre, frase, promesa, detalle y teLlevas (lo que la persona se lleva al terminarlo). Deja valor en 0 salvo que te dé un precio por separado. Borra las marcas EJEMPLO de lo que cambies.</span></div>
+    <div class="prompt"><b>Prompt 2 · las cajas de los módulos</b><span class="texto">Dejé en public/assets/ la imagen de la caja de cada módulo, en orden: [caja-1.png, caja-2.png…]. Conviértelas a WebP de 640 px de ancho con fondo transparente, guárdalas como modulo-1.webp, modulo-2.webp… y conéctalas en el campo imagen de cada módulo. Si de alguno no tengo imagen, deja imagen en '' para que salga el marcador.</span></div>
+    <div class="prompt"><b>Prompt 3 · el resto de la oferta</b><span class="texto">Con lo que ya sabes de mi programa, reescribe en src/contenido/oferta.ts el hero, el problema, qué incluye, para quién es, el acompañamiento en vivo y el cierre. Mi garantía real es: [días y condiciones]. Si tengo bonos son estos: [lista]; si no, deja la lista vacía. Si quiero mostrar escalera de precio, el valor por separado es [número] y el precio regular [número]; si no, déjalos en 0.</span></div>
 
-    <div class="nota"><span class="t">Si no conectas el webhook</span><p>Todo lo demás funciona. Solo que Cliente Ganado se queda en cero y no sabrás qué anuncio vendió. Puedes cruzar a mano el reporte de tu pasarela con las etiquetas de carrito.</p></div>
+    <div class="tu"><span class="t">Lo único que haces tú</span>
+      <ol>
+        <li>Conseguir o generar la caja de cada módulo (retrato, fondo transparente). Si no las tienes todavía, la página muestra un marcador y se ve bien igual.</li>
+        <li>En el panel, grupo <em>La oferta</em>: tu <strong>precio</strong> (solo el número) y tu <strong>moneda</strong>. Guarda y abre <code>/oferta</code>.</li>
+      </ol>
+    </div>
+
+    <div class="nota"><span class="t">El método de pago, más adelante</span><p>El botón de la oferta lleva al enlace de pago que pongas en el panel. Cómo cobrar y cómo registrar las ventas en tu pipeline se ve más adelante en la formación. Mientras el enlace esté vacío, el botón avisa que falta y nadie puede pagar: puedes publicar y probar todo lo demás sin riesgo.</p></div>
 
     <div class="lista" data-modulo="m9">
       <div class="cab"><b>Módulo 09</b><span></span></div>
-      <label><input type="checkbox" id="c-9-1"><span>Precio y enlace de pago cargados en el panel</span></label>
-      <label><input type="checkbox" id="c-9-2"><span>Probé <code>/oferta</code> en ventana privada: pide datos y lleva al pago</span></label>
-      <label><input type="checkbox" id="c-9-3"><span>Webhook de Mercado Pago dado de alta con la URL de mi dominio y evento Pagos</span></label>
-      <label><input type="checkbox" id="c-9-4"><span>Claude subió <code>MP_ACCESS_TOKEN</code> y <code>MP_WEBHOOK_SECRET</code> a Vercel y publicó</span></label>
-      <label><input type="checkbox" id="c-9-5"><span>Un pago de prueba llegó a Cliente Ganado</span></label>
+      <label><input type="checkbox" id="c-9-1"><span>Mis módulos están en <code>oferta.ts</code>, cada uno con su frase, promesa, detalle y lo que se lleva</span></label>
+      <label><input type="checkbox" id="c-9-2"><span>Cada módulo tiene su caja (o decidí dejar el marcador por ahora)</span></label>
+      <label><input type="checkbox" id="c-9-3"><span>La garantía que se lee es la mía, con mis días y mis condiciones</span></label>
+      <label><input type="checkbox" id="c-9-4"><span>Precio y moneda cargados en el panel, y <code>/oferta</code> los muestra bien</span></label>
+      <label><input type="checkbox" id="c-9-5"><span>Probé el botón en una ventana privada: me pide mis datos antes de avanzar</span></label>
     </div>
   </section>
 
   <!-- ══════════════════════════════════════════════════════════════ -->
   <section class="modulo" id="m10" data-titulo="Meta: pixel y conversiones">
-    <div class="cabecera"><span class="num">10</span><h2>Meta: pixel y conversiones</h2><p class="meta">Veinte minutos. Opcional, pero sin esto tus anuncios no aprenden.</p></div>
+    <div class="cabecera"><span class="num">10</span><h2>Meta: pixel y conversiones</h2><p class="meta">Veinte minutos. No es opcional: sin esto tus anuncios no aprenden.</p></div>
 
     <h3>Qué es</h3>
-    <p>El sitio manda a Meta tres eventos, cada uno una sola vez por persona: <em>Lead</em> cuando alguien se registra, <em>Asistio</em> (evento propio) cuando entra a la sala, y <em>Purchase</em> cuando paga. Con eso tu campaña optimiza hacia registros reales y puedes ver el costo por asistente, no solo por registro.</p>
+    <p>El sitio manda a Meta tres eventos, cada uno una sola vez por persona: <em>Lead</em> cuando alguien se registra, <em>Asistio</em> (evento propio) cuando entra a la sala, y <em>Purchase</em> cuando paga (eso se activa con tu método de pago, más adelante). Con eso tu campaña optimiza hacia registros reales y puedes ver el costo por asistente, no solo por registro.</p>
 
     <h3>Cómo funciona</h3>
     <p>Cada evento sale por dos caminos con el mismo identificador: el pixel del navegador y la API de conversiones desde el servidor. Meta los une y cuenta uno. El camino del servidor recupera lo que el navegador pierde por bloqueadores y por iOS.</p>
@@ -855,7 +860,6 @@ Listo. Ahora súbelas y publica:  npm run subir-env && npx vercel --prod</code><
         <tr><td>La puerta está abierta todo el tiempo</td><td>Mando quedó en <em>abierta</em> desde la última clase</td><td>Panel → La sala → <em>auto</em></td></tr>
         <tr><td>El registro dice "cerrado"</td><td>Modo fecha única con fecha pasada, o "Webinar activo" en no</td><td>Pon la siguiente fecha o cambia a recurrente; revisa el interruptor</td></tr>
         <tr><td>Meta cuenta más leads que registros en GHL</td><td>Otro pixel o evento Lead duplicado en la página (por ejemplo en GHL o en un plugin)</td><td>El sitio solo manda Lead en el registro. Busca el otro origen en "Probar eventos"</td></tr>
-        <tr><td>Los pagos no llegan a Cliente Ganado</td><td>Webhook sin dar de alta, o variables MP faltantes</td><td>Módulo 09 B. En Mercado Pago, historial de notificaciones: si responde 503, faltan variables; si 401, la clave secreta está mal</td></tr>
         <tr><td>El panel no me deja entrar y dice "Demasiados intentos"</td><td>Cinco contraseñas mal en 15 minutos</td><td>Espera 15 minutos. Si olvidaste la contraseña, pídele a Claude que cambie <code>ADMIN_PASSWORD</code> en <code>.env.local</code>, la suba y publique</td></tr>
         <tr><td>Subí un cambio y no se publicó</td><td>El repositorio no está ligado a Vercel, o el build falló</td><td>Pídele a Claude: "corre npm run verificar y revisa el último deploy en Vercel (vercel ls); dime por qué falló"</td></tr>
       </tbody>

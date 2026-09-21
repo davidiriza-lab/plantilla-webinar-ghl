@@ -12,7 +12,9 @@ Reglas que valen para los cuatro:
 - Todo lo que cambia de semana en semana sale de custom values o del contacto, nunca escrito a mano:
   `{{contact.fecha_de_su_clase}}`, `{{custom_values.webinar_proxima_hora}}`, `{{custom_values.titulo_del_webinar}}`,
   `{{custom_values.enlace_de_la_puerta}}`, `{{custom_values.enlace_grupo_whatsapp}}`, `{{custom_values.enlace_de_la_oferta}}`,
-  `{{custom_values.precio_de_la_oferta}}`, `{{custom_values.webinar_antelacion_minutos}}`, `{{custom_values.enlace_de_whatsapp_de_soporte}}`.
+  `{{custom_values.precio_de_la_oferta}}`, `{{custom_values.moneda_de_la_oferta}}`, `{{custom_values.webinar_antelacion_minutos}}`, `{{custom_values.enlace_de_whatsapp_de_soporte}}`.
+- El workflow 4 se dispara con `pago webinar`, que pone el sitio cuando registra un pago: queda listo y empieza a
+  correr cuando conectes tu método de pago.
 - Los recordatorios mandan **el enlace de la puerta** (`/ingreso`), nunca el Zoom directo: es lo que pasa lista
   y lo que dispara el workflow 3.
 - Las esperas de los recordatorios apuntan al campo de fecha `{{contact.dia_de_su_clase}}` (lo escribe el sitio
@@ -150,19 +152,19 @@ Hola {{contact.first_name}},
 
 Gracias por quedarte a la clase. Entrar en vivo y aguantar los 90 minutos ya te separa de la mayoría.
 
-Hoy viste el sistema completo en tres partes: diseñar la trayectoria, montar tu primer equipo de IA y ejecutar el crecimiento con un ritmo semanal. Verlo es una cosa. Tenerlo funcionando en tu negocio es otra, y ahí es donde casi todos se quedan.
+Hoy viste el sistema completo. Verlo es una cosa. Tenerlo funcionando en tu negocio es otra, y ahí es donde casi todos se quedan.
 
-Para eso existe **Business Growth Intensive**: un intensivo guiado de 30 días para construirlo con tu caso, no para acumular otro curso.
+Para eso existe **Business Growth Intensive**: un programa intensivo de 16 semanas para convertir tu conocimiento en un negocio digital que vende todos los días.
 
-- **Semana 1, Trayectoria.** Diagnóstico, números y tu siguiente nivel concreto, en un mapa de una página.
-- **Semana 2, Propulsión.** Tu primer equipo de IA conectado a tu CRM: captura, seguimiento y agenda.
-- **Semana 3, Órbita.** Tu primera clase en vivo con este mismo embudo.
-- **Semana 4, Altitud.** El ritmo semanal que sostiene el crecimiento, con métricas y responsables.
-Incluye una sesión grupal en vivo cada semana para trabajar tu caso, las plantillas y sistemas listos para adaptar, y acceso a la academia por 12 meses.
+- **Semana 0, Preparación.** Aterrizas en la plataforma, conoces a tu coach y dejas todo listo para despegar.
+- **Fase 1, Speed Webinar (semanas 1 a 3).** Validas tu oferta, creas tu infoproducto y lanzas tu primer webinar en vivo.
+- **Fase 2, Profit Machine (semanas 4 a 9).** Automatizas tu webinar: funnel completo, tráfico pago, CRM y métricas.
+- **Fase 3, Escalamiento (semanas 10 a 16).** Escalas tu pauta, armas tu equipo mínimo y documentas tu operación.
+No avanzas solo: tienes un coach personal 1:1 cada semana, sesiones en vivo con especialistas tres días por semana, comunidad privada, workbooks y un directorio de herramientas.
 
-Inversión: ${{custom_values.precio_de_la_oferta}} MXN, con garantía: entras, conoces la primera etapa y decides desde la experiencia.
+Inversión: ${{custom_values.precio_de_la_oferta}} {{custom_values.moneda_de_la_oferta}}.
 
-**Ver todos los detalles e inscribirme** → {{custom_values.enlace_de_la_oferta}}
+**Ver el programa módulo por módulo** → {{custom_values.enlace_de_la_oferta}}
 
 Equipo de Business Growth Intensive
 ```
@@ -173,18 +175,18 @@ Equipo de Business Growth Intensive
 
 ### Paso 4 · Correo
 
-**Asunto:** Puedes tener la estrategia clara y seguir sin despegar
+**Asunto:** Puedes saber muchísimo y seguir sin un negocio que venda con sistema
 
 ```text
 {{contact.first_name}},
 
-Lo que más escuchamos después de la clase es esto: “Sé exactamente qué tendría que hacer, pero entre operar el negocio y atender clientes nunca me siento a construirlo”.
+Lo que más escuchamos después de la clase es esto: “Sé exactamente qué tendría que hacer, pero entre clientes y operación nunca me siento a construirlo”.
 
-No es falta de visión. Es falta de propulsión: nadie arma un sistema en los ratos libres que deja la operación.
+No es falta de conocimiento. Nadie arma un sistema en los ratos libres que deja la operación.
 
-Por eso el intensivo no es contenido para ver cuando puedas. Son 30 días con fechas, una sesión en vivo cada semana y un entregable concreto por etapa. Al terminar la semana 3 ya diste tu primera clase en vivo con tu propio embudo, el mismo que te trajo hasta este correo.
+Por eso Business Growth Intensive no es contenido para ver cuando puedas. Son 16 semanas con plan de vuelo: cada semana sabes exactamente qué construir y qué entregar, con tu coach 1:1 revisando tu avance. Primero vendes en vivo, luego lo automatizas y al final lo escalas. Al terminar la Fase 1 ya lanzaste tu primer webinar en vivo.
 
-Y si entras y ves que no es para ti, tienes la garantía para decidir desde adentro y no desde la duda.
+Y no necesitas saber de tecnología: avanzas paso a paso con tus workbooks, tu coach y el directorio de herramientas.
 
 **Ver el programa completo** → {{custom_values.enlace_de_la_oferta}}
 
@@ -209,9 +211,9 @@ Si lo estás pensando y algo te detiene, dínoslo. Responde este correo o escrí
 
 Las tres dudas más comunes:
 
-- **“No sé nada de tecnología.”** No hace falta. El sistema se arma pidiéndole a la IA, paso a paso, con plantillas.
-- **“No tengo tiempo.”** Son 30 días con una sesión en vivo por semana. Lo que construyes es justo lo que te devuelve tiempo después.
-- **“¿Y si no es para mí?”** Para eso está la garantía: entras, conoces la primera etapa y decides.
+- **“No sé nada de tecnología.”** No hace falta. Avanzas paso a paso con tus workbooks, tu coach personal y el directorio de herramientas del programa.
+- **“¿Es presencial?”** Es 100% en línea y en español: sesiones en vivo con especialistas tres días por semana y una sesión semanal 1:1 con tu coach, desde donde estés.
+- **“¿Para quién no es?”** Para quien busca dinero rápido sin construir nada, o no quiere aparecer en cámara. Son 16 semanas de trabajo.
 **Ver el programa e inscribirme** → {{custom_values.enlace_de_la_oferta}}
 
 Y si no es el momento, no pasa nada. Te vemos en la próxima clase.
@@ -234,9 +236,9 @@ Quita al contacto de **Webinar · 3 Oferta post-clase**, para no seguir vendién
 ```text
 {{contact.first_name}}, recibimos tu pago. Ya estás dentro de **Business Growth Intensive**.
 
-Guarda este correo. Por este medio y por WhatsApp te mandamos tu acceso a la plataforma y la fecha de tu primera sesión en vivo.
+Guarda este correo. Por este medio y por WhatsApp te mandamos tu acceso personal a la plataforma de alumnos.
 
-Mientras tanto, una sola tarea: ten a la mano cuántos prospectos te llegaron el mes pasado, cuántos cerraste y cuánto vale un cliente para ti. Con esos tres números arrancamos la Semana 1, Trayectoria.
+Arrancas con la **semana 0, Preparación**: aterrizas en la plataforma, conoces a tu coach y dejas todo listo para despegar. Después vienen las 16 semanas: Speed Webinar, Profit Machine y Escalamiento.
 
 Si algo no te llega o tienes una duda con tu pago, escríbenos:
 {{custom_values.enlace_de_whatsapp_de_soporte}}

@@ -298,6 +298,8 @@ export interface ConfigPublica {
   enlaceCheckout: string;
   enlaceApartado: string;
   precio: number;
+  /** Código de moneda de tres letras, en mayúsculas. */
+  moneda: string;
   minutosOferta: number;
   pixelFacebook: string;
   videoGracias: string;
@@ -349,7 +351,9 @@ export function aPublica(config: ConfigWebinar): ConfigPublica {
     enlaceOferta: parsearUrl(config.enlaceOferta),
     enlaceCheckout: parsearUrl(config.enlaceCheckout),
     enlaceApartado: parsearUrl(config.enlaceApartado),
-    precio: parsearEntero(config.precio, 397, 1, 100000),
+    // Tope alto: en pesos colombianos o chilenos un programa son millones.
+    precio: parsearEntero(config.precio, 9997, 1, 100_000_000),
+    moneda: /^[a-z]{3}$/i.test(config.moneda.trim()) ? config.moneda.trim().toUpperCase() : 'MXN',
     minutosOferta: parsearEntero(config.minutosOferta, 30, 1, 1440),
     // Solo dígitos: el id se interpola en un <script>, así que cualquier otra
     // cosa (el snippet entero pegado por error, o algo peor) se descarta.

@@ -100,16 +100,19 @@ export async function revisarSalud(): Promise<Salud> {
       });
     }
 
-    const faltan: string[] = [];
-    if (!publica.haySala) faltan.push('el enlace de la sala (Zoom)');
-    if (publica.precio > 0 && !publica.enlaceCheckout) faltan.push('el enlace de pago');
+    // Sin enlace de sala nadie entra a la clase: eso sí es una falla. Sin
+    // enlace de pago el embudo funciona completo y el botón de la oferta ya
+    // avisa que falta: es un pendiente, no una alarma (hay quien publica y
+    // llena salas antes de conectar su cobro).
+    const sinPago = publica.precio > 0 && !publica.enlaceCheckout;
     revisiones.push({
       clave: 'enlaces',
-      ok: faltan.length === 0,
-      mensaje:
-        faltan.length === 0
-          ? 'Enlaces de sala y pago cargados.'
-          : `Falta ${faltan.join(' y ')} en el panel.`,
+      ok: publica.haySala,
+      mensaje: !publica.haySala
+        ? 'Falta el enlace de la sala (Zoom) en el panel.'
+        : sinPago
+          ? 'Enlace de sala cargado. Aún no hay enlace de pago: el botón de la oferta avisa que falta.'
+          : 'Enlaces de sala y pago cargados.',
     });
   }
 
