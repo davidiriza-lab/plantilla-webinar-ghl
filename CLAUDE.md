@@ -35,6 +35,7 @@ de Vercel/Meta/Mercado Pago, DNS) díselo con los pasos exactos.
 | Iconos de las tarjetas | `imagen` en `landing.ts`: icono 3D generado, WebP cuadrado 512 px con fondo transparente en `public/assets/`. Si queda en `''`, cae al icono lineal de `src/components/Icono.tsx` (`icono: 'cohete'`) |
 | Fecha, hora, zona, enlaces, precio, moneda, pixel, etiquetas | **NO en código**: `/admin` → custom values de GHL |
 | Qué custom values existen | `src/lib/campos.ts` |
+| Mensajes sugeridos del WhatsApp de soporte (el panel arma el enlace `wa.me`) | `MENSAJES_SOPORTE` en `src/lib/whatsapp.ts` |
 | Etiquetas que se mandan a GHL | `src/lib/etiquetas.ts` |
 | Workflows de GHL y el copy de sus correos | `docs/WORKFLOWS.md` (estructura + ejemplo; GHL no los crea por API oficial) |
 | Etapas del pipeline | `src/lib/pipeline.ts` (se resuelven por nombre) |

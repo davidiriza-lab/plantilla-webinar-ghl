@@ -4,6 +4,7 @@
  * Cubren lo que puede pasar cuando alguien edita los custom values a mano
  * desde GoHighLevel, que es el punto del sistema híbrido.
  */
+import { armarEnlaceWa, leerEnlaceWa } from '../src/lib/whatsapp.ts';
 import { interpretarVideo } from '../src/lib/video.ts';
 import {
   parsearDia,
@@ -120,6 +121,33 @@ console.log('\nVideo de bienvenida\n');
   verificar('http sin s NO', v('http://assets.cdn.filesafe.space/abc/media/x.mp4'), 'nada');
   verificar('javascript: NO', v('javascript:alert(1)'), 'nada');
   verificar('texto que no es URL NO', v('mi video'), 'nada');
+}
+
+console.log('\nEnlace de WhatsApp\n');
+{
+  verificar(
+    'arma el enlace con mensaje',
+    armarEnlaceWa('+52', '55 1234 5678', 'Hola, tengo una duda sobre la clase.'),
+    'https://wa.me/525512345678?text=Hola%2C%20tengo%20una%20duda%20sobre%20la%20clase.',
+  );
+  verificar('sin mensaje, sin ?text', armarEnlaceWa('+34', '612 345 678', '  '), 'https://wa.me/34612345678');
+  verificar('quita el 0 de marcación local', armarEnlaceWa('+54', '011 5555-1234', ''), 'https://wa.me/541155551234');
+  verificar('número incompleto → vacío', armarEnlaceWa('+52', '5512', 'Hola'), '');
+  verificar('sin número → vacío', armarEnlaceWa('+52', '', 'Hola'), '');
+  verificar(
+    'lee de vuelta lo que armó',
+    JSON.stringify(leerEnlaceWa(armarEnlaceWa('+57', '3001234567', '¿Hay cupo? ¡Gracias!'))),
+    JSON.stringify({ lada: '+57', numero: '3001234567', mensaje: '¿Hay cupo? ¡Gracias!' }),
+  );
+  verificar('+1 no se confunde con otra lada', leerEnlaceWa('https://wa.me/13055551234')?.lada, '+1');
+  verificar(
+    'formato api.whatsapp.com',
+    JSON.stringify(leerEnlaceWa('https://api.whatsapp.com/send?phone=5215512345678&text=Hola')),
+    JSON.stringify({ lada: '+52', numero: '15512345678', mensaje: 'Hola' }),
+  );
+  verificar('un enlace de grupo no es un número', leerEnlaceWa('https://chat.whatsapp.com/AbCdEf123'), null);
+  verificar('otra página no es WhatsApp', leerEnlaceWa('https://example.com/?phone=5215512345678'), null);
+  verificar('texto que no es URL', leerEnlaceWa('5512345678'), null);
 }
 
 console.log(

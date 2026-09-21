@@ -1,10 +1,12 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import type { CampoConfig, ConfigWebinar } from '@/lib/config';
 import type { Salud } from '@/lib/salud';
 import { ruta } from '@/lib/ruta';
+import { LADAS, LADA_POR_DEFECTO } from '@/lib/telefono';
+import { MENSAJES_SOPORTE, armarEnlaceWa, leerEnlaceWa } from '@/lib/whatsapp';
 
 interface Props {
   config: ConfigWebinar;
@@ -482,9 +484,180 @@ function Campo({
         />
       )}
 
+      {campo.tipo === 'whatsapp' && (
+        <CampoWhatsapp id={id} valor={valor} onChange={onChange} claseInput={claseInput} />
+      )}
+
       {campo.ayuda && (
         <p className="mt-1.5 text-xs text-texto-tenue">{campo.ayuda}</p>
       )}
+    </div>
+  );
+}
+
+/**
+ * Un WhatsApp, sin armar el enlace a mano: lada, número y el mensaje con el
+ * que llega escrito el chat. Lo que se guarda sigue siendo el enlace completo
+ * (`https://wa.me/…`), que es lo que usan el sitio y los correos de GHL.
+ */
+function CampoWhatsapp({
+  id,
+  valor,
+  onChange,
+  claseInput,
+}: {
+  id: string;
+  valor: string;
+  onChange: (v: string) => void;
+  claseInput: string;
+}) {
+  const PROPIO = 'propio';
+  const NINGUNO = 'ninguno';
+
+  const desde = (url: string) => {
+    const partes = url ? leerEnlaceWa(url) : null;
+    const indice = partes ? MENSAJES_SOPORTE.indexOf(partes.mensaje) : 0;
+    return {
+      // Un enlace que no es un número (o uno que no sabemos desarmar) se edita tal cual.
+      modo: url && !partes ? ('enlace' as const) : ('armar' as const),
+      lada: partes?.lada ?? LADA_POR_DEFECTO,
+      numero: partes?.numero ?? '',
+      eleccion: !partes ? '0' : partes.mensaje === '' ? NINGUNO : indice >= 0 ? String(indice) : PROPIO,
+      propio: partes && indice < 0 ? partes.mensaje : '',
+    };
+  };
+
+  const [estado, setEstado] = useState(() => desde(valor));
+  const ultimoEmitido = useRef(valor);
+
+  // Si el valor cambia desde fuera (re-sincronizar, recargar), se vuelve a leer.
+  useEffect(() => {
+    if (valor !== ultimoEmitido.current) {
+      ultimoEmitido.current = valor;
+      setEstado(desde(valor));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [valor]);
+
+  const mensajeDe = (e: typeof estado): string =>
+    e.eleccion === NINGUNO ? '' : e.eleccion === PROPIO ? e.propio : (MENSAJES_SOPORTE[Number(e.eleccion)] ?? '');
+
+  const cambiar = (parcial: Partial<typeof estado>) => {
+    const nuevo = { ...estado, ...parcial };
+    setEstado(nuevo);
+    if (nuevo.modo === 'armar') {
+      const enlace = armarEnlaceWa(nuevo.lada, nuevo.numero, mensajeDe(nuevo));
+      ultimoEmitido.current = enlace;
+      onChange(enlace);
+    }
+  };
+
+  const enlace = estado.modo === 'armar' ? armarEnlaceWa(estado.lada, estado.numero, mensajeDe(estado)) : valor;
+  const claseCambio = 'mt-2.5 text-xs font-semibold text-acento-claro underline decoration-dotted underline-offset-4 hover:text-crema';
+
+  if (estado.modo === 'enlace') {
+    return (
+      <div>
+        <input
+          id={id}
+          type="url"
+          value={valor}
+          placeholder="https://wa.me/…"
+          onChange={(e) => {
+            ultimoEmitido.current = e.target.value;
+            onChange(e.target.value);
+          }}
+          className={claseInput}
+        />
+        <button type="button" className={claseCambio} onClick={() => cambiar({ ...desde(''), modo: 'armar' })}>
+          Mejor armarlo con mi número
+        </button>
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-3">
+      <div className="grid grid-cols-[minmax(0,210px)_1fr] gap-2.5 max-sm:grid-cols-1">
+        <select
+          aria-label="País"
+          value={estado.lada}
+          onChange={(e) => cambiar({ lada: e.target.value })}
+          className={claseInput}
+        >
+          {LADAS.map(([codigo, bandera, pais]) => (
+            <option key={codigo} value={codigo}>
+              {bandera} {codigo} · {pais}
+            </option>
+          ))}
+        </select>
+        <input
+          id={id}
+          type="tel"
+          inputMode="tel"
+          autoComplete="off"
+          value={estado.numero}
+          placeholder="Tu número, con lada de ciudad. Ej. 55 1234 5678"
+          onChange={(e) => cambiar({ numero: e.target.value })}
+          className={claseInput}
+        />
+      </div>
+
+      <div>
+        <label htmlFor={`${id}-mensaje`} className="mb-1.5 block text-xs text-texto-tenue">
+          El mensaje con el que llega escrito el chat
+        </label>
+        <select
+          id={`${id}-mensaje`}
+          value={estado.eleccion}
+          onChange={(e) => cambiar({ eleccion: e.target.value })}
+          className={claseInput}
+        >
+          {MENSAJES_SOPORTE.map((m, i) => (
+            <option key={m} value={String(i)}>
+              {m}
+            </option>
+          ))}
+          <option value={PROPIO}>Escribir el mío…</option>
+          <option value={NINGUNO}>Sin mensaje: que abra el chat vacío</option>
+        </select>
+      </div>
+
+      {estado.eleccion === PROPIO && (
+        <textarea
+          aria-label="Tu mensaje"
+          rows={2}
+          maxLength={300}
+          value={estado.propio}
+          placeholder="Hola, vi tu clase y quiero…"
+          onChange={(e) => cambiar({ propio: e.target.value })}
+          className={claseInput}
+        />
+      )}
+
+      <div className="rounded-[7px] border border-linea bg-fondo/60 px-4 py-3">
+        {enlace ? (
+          <>
+            <p className="mb-2 break-all font-mono text-[12.5px] leading-snug text-texto-tenue">{enlace}</p>
+            <a
+              href={enlace}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs font-semibold text-acento-claro underline decoration-dotted underline-offset-4 hover:text-crema"
+            >
+              Probar: abrir este chat en WhatsApp ↗
+            </a>
+          </>
+        ) : (
+          <p className="text-xs text-texto-tenue">
+            Escribe tu número y aquí aparece tu enlace, listo. Sin número, el botón de WhatsApp no sale en tus páginas.
+          </p>
+        )}
+      </div>
+
+      <button type="button" className={claseCambio} onClick={() => setEstado({ ...estado, modo: 'enlace' })}>
+        Ya tengo mi enlace: prefiero pegarlo
+      </button>
     </div>
   );
 }

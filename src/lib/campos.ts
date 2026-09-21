@@ -34,7 +34,9 @@ export interface CampoConfig {
     | 'interruptor'
     | 'modo'
     | 'fecha'
-    | 'puerta';
+    | 'puerta'
+    /** Un WhatsApp: el panel arma el enlace wa.me con lada, número y mensaje. */
+    | 'whatsapp';
   grupo:
     | 'Programación'
     | 'La sala'
@@ -247,8 +249,8 @@ export const CAMPOS: readonly CampoConfig[] = [
     nombre: 'Enlace de Whatsapp de Soporte',
     slug: 'enlace_de_whatsapp_de_soporte',
     etiqueta: 'WhatsApp de soporte',
-    ayuda: 'Para dudas. Aparece en el pie de página.',
-    tipo: 'url',
+    ayuda: 'A donde te escriben con dudas. Aparece en el pie de tus páginas y en tus correos.',
+    tipo: 'whatsapp',
     grupo: 'Enlaces',
   },
   {

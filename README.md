@@ -250,7 +250,7 @@ con HMAC que dura 12 h.
 |---|---|
 | Programación | recurrente o fecha única, día, fecha, hora, zona horaria, duración, abrir o cerrar registros |
 | La sala | minutos de antelación, mando de la puerta |
-| Enlaces | ingreso, grupo de WhatsApp, soporte, oferta, repetición |
+| Enlaces | ingreso, grupo de WhatsApp, soporte, oferta, repetición (el WhatsApp de soporte se arma en el panel con lada, número y mensaje: `src/lib/whatsapp.ts`) |
 | La oferta | checkout, apartado, precio, minutos del contador |
 | Etiquetas | los tres nombres generales |
 | Contenido | título del webinar, video de bienvenida (enlace de Media Storage de GHL; también YouTube o Vimeo. Otras URLs no se incrustan: `src/lib/video.ts`) |
