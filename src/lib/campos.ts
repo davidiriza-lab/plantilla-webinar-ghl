@@ -307,7 +307,8 @@ export const CAMPOS: readonly CampoConfig[] = [
     nombre: 'Video de Gracias',
     slug: 'video_de_gracias',
     etiqueta: 'Video de bienvenida (página de gracias)',
-    ayuda: 'YouTube, Vimeo o un MP4. Si lo dejas vacío, no aparece el bloque.',
+    ayuda:
+      'Sube tu video a Media Storage de GoHighLevel, copia su enlace y pégalo aquí (también sirve YouTube o Vimeo). Comprímelo antes: 720p y menos de 50 MB carga rápido en el teléfono. Vacío = no aparece el bloque.',
     tipo: 'url',
     grupo: 'Contenido',
   },

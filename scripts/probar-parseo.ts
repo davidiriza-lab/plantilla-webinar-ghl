@@ -4,6 +4,7 @@
  * Cubren lo que puede pasar cuando alguien edita los custom values a mano
  * desde GoHighLevel, que es el punto del sistema híbrido.
  */
+import { interpretarVideo } from '../src/lib/video.ts';
 import {
   parsearDia,
   parsearHora,
@@ -93,6 +94,33 @@ verificar('sin protocolo no se usa', parsearUrl('zoom.us/j/123'), '');
 verificar('javascript: se bloquea', parsearUrl('javascript:alert(1)'), '');
 
 console.warn = avisoOriginal;
+
+console.log('\nVideo de bienvenida\n');
+{
+  const v = (u: string): string => {
+    const r = interpretarVideo(u);
+    return r ? `${r.tipo}:${r.src}` : 'nada';
+  };
+  const GHL = 'https://assets.cdn.filesafe.space/abc123/media/6645183f4c28.mp4';
+  verificar('media de GHL → reproductor nativo', v(GHL), `archivo:${GHL}`);
+  verificar(
+    'media de GHL (dominio viejo)',
+    v('https://storage.googleapis.com/msgsndr/abc123/media/x.mp4').split(':')[0],
+    'archivo',
+  );
+  verificar('una imagen de GHL no es un video', v('https://assets.cdn.filesafe.space/abc/media/foto.png'), 'nada');
+  verificar(
+    'YouTube → reproductor oficial sin cookies',
+    v('https://www.youtube.com/watch?v=dQw4w9WgXcQ'),
+    'iframe:https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ',
+  );
+  verificar('youtu.be', v('https://youtu.be/dQw4w9WgXcQ'), 'iframe:https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ');
+  verificar('Vimeo', v('https://vimeo.com/123456789'), 'iframe:https://player.vimeo.com/video/123456789');
+  verificar('una página cualquiera NO se incrusta', v('https://pagina-ajena.com/formulario'), 'nada');
+  verificar('http sin s NO', v('http://assets.cdn.filesafe.space/abc/media/x.mp4'), 'nada');
+  verificar('javascript: NO', v('javascript:alert(1)'), 'nada');
+  verificar('texto que no es URL NO', v('mi video'), 'nada');
+}
 
 console.log(
   fallos === 0

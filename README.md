@@ -253,7 +253,7 @@ con HMAC que dura 12 h.
 | Enlaces | ingreso, grupo de WhatsApp, soporte, oferta, repetición |
 | La oferta | checkout, apartado, precio, minutos del contador |
 | Etiquetas | los tres nombres generales |
-| Contenido | título del webinar, video de bienvenida |
+| Contenido | título del webinar, video de bienvenida (enlace de Media Storage de GHL; también YouTube o Vimeo. Otras URLs no se incrustan: `src/lib/video.ts`) |
 | Seguimiento | pixel de Meta y token de la API de conversiones |
 
 La API solo acepta las claves declaradas en `CAMPOS` (`src/lib/config.ts`): no se
