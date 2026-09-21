@@ -96,6 +96,14 @@ const MODULOS: readonly Modulo[] = [
 const BONOS: readonly Bono[] = [];
 
 export const OFERTA = {
+  /**
+   * Leyenda de demostración. Sale en una franja arriba de la página y junto al
+   * precio. La plantilla la trae porque su oferta de ejemplo NO es real: en
+   * cuanto pongas la tuya, déjala en '' y desaparece.
+   */
+  aviso:
+    'Página de demostración. Esta es una oferta ficticia, no una oferta real de Business Growth Intensive: el precio, la garantía y las condiciones son de ejemplo.', // EJEMPLO
+
   seo: {
     titulo: 'Business Growth Intensive | 16 semanas para construir tu Profit Machine', // EJEMPLO
     descripcion:

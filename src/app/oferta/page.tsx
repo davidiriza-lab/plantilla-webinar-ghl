@@ -87,6 +87,16 @@ export default async function Oferta() {
     <div className="min-h-dvh bg-fondo text-texto">
       <PixelMeta pixelId={config.pixelFacebook} />
 
+      {/* ── Leyenda de demostración (solo si oferta.ts trae aviso) ─── */}
+      {O.aviso && (
+        <p
+          role="note"
+          className="border-b border-[#fbbf24]/40 bg-[#fbbf24]/15 px-5 py-2.5 text-center text-[13.5px] font-medium leading-snug text-[#fde68a]"
+        >
+          {O.aviso}
+        </p>
+      )}
+
       {/* ── Cabecera ───────────────────────────────────────────────── */}
       <header className="sticky top-0 z-50 border-b border-linea bg-fondo/95 backdrop-blur">
         <div className="contenedor flex items-center justify-between gap-6 px-6 py-2.5 max-sm:px-5">
@@ -448,6 +458,15 @@ export default async function Oferta() {
             </div>
           </dl>
           <p className="mb-9 text-[14px] text-texto-tenue">{O.inversion.unPago}</p>
+
+          {O.aviso && (
+            <p
+              role="note"
+              className="mx-auto mb-9 max-w-[460px] rounded-xl border border-[#fbbf24]/40 bg-[#fbbf24]/10 px-4 py-3 text-[13.5px] leading-snug text-[#fde68a]"
+            >
+              {O.aviso}
+            </p>
+          )}
 
           <ul className="mx-auto mb-10 max-w-[420px] space-y-2.5 text-left">
             {O.inversion.resumen.map((r) => (

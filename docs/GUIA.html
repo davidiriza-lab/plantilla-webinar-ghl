@@ -695,7 +695,7 @@ El embudo escribe bien en GoHighLevel.</code></pre>
     <h3>Pídele a Claude</h3>
     <div class="prompt"><b>Prompt 1 · mis módulos</b><span class="texto">Mi programa se llama [nombre], dura [duración] y tiene estos módulos, en orden: [lista con el nombre de cada módulo y qué se logra en él]. Reescribe la lista de módulos de src/contenido/oferta.ts: para cada uno llena cuando, fase, nombre, frase, promesa, detalle y teLlevas (lo que la persona se lleva al terminarlo). Deja valor en 0 salvo que te dé un precio por separado. Borra las marcas EJEMPLO de lo que cambies.</span></div>
     <div class="prompt"><b>Prompt 2 · las cajas de los módulos</b><span class="texto">Dejé en public/assets/ la imagen de la caja de cada módulo, en orden: [caja-1.png, caja-2.png…]. Conviértelas a WebP de 640 px de ancho con fondo transparente, guárdalas como modulo-1.webp, modulo-2.webp… y conéctalas en el campo imagen de cada módulo. Si de alguno no tengo imagen, deja imagen en '' para que salga el marcador.</span></div>
-    <div class="prompt"><b>Prompt 3 · el resto de la oferta</b><span class="texto">Con lo que ya sabes de mi programa, reescribe en src/contenido/oferta.ts el hero, el problema, qué incluye, para quién es, el acompañamiento en vivo y el cierre. Mi garantía real es: [días y condiciones]. Si tengo bonos son estos: [lista]; si no, deja la lista vacía. Si quiero mostrar escalera de precio, el valor por separado es [número] y el precio regular [número]; si no, déjalos en 0.</span></div>
+    <div class="prompt"><b>Prompt 3 · el resto de la oferta</b><span class="texto">Con lo que ya sabes de mi programa, reescribe en src/contenido/oferta.ts el hero, el problema, qué incluye, para quién es, el acompañamiento en vivo y el cierre. Deja aviso en '' para quitar la leyenda de oferta ficticia, porque esta ya es mi oferta real. Mi garantía real es: [días y condiciones]. Si tengo bonos son estos: [lista]; si no, deja la lista vacía. Si quiero mostrar escalera de precio, el valor por separado es [número] y el precio regular [número]; si no, déjalos en 0.</span></div>
 
     <div class="tu"><span class="t">Lo único que haces tú</span>
       <ol>
@@ -711,6 +711,7 @@ El embudo escribe bien en GoHighLevel.</code></pre>
       <label><input type="checkbox" id="c-9-1"><span>Mis módulos están en <code>oferta.ts</code>, cada uno con su frase, promesa, detalle y lo que se lleva</span></label>
       <label><input type="checkbox" id="c-9-2"><span>Cada módulo tiene su caja (o decidí dejar el marcador por ahora)</span></label>
       <label><input type="checkbox" id="c-9-3"><span>La garantía que se lee es la mía, con mis días y mis condiciones</span></label>
+      <label><input type="checkbox" id="c-9-6"><span>Quité la leyenda de "oferta ficticia" (<code>aviso</code> en <code>oferta.ts</code>, vacío) porque la oferta ya es la mía</span></label>
       <label><input type="checkbox" id="c-9-4"><span>Precio y moneda cargados en el panel, y <code>/oferta</code> los muestra bien</span></label>
       <label><input type="checkbox" id="c-9-5"><span>Probé el botón en una ventana privada: me pide mis datos antes de avanzar</span></label>
     </div>
