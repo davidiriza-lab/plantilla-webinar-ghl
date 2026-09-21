@@ -182,6 +182,34 @@
 
   .ritmo{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:14px 0 20px}
   .ritmo .paso .k{color:var(--gold)}
+
+  /* ── Pasos: quién hace cada uno ── */
+  .para{font-size:17px;color:var(--white);max-width:66ch;margin:6px 0 22px}
+  ol.pasos{list-style:none;padding:0;margin:0 0 20px;counter-reset:paso;display:flex;flex-direction:column;gap:12px}
+  ol.pasos>li{counter-increment:paso;position:relative;max-width:none;margin:0;padding:16px 18px 16px 62px;background:var(--surface);border:1px solid var(--border);border-radius:16px;backdrop-filter:blur(12px)}
+  ol.pasos>li::before{content:counter(paso);position:absolute;left:16px;top:14px;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;font:700 14px var(--mono);color:var(--white);background:rgba(148,163,184,.18);border:1px solid var(--border)}
+  ol.pasos>li.claude{border-color:rgba(56,130,246,.45)}
+  ol.pasos>li.claude::before{background:var(--blue);border-color:var(--blue)}
+  ol.pasos>li.tu-paso{border-color:rgba(251,191,36,.4)}
+  ol.pasos>li.tu-paso::before{background:rgba(251,191,36,.9);border-color:var(--gold);color:#0b1a3c}
+  .quien{display:inline-block;font:700 10.5px var(--body);letter-spacing:.16em;text-transform:uppercase;margin-right:10px;padding:3px 9px;border-radius:999px;vertical-align:2px}
+  .quien.c{color:#dbeafe;background:rgba(56,130,246,.28)}
+  .quien.t{color:#0b1a3c;background:var(--gold)}
+  ol.pasos>li>p{margin:0 0 10px;max-width:70ch}
+  ol.pasos>li>p:last-child{margin-bottom:0}
+  ol.pasos>li .prompt{margin:10px 0 0}
+  ol.pasos>li ul{margin:8px 0 0}
+  ol.pasos>li pre{margin:10px 0 0}
+  @media (max-width:560px){ol.pasos>li{padding:54px 16px 16px}ol.pasos>li::before{top:12px}}
+  details.falla{border:1px solid var(--border);border-radius:16px;background:rgba(6,16,34,.5);margin:14px 0 18px;padding:0 18px}
+  details.falla summary{cursor:pointer;padding:13px 0;font:600 14.5px var(--body);color:var(--gray-light);list-style:none}
+  details.falla summary::before{content:"+";display:inline-block;width:20px;color:var(--cyan);font-weight:700}
+  details.falla[open] summary::before{content:"–"}
+  details.falla summary::-webkit-details-marker{display:none}
+  details.falla ul{margin:0 0 14px}
+  .leyenda-pasos{display:flex;flex-wrap:wrap;gap:10px 22px;margin:12px 0 22px;font-size:14.5px;color:var(--gray-light)}
+  .en-clase{margin:4px 0 18px;padding:12px 16px;border-left:3px solid var(--cyan);background:rgba(34,211,238,.06);border-radius:0 12px 12px 0;font-size:14.5px;color:var(--gray-light);max-width:none}
+  .en-clase b{display:inline-block;font:700 10.5px var(--body);letter-spacing:.18em;text-transform:uppercase;color:var(--cyan);margin-right:10px}
 </style>
 </head>
 <body>
@@ -190,9 +218,9 @@
   <header class="portada">
     <div>
       <img class="logo" src="assets/bgi-logo-white.png" alt="Business Growth Intensive" width="1400" height="614">
-      <p class="ojo">Manual de trabajo · Ideas · Estrategia · Ejecución · Resultados</p>
+      <p class="ojo">Manual de trabajo · Business Growth Intensive</p>
       <h1>Tu embudo de webinar, construido desde <span>Claude Code</span></h1>
-      <p>Tú decides y apruebas. Claude escribe, corre y publica. Este manual te dice qué pedirle en cada módulo, con el texto listo para copiar, y qué es lo único que tienes que hacer tú en cada herramienta externa. Las casillas se guardan en este navegador.</p>
+      <p>Tú decides y apruebas. Claude escribe, corre y publica. Cada módulo te dice para qué sirve la pieza, los pasos en orden y el texto exacto que le pegas a Claude.</p>
     </div>
     <div class="progreso" aria-live="polite">
       <div class="n"><span id="p-hecho">0</span><small>de <span id="p-total">0</span> pasos</small></div>
@@ -208,7 +236,7 @@
       <b>Enlaces</b>
       <a href="https://github.com/davidiriza-lab/plantilla-webinar-ghl" target="_blank" rel="noopener">La plantilla en GitHub ↗</a>
       <a href="https://www.mibgi.com/plantilla" target="_blank" rel="noopener">La demo en vivo ↗</a>
-      <a href="https://github.com/davidiriza-lab/plantilla-webinar-ghl/blob/main/docs/WORKFLOWS.md" target="_blank" rel="noopener">Workflows y sus correos ↗</a>
+      <a href="https://github.com/davidiriza-lab/plantilla-webinar-ghl/blob/main/docs/WORKFLOWS.md" target="_blank" rel="noopener">Los correos de ejemplo ↗</a>
       <a class="vivo" data-ghl="" target="_blank" rel="noopener">Mi GoHighLevel</a>
       <a class="vivo" data-sitio="/admin" target="_blank" rel="noopener">Mi panel</a>
       <a class="vivo" data-sitio="/api/salud" target="_blank" rel="noopener">La salud de mi sitio</a>
@@ -217,70 +245,56 @@
 
   <main>
 
-  <!-- ══════════════════════════════════════════════════════════════ -->
+  <!-- ═══ 00 ═══ -->
   <section class="modulo" id="m0" data-titulo="Qué vas a construir">
-    <div class="cabecera"><span class="num">00</span><h2>Qué vas a construir</h2><p class="meta">Lee esto antes de tocar nada. Diez minutos.</p></div>
+    <div class="cabecera"><span class="num">00</span><h2>Qué vas a construir</h2><p class="meta">Diez minutos de lectura.</p></div>
 
-    <p>Un embudo completo de webinar en vivo: una página que registra, una que confirma, una puerta que abre sola quince minutos antes de la clase, una oferta que cobra, y un panel desde el que cambias fecha, enlaces y precio sin tocar código. Así se ve, tal cual, en la demo publicada:</p>
+    <p class="para">Un embudo completo para dar una clase en vivo y vender al final: la gente se registra, recibe sus recordatorios, entra a la sala, ve tu oferta, y tú lo ves todo en tu GoHighLevel.</p>
 
     <div class="dos-capturas">
-      <figure class="captura"><img src="assets/capturas/landing-hero.jpg" alt="La página de registro de la demo: titular, promesa y formulario de nombre, email y WhatsApp" width="1440" height="900" loading="lazy"><figcaption><b>La landing de registro.</b> Todo el texto sale de tres archivos que vas a reescribir con Claude en el módulo 06.</figcaption></figure>
-      <figure class="captura"><img src="assets/capturas/movil-landing.jpg" alt="La misma landing vista en un teléfono" width="780" height="1688" loading="lazy"><figcaption>En el teléfono, que es donde llega la mayoría desde un anuncio.</figcaption></figure>
+      <figure class="captura"><img src="assets/capturas/landing-hero.jpg" alt="La página de registro de la demo: titular, promesa y formulario de nombre, email y WhatsApp" width="1440" height="900" loading="lazy"><figcaption><b>La página de registro</b> de la demo. La tuya va a ser igual, con tu copy.</figcaption></figure>
+      <figure class="captura"><img src="assets/capturas/movil-landing.jpg" alt="La misma página vista en un teléfono" width="780" height="1688" loading="lazy"><figcaption>En el teléfono, que es donde llega la mayoría.</figcaption></figure>
     </div>
 
-    <p>La decisión que lo hace distinto: <strong>GoHighLevel es la única base de datos.</strong> No hay Supabase, no hay Postgres, no hay cron. Los prospectos son contactos de tu sub-cuenta. La configuración vive en los custom values de esa sub-cuenta. Los correos y WhatsApp los manda GHL con sus workflows. El sitio solo hace las páginas y captura.</p>
-    <p>Y la decisión que hace distinto a <em>este manual</em>: <strong>casi todo lo haces desde Claude Code.</strong> Crear tu copia, instalar, conectar GHL, escribir el copy, probar el embudo, publicar. Lo que queda fuera son pantallas de terceros que no tienen API para eso: crear una llave, generar un token, poner un registro DNS. En cada módulo verás una caja dorada, <em>Lo único que haces tú</em>, con exactamente eso y nada más.</p>
+    <h3>Las piezas y para qué sirven</h3>
+    <div class="tabla"><table>
+      <thead><tr><th>Pieza</th><th>Para qué sirve</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Página de registro</strong></td><td>Convierte visitas en registrados: nombre, correo y WhatsApp.</td></tr>
+        <tr><td><strong>Página de gracias</strong></td><td>Confirma el lugar y hace que agenden la clase y entren a tu grupo de WhatsApp.</td></tr>
+        <tr><td><strong>La puerta de la sala</strong></td><td>El enlace que mandas el día de la clase. Pasa lista y abre tu Zoom.</td></tr>
+        <tr><td><strong>La oferta</strong></td><td>Presenta tu programa módulo por módulo y lleva a pagar.</td></tr>
+        <tr><td><strong>El panel</strong></td><td>Donde cambias fecha, hora, enlaces y precio cada semana, sin tocar nada más.</td></tr>
+        <tr><td><strong>GoHighLevel</strong></td><td>Guarda a tus registrados, sabe quién asistió y manda los correos y recordatorios.</td></tr>
+        <tr><td><strong>Meta</strong></td><td>Le dice a tus anuncios quién se registró y quién asistió, para que aprendan.</td></tr>
+        <tr><td><strong>Claude Code</strong></td><td>Construye, prueba y publica todo esto por ti. Tú le pides.</td></tr>
+        <tr><td><strong>GitHub y Vercel</strong></td><td>Donde se guarda tu sitio y donde vive publicado. Claude los maneja.</td></tr>
+      </tbody>
+    </table></div>
+    <p>Todo lo que pasa con tus prospectos queda en tu GoHighLevel. No hay otra herramienta que pagar ni que aprender.</p>
 
-    <div class="diagrama" role="img" aria-label="Mapa del sistema: el visitante llega al sitio en Vercel; el sitio escribe prospectos en GoHighLevel y lee la configuración de una copia en Edge Config; el panel escribe en los dos lados; Meta se conecta al sitio por API.">
-      <svg viewBox="0 0 760 300">
-        <defs><marker id="flecha" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#94a3b8"/></marker></defs>
-        <rect class="caja" x="16" y="118" width="120" height="64" rx="10"/>
-        <text x="76" y="146" text-anchor="middle" class="t">Visitante</text>
-        <text x="76" y="164" text-anchor="middle" class="s">desde un anuncio</text>
-        <rect class="caja p" x="210" y="90" width="200" height="120" rx="10"/>
-        <text x="310" y="116" text-anchor="middle" class="t">El sitio (Next.js)</text>
-        <text x="310" y="136" text-anchor="middle">/  /gracias  /ingreso</text>
-        <text x="310" y="154" text-anchor="middle">/oferta  /admin</text>
-        <text x="310" y="180" text-anchor="middle" class="s">corre en Vercel</text>
-        <rect class="caja a" x="520" y="20" width="220" height="112" rx="10"/>
-        <text x="630" y="46" text-anchor="middle" class="t">GoHighLevel</text>
-        <text x="630" y="66" text-anchor="middle">contactos · etiquetas</text>
-        <text x="630" y="84" text-anchor="middle">custom values · pipeline</text>
-        <text x="630" y="102" text-anchor="middle">workflows (correo, WhatsApp)</text>
-        <text x="630" y="122" text-anchor="middle" class="s">la única base de datos</text>
-        <rect class="caja" x="520" y="168" width="220" height="64" rx="10"/>
-        <text x="630" y="194" text-anchor="middle" class="t">Copia en Edge Config</text>
-        <text x="630" y="214" text-anchor="middle" class="s">lo que leen las páginas, rápido</text>
-        <rect class="caja" x="232" y="246" width="156" height="40" rx="8"/>
-        <text x="310" y="271" text-anchor="middle">Meta (pixel y conversiones)</text>
-        <path class="fl" d="M136 150 L208 150"/>
-        <path class="fl p" d="M410 120 C460 120 470 76 518 76"/>
-        <text x="455" y="88" class="s" text-anchor="middle">escribe</text>
-        <path class="fl" d="M518 200 C470 200 460 160 410 160"/>
-        <text x="462" y="196" class="s" text-anchor="middle">lee</text>
-        <path class="fl" d="M630 132 L630 166"/>
-        <text x="662" y="154" class="s">el panel copia</text>
-        <path class="fl" d="M310 244 L310 212"/>
-      </svg>
+    <h3>Cómo leer este manual</h3>
+    <p>Cada módulo tiene lo mismo: <strong>para qué sirve</strong>, <strong>los pasos</strong> en orden y una lista de <strong>listo cuando</strong>. Cada paso dice quién lo hace:</p>
+    <div class="leyenda-pasos">
+      <span><span class="quien c">Claude</span>Copias el texto y se lo pegas a Claude Code. Cambia lo que va entre [corchetes].</span>
+      <span><span class="quien t">Tú</span>Un clic que nadie puede dar por ti, en GoHighLevel, Vercel o Meta.</span>
     </div>
-
-    <div class="nota"><span class="t">Dónde vive la plantilla</span><p>En GitHub: <a href="https://github.com/davidiriza-lab/plantilla-webinar-ghl" target="_blank" rel="noopener">github.com/davidiriza-lab/plantilla-webinar-ghl</a>. Es un repositorio público y <em>template</em>: no lo modificas, sacas tu propia copia (módulo 03) y trabajas sobre ella. La plantilla es pública; <strong>tu copia va privada</strong>, porque ahí van a vivir tu copy y tu configuración.</p></div>
 
     <h3>Todos los enlaces, en un lugar</h3>
     <div class="enlaces">
       <div class="grupo"><b>La plantilla</b>
         <a href="https://github.com/davidiriza-lab/plantilla-webinar-ghl" target="_blank" rel="noopener">El repositorio en GitHub ↗</a>
-        <a href="https://github.com/davidiriza-lab/plantilla-webinar-ghl/blob/main/docs/WORKFLOWS.md" target="_blank" rel="noopener">Los 4 workflows y sus 9 correos ↗</a>
-        <a href="https://github.com/davidiriza-lab/plantilla-webinar-ghl#readme" target="_blank" rel="noopener">La documentación técnica (README) ↗</a>
+        <a href="https://github.com/davidiriza-lab/plantilla-webinar-ghl/blob/main/docs/WORKFLOWS.md" target="_blank" rel="noopener">Los 9 correos de ejemplo ↗</a>
+        <a href="https://github.com/davidiriza-lab/plantilla-webinar-ghl#readme" target="_blank" rel="noopener">La documentación técnica ↗</a>
         <small>Es pública. Tu copia va privada: se crea en el módulo 03.</small>
       </div>
       <div class="grupo"><b>La demo en vivo</b>
         <a href="https://www.mibgi.com/plantilla" target="_blank" rel="noopener">Registro ↗</a>
         <a href="https://www.mibgi.com/plantilla/gracias" target="_blank" rel="noopener">Gracias ↗</a>
         <a href="https://www.mibgi.com/plantilla/ingreso" target="_blank" rel="noopener">La puerta de la sala ↗</a>
-        <a href="https://www.mibgi.com/plantilla/oferta" target="_blank" rel="noopener">La oferta por módulos ↗</a>
+        <a href="https://www.mibgi.com/plantilla/oferta" target="_blank" rel="noopener">La oferta ↗</a>
         <a href="https://www.mibgi.com/plantilla/admin" target="_blank" rel="noopener">El panel ↗</a>
-        <small>Es lo que vas a tener tú, con tu copy. La oferta que muestra es ficticia y la página lo dice. La contraseña del panel se da en la formación.</small>
+        <small>Es lo que vas a tener tú. La oferta que muestra es ficticia y la página lo dice. La contraseña del panel se da en la formación.</small>
       </div>
       <div class="grupo"><b>Las cuentas que vas a usar</b>
         <a href="https://claude.ai" target="_blank" rel="noopener">Claude ↗</a>
@@ -288,669 +302,476 @@
         <a href="https://vercel.com/signup" target="_blank" rel="noopener">Vercel: crear cuenta ↗</a>
         <a href="https://app.gohighlevel.com" target="_blank" rel="noopener">GoHighLevel ↗</a>
         <a href="https://business.facebook.com/events_manager2" target="_blank" rel="noopener">Meta: Administrador de eventos ↗</a>
-        <small>En Vercel, entra con tu cuenta de GitHub: así quedan ligadas desde el principio.</small>
+        <small>En Vercel entra con tu cuenta de GitHub: quedan ligadas desde el principio.</small>
       </div>
     </div>
-    <div class="nota"><span class="t">Los enlaces con flecha hacia TU cuenta</span><p>Varios enlaces de este manual abren la pantalla exacta de <strong>tu</strong> GoHighLevel, de <strong>tu</strong> sitio o de <strong>tu</strong> repositorio. Se arman con lo que escribas en <a href="#ficha">tu ficha</a> (Location ID, dominio y repositorio), que se guarda solo en este navegador. Mientras un dato falte, el enlace aparece punteado y te dice cuál.</p></div>
+    <p>Algunos enlaces del manual abren <strong>tus</strong> propias pantallas: tu GoHighLevel, tu panel, tu repositorio. Se arman con lo que escribas en <a href="#ficha">tu ficha</a>. Mientras falte un dato se ven punteados.</p>
 
-    <h3>Lo que necesitas tener antes de empezar</h3>
-    <div class="tabla"><table>
-      <thead><tr><th>Cuenta</th><th>Para qué</th><th>Costo</th></tr></thead>
-      <tbody>
-        <tr><td><strong>Claude Code</strong></td><td>Es quien construye. Todo el manual pasa por aquí</td><td>Tu suscripción de Claude</td></tr>
-        <tr><td><strong>GoHighLevel</strong>, de preferencia con <strong>agencia propia</strong></td><td>Guardar prospectos, configuración y mandar recordatorios, en una sub-cuenta solo para el webinar</td><td>Tu plan de GHL</td></tr>
-        <tr><td><strong>GitHub</strong></td><td>Tu copia del código y los despliegues automáticos</td><td>Gratis</td></tr>
-        <tr><td><strong>Vercel</strong></td><td>Donde vive el sitio</td><td>Gratis para empezar</td></tr>
-        <tr><td><strong>Meta Business</strong>, con un pixel</td><td>Pixel y API de conversiones: es lo que le dice a tus anuncios quién se registró y quién asistió. Sin esto la pauta optimiza a ciegas</td><td>Gratis</td></tr>
-      </tbody>
-    </table></div>
+    <div class="nota"><span class="t">Te conviene tener tu propia agencia de GoHighLevel</span><p>Con agencia propia creas una sub-cuenta limpia solo para este webinar, no le pides llaves a nadie, y el día que quieras montar este embudo para un cliente es otra sub-cuenta y otra copia. Si hoy eres sub-cuenta dentro de la agencia de alguien más, todo funciona igual; solo dependes del dueño para crear la sub-cuenta.</p></div>
 
-    <div class="nota"><span class="t">Por qué te conviene tener tu propia agencia de GoHighLevel</span><p>Con agencia propia creas una sub-cuenta limpia solo para este webinar, generas tú las llaves sin pedirle nada a nadie, puedes <strong>importar snapshots</strong> (una sub-cuenta ya armada, con pipeline, campos y workflows) y, el día que quieras montar este embudo para un cliente, es otra sub-cuenta y otra copia del repositorio. Si hoy vives como sub-cuenta dentro de la agencia de alguien más, todo el manual funciona igual; solo que para crear la sub-cuenta o importar un snapshot dependes del dueño de esa agencia.</p></div>
-
-    <h3>Cómo leer cada módulo</h3>
-    <div class="ritmo">
-      <div class="paso"><div class="k">1 · QUÉ ES</div><div class="r">La pieza</div><div class="e">Qué hace y por qué está así. Dos párrafos.</div></div>
-      <div class="paso"><div class="k">2 · PÍDELE A CLAUDE</div><div class="r">El prompt</div><div class="e">Texto listo para copiar. Cambias lo que va entre corchetes y lo pegas en Claude Code.</div></div>
-      <div class="paso"><div class="k">3 · LO ÚNICO QUE HACES TÚ</div><div class="r">La caja dorada</div><div class="e">Los clics en GHL, Vercel o Meta que nadie puede dar por ti.</div></div>
-      <div class="paso"><div class="k">4 · COMPRUEBA</div><div class="r">Las casillas</div><div class="e">Cómo saber que quedó. Se guardan en este navegador.</div></div>
-    </div>
-
-    <div class="nota"><span class="t">Puedes verlo funcionando ahora mismo</span><p>La demo vive en <a href="https://www.mibgi.com/plantilla" target="_blank" rel="noopener">mibgi.com/plantilla</a>: registro, <a href="https://www.mibgi.com/plantilla/ingreso" target="_blank" rel="noopener">puerta de la sala</a>, <a href="https://www.mibgi.com/plantilla/oferta" target="_blank" rel="noopener">oferta</a> y <a href="https://www.mibgi.com/plantilla/admin" target="_blank" rel="noopener">panel</a> (la contraseña te la damos en la formación). No tiene GoHighLevel conectado, así que el formulario no guarda nada a propósito. Todo lo demás es lo que vas a tener tú, con tu copy.</p></div>
+    <p class="en-clase"><b>En la clase</b> Cómo se mueve una persona por el embudo, de anuncio a venta · por qué una clase en vivo · qué vas a tener al terminar el manual.</p>
 
     <div class="lista" data-modulo="m0">
       <div class="cab"><b>Antes de empezar</b><span></span></div>
-      <label><input type="checkbox" id="c-0-1"><span>Tengo una sub-cuenta de GoHighLevel donde voy a trabajar <small>Lo ideal: una nueva, dentro de tu propia agencia. Si usas una que ya existe, el instalador no borra nada.</small></span></label>
-      <label><input type="checkbox" id="c-0-2"><span>Tengo cuenta en GitHub y en Vercel con el mismo correo</span></label>
+      <label><input type="checkbox" id="c-0-1"><span>Tengo una sub-cuenta de GoHighLevel para este webinar <small>Lo ideal: nueva y dentro de tu propia agencia. Si usas una que ya existe, nada se borra.</small></span></label>
+      <label><input type="checkbox" id="c-0-2"><span>Tengo cuenta en GitHub y en Vercel</span></label>
       <label><input type="checkbox" id="c-0-3"><span>Tengo suscripción de Claude</span></label>
-      <label><input type="checkbox" id="c-0-5"><span>Tengo Meta Business con un pixel creado (o acceso de administrador al de mi negocio)</span></label>
-      <label><input type="checkbox" id="c-0-4"><span>Sé qué voy a enseñar en la clase y qué voy a ofrecer al final <small>No hace falta el copy final. Hace falta saber el tema y el precio aproximado.</small></span></label>
+      <label><input type="checkbox" id="c-0-5"><span>Tengo Meta Business con un pixel</span></label>
+      <label><input type="checkbox" id="c-0-4"><span>Sé qué voy a enseñar y qué voy a ofrecer al final <small>No hace falta el copy final. Hace falta el tema y el precio.</small></span></label>
     </div>
   </section>
 
-  <!-- ══════════════════════════════════════════════════════════════ -->
-  <section class="modulo" id="m1" data-titulo="Cómo se trabaja con Claude Code">
-    <div class="cabecera"><span class="num">01</span><h2>Cómo se trabaja con Claude Code</h2><p class="meta">Diez minutos. Es el método de todo el manual: léelo aunque ya uses Claude.</p></div>
+  <!-- ═══ 01 ═══ -->
+  <section class="modulo" id="m1" data-titulo="Cómo se trabaja con Claude">
+    <div class="cabecera"><span class="num">01</span><h2>Cómo se trabaja con Claude</h2><p class="meta">Cinco minutos. Es el método de todo el manual.</p></div>
 
-    <h3>Qué es</h3>
-    <p>Claude Code es Claude dentro de tu computadora: lee tu carpeta del proyecto, escribe archivos, corre comandos en la terminal y publica. Le hablas en español, como a alguien de tu equipo. En vez de seguir instrucciones de "abre tal menú, pega tal cosa", le dices lo que quieres y él da los pasos. Cuando va a correr un comando, te lo muestra y espera tu aprobación: tú sigues teniendo el control.</p>
-    <p>El proyecto trae un archivo <code>CLAUDE.md</code> que le explica a Claude dónde vive cada cosa, las reglas y los comandos. Por eso no tienes que explicarle la arquitectura. Y por eso, si le pides algo que rompe una regla (poner una fecha en el código, mandar un Lead desde la puerta), te lo va a decir.</p>
+    <p class="para">Claude Code es Claude dentro de tu computadora: lee tu proyecto, escribe los archivos, corre los comandos y publica. Le hablas en español, como a alguien de tu equipo.</p>
 
-    <h3>Las dos ventanas</h3>
-    <ul>
-      <li><strong>El chat de Claude en VS Code</strong> (barra lateral). Ahí pegas los prompts de este manual y lees lo que hizo.</li>
-      <li><strong>La terminal</strong> (abajo). Ahí ves correr los comandos y, a veces, se abre el navegador para que apruebes un inicio de sesión. Casi nunca tecleas tú.</li>
-    </ul>
-
-    <h3>Cómo se pide bien</h3>
-    <div class="prompt"><b>Con contexto y con resultado esperado</b><span class="texto">Mi clase se llama "[nombre]". La doy para [audiencia] que tiene [problema]. Reescribe el hero de src/contenido/landing.ts con mi voz, borra las marcas EJEMPLO de lo que cambies y dime qué quedó.</span></div>
-    <div class="prompt"><b>Pegando lo que ves</b><span class="texto">Corrí el sitio y sale este error: [pega el error]. ¿Qué es y qué hago?</span></div>
-    <div class="prompt"><b>Con credenciales, cuando toque</b><span class="texto">Este es mi token: [pega]. Ponlo en .env.local como GHL_API_KEY y no lo muestres en pantalla.</span></div>
-
-    <div class="nota"><span class="t">Pegar llaves y tokens en el chat</span><p>Claude Code corre en tu computadora. Lo que pegas ahí termina en <code>.env.local</code>, un archivo que <strong>nunca se sube a GitHub</strong> (está excluido). Si prefieres no pegar un secreto en el chat, escríbelo tú en <code>.env.local</code> con el editor y dile a Claude "ya está en .env.local, sigue".</p></div>
-
-    <h3>Lo que no le pidas</h3>
-    <ul>
-      <li>Cambiar fecha, hora, enlaces, precio o pixel editando código. Eso es el panel (módulo 05). Te lo va a decir.</li>
-      <li>"Agrega Supabase para guardar los registros". GHL ya los guarda; una segunda base es una segunda cosa que mantener.</li>
-      <li>Meter un contador de urgencia falso en la oferta. Puede hacerlo, pero la plantilla no lo trae por una razón.</li>
-    </ul>
-
-    <h3>El ciclo de trabajo, siempre el mismo</h3>
-    <ol>
-      <li>Pides el cambio en el chat.</li>
-      <li>Lo ves en tu navegador (<code>npm run dev</code>, Claude lo arranca).</li>
-      <li>Le pides "verifica" (<code>npm run verificar</code>).</li>
-      <li>Le pides "súbelo": hace commit y push, y Vercel lo publica solo (módulo 11).</li>
+    <ol class="pasos">
+      <li><p><strong>Le pides.</strong> En el chat de Claude, dentro de VS Code, pegas el texto del manual o le escribes lo que quieres. No sigues menús: él da los pasos.</p></li>
+      <li><p><strong>Apruebas.</strong> Antes de correr algo te lo muestra y espera tu aprobación. Tú sigues teniendo el control.</p></li>
+      <li><p><strong>Lo ves.</strong> Le pides "arranca el sitio" y lo abres en tu navegador.</p></li>
+      <li><p><strong>Lo publicas.</strong> Le dices "súbelo" y en un par de minutos está en tu dominio (desde el módulo 11).</p></li>
     </ol>
 
+    <h3>Cómo se pide bien</h3>
+    <div class="prompt"><b>Con contexto y con el resultado que esperas</b><span class="texto">Mi clase se llama "[nombre]". La doy para [audiencia] que tiene [problema]. Reescribe el titular de la página de registro con mi voz y dime qué quedó.</span></div>
+    <div class="prompt"><b>Pegando lo que ves</b><span class="texto">Me sale este error: [pega el error]. ¿Qué es y qué hago?</span></div>
+
+    <div class="nota"><span class="t">Cuando le pegues una llave o una contraseña</span><p>Claude corre en tu computadora y guarda tus llaves en un archivo privado del proyecto que <strong>nunca se sube a internet</strong>. Los textos del manual ya le piden que no las repita en pantalla.</p></div>
+
+    <div class="nota"><span class="t">Lo que cambia cada semana no se le pide a Claude</span><p>Fecha, hora, enlace de Zoom, precio y pixel se cambian en tu panel (módulo 05). Si se lo pides a Claude, te va a mandar ahí.</p></div>
+
+    <p class="en-clase"><b>En la clase</b> Trabajamos un cambio real con Claude, de la petición a verlo publicado · cómo corregirlo cuando no le atina a la primera.</p>
+
     <div class="lista" data-modulo="m1">
-      <div class="cab"><b>Módulo 01</b><span></span></div>
-      <label><input type="checkbox" id="c-1-1"><span>Entiendo que le pido a Claude y apruebo lo que propone; no sigo menús</span></label>
-      <label><input type="checkbox" id="c-1-2"><span>Sé dónde está el chat y dónde la terminal en VS Code</span></label>
-      <label><input type="checkbox" id="c-1-3"><span>Sé que las llaves van a <code>.env.local</code> y que ese archivo no se sube</span></label>
+      <div class="cab"><b>Listo cuando</b><span></span></div>
+      <label><input type="checkbox" id="c-1-1"><span>Entiendo que le pido a Claude y apruebo lo que propone</span></label>
+      <label><input type="checkbox" id="c-1-2"><span>Sé que lo semanal (fecha, enlaces, precio) va en el panel, no en Claude</span></label>
     </div>
   </section>
 
-  <!-- ══════════════════════════════════════════════════════════════ -->
-  <section class="modulo" id="m2" data-titulo="Tu taller: VS Code y Claude">
-    <div class="cabecera"><span class="num">02</span><h2>Tu taller: VS Code y Claude</h2><p class="meta">Veinte minutos, una sola vez. Es el único módulo con instalaciones a mano.</p></div>
+  <!-- ═══ 02 ═══ -->
+  <section class="modulo" id="m2" data-titulo="Tu taller">
+    <div class="cabecera"><span class="num">02</span><h2>Tu taller</h2><p class="meta">Veinte minutos, una sola vez. El único módulo con instalaciones a mano.</p></div>
 
-    <h3>Qué es</h3>
-    <p>Para que Claude pueda trabajar necesita tres cosas que solo tú puedes darle: un editor donde vivir (VS Code), estar instalado con tu sesión iniciada, y que tu computadora esté conectada a GitHub y a Vercel. Lo primero lo instalas tú. Lo demás se lo pides.</p>
+    <p class="para">Dejas tu computadora lista para que Claude pueda trabajar: un editor, Claude instalado, y tus cuentas de GitHub y Vercel conectadas.</p>
 
-    <div class="tu"><span class="t">Lo único que haces tú</span>
-      <ol>
-        <li><strong>Visual Studio Code:</strong> descárgalo de <a href="https://code.visualstudio.com" target="_blank" rel="noopener">code.visualstudio.com</a> e instálalo.</li>
-        <li><strong>Node.js</strong> (22.18 o más nuevo): <a href="https://nodejs.org" target="_blank" rel="noopener">nodejs.org</a>, la versión marcada LTS. Si ya tenías uno viejo instalado, instala la LTS encima.</li>
-        <li><strong>La extensión <a href="https://marketplace.visualstudio.com/items?itemName=anthropic.claude-code" target="_blank" rel="noopener">Claude Code</a>:</strong> ábrela desde ese enlace y toca <em>Install</em>, o búscala en VS Code, Extensiones (Cmd+Shift+X / Ctrl+Shift+X), como <em>Claude Code</em> (de Anthropic). Aparece el icono de Claude en la barra lateral: ábrelo e inicia sesión en el navegador con tu cuenta.</li>
-        <li><strong>La terminal de Claude</strong>, para que pueda correr comandos. Terminal → Nueva terminal, y pega:</li>
-      </ol>
+    <ol class="pasos">
+      <li class="tu-paso"><p><span class="quien t">Tú</span>Instala <a href="https://code.visualstudio.com" target="_blank" rel="noopener">Visual Studio Code ↗</a>.</p></li>
+      <li class="tu-paso"><p><span class="quien t">Tú</span>Instala <a href="https://nodejs.org" target="_blank" rel="noopener">Node.js ↗</a>, la versión marcada <strong>LTS</strong>. Si ya tenías uno viejo, instala la LTS encima.</p></li>
+      <li class="tu-paso"><p><span class="quien t">Tú</span>Instala la extensión <a href="https://marketplace.visualstudio.com/items?itemName=anthropic.claude-code" target="_blank" rel="noopener">Claude Code ↗</a> en VS Code. Aparece el icono de Claude a la izquierda: ábrelo e inicia sesión con tu cuenta.</p></li>
+      <li class="tu-paso"><p><span class="quien t">Tú</span>En VS Code abre <em>Terminal → Nueva terminal</em>, pega esto y, al terminar, cierra y vuelve a abrir la terminal:</p>
 <pre><code><span class="c"># Mac</span>
 curl -fsSL https://claude.ai/install.sh | bash
 <span class="c"># Windows (PowerShell)</span>
-irm https://claude.ai/install.ps1 | iex</code></pre>
-      <p>Cierra y vuelve a abrir la terminal. Con eso Claude ya trabaja. El resto de este módulo lo hace él.</p>
-    </div>
+irm https://claude.ai/install.ps1 | iex</code></pre></li>
+      <li class="tu-paso"><p><span class="quien t">Tú</span>En VS Code, <em>Archivo → Abrir carpeta</em>, y elige la carpeta donde guardas tus proyectos.</p></li>
+      <li class="claude"><p><span class="quien c">Claude</span>Pega esto en el chat. Se va a abrir el navegador una o dos veces para que entres a GitHub y a Vercel y aceptes.</p>
+        <div class="prompt"><b>Conectar GitHub y Vercel</b><span class="texto">Revisa que tengo Node 22.18 o más nuevo y Git. Instala la CLI de GitHub (gh) y la CLI de Vercel si faltan (en Mac con Homebrew, en Windows con winget). Luego conéctalas a mis cuentas: corre gh auth login (GitHub.com, HTTPS, con el navegador) y vercel login, y avísame cada vez que tenga que aprobar algo en el navegador. Al final dime qué quedó conectado.</span></div></li>
+    </ol>
 
-    <h3>Pídele a Claude</h3>
-    <p>En VS Code, Archivo → Abrir carpeta, y elige la carpeta donde guardas tus proyectos (por ejemplo <code>Documentos/proyectos</code>). Abre el chat de Claude y pega:</p>
-    <div class="prompt"><b>Prompt · conectar GitHub y Vercel</b><span class="texto">Revisa que tengo Node 22.18 o más nuevo y Git. Instala la CLI de GitHub (gh) y la CLI de Vercel si faltan (en Mac con Homebrew, en Windows con winget). Luego conéctalas a mis cuentas: corre gh auth login (GitHub.com, HTTPS, con el navegador) y vercel login, y avísame cada vez que tenga que aprobar algo en el navegador. Al final dime qué quedó conectado.</span></div>
-    <p>Se va a abrir el navegador una o dos veces: entras a GitHub, aceptas; entras a Vercel, aceptas (si tienes verificación en dos pasos, te pide el código). Eso es todo.</p>
+    <details class="falla"><summary>Si algo falla</summary>
+      <ul>
+        <li><strong>"command not found: claude"</strong>. Cierra la terminal y ábrela de nuevo.</li>
+        <li><strong>Falta Homebrew</strong> (Mac). Claude te da el comando de <a href="https://brew.sh" target="_blank" rel="noopener">brew.sh ↗</a>: pégalo en la terminal y vuelve a pedirle lo mismo.</li>
+        <li><strong>No se abre el navegador</strong> para iniciar sesión. Copia la dirección que muestra la terminal y ábrela a mano.</li>
+      </ul>
+    </details>
 
-    <h4>Si algo falla</h4>
-    <ul>
-      <li><strong>"command not found: claude"</strong>. Cierra la terminal y ábrela de nuevo; el instalador agrega la ruta al abrir una terminal nueva.</li>
-      <li><strong>Homebrew no está</strong> (Mac). Claude te va a dar el comando de <a href="https://brew.sh" target="_blank" rel="noopener">brew.sh</a>; pégalo en la terminal y vuelve a pedirle lo mismo.</li>
-      <li><strong>Claude no abre el navegador</strong> para iniciar sesión. Copia la URL que muestra en la terminal y ábrela a mano.</li>
-    </ul>
+    <p class="en-clase"><b>En la clase</b> Instalamos todo en pantalla, en Mac y en Windows.</p>
 
     <div class="lista" data-modulo="m2">
-      <div class="cab"><b>Módulo 02</b><span></span></div>
-      <label><input type="checkbox" id="c-2-1"><span>VS Code y Node (22.18+) instalados</span></label>
-      <label><input type="checkbox" id="c-2-2"><span>Extensión Claude Code con sesión iniciada y <code>claude</code> responde en la terminal</span></label>
+      <div class="cab"><b>Listo cuando</b><span></span></div>
+      <label><input type="checkbox" id="c-2-1"><span>VS Code, Node y la extensión de Claude están instalados, con mi sesión iniciada</span></label>
       <label><input type="checkbox" id="c-2-3"><span>Claude me confirmó que GitHub y Vercel quedaron conectados</span></label>
     </div>
   </section>
 
-  <!-- ══════════════════════════════════════════════════════════════ -->
+  <!-- ═══ 03 ═══ -->
   <section class="modulo" id="m3" data-titulo="Tu copia de la plantilla">
-    <div class="cabecera"><span class="num">03</span><h2>Tu copia de la plantilla</h2><p class="meta">Cinco minutos. Al final tienes tu repositorio y el sitio corriendo en tu computadora.</p></div>
+    <div class="cabecera"><span class="num">03</span><h2>Tu copia de la plantilla</h2><p class="meta">Cinco minutos.</p></div>
 
-    <h3>Qué es</h3>
-    <p>La plantilla es un repositorio de GitHub marcado como <em>template</em>. No la clonas: creas tu propia copia, que es tuya para siempre. Los cambios que hagas no tocan la plantilla, y las mejoras futuras de la plantilla no te llegan solas. Eso es a propósito: tu embudo no debe cambiar porque alguien más cambió el suyo.</p>
+    <p class="para">Sacas tu propia copia de la plantilla. Es tuya para siempre: lo que cambies no toca la plantilla, y tu embudo no cambia porque alguien más cambió el suyo.</p>
 
-    <h3>Pídele a Claude</h3>
-    <p>Cambia <code>webinar-mi-programa</code> por el nombre de tu webinar, en minúsculas y sin espacios.</p>
-    <div class="prompt"><b>Prompt · crear mi copia</b><span class="texto">Crea mi copia de la plantilla https://github.com/davidiriza-lab/plantilla-webinar-ghl como repositorio PRIVADO llamado webinar-mi-programa en mi cuenta de GitHub (es un repositorio template: usa gh repo create con --template davidiriza-lab/plantilla-webinar-ghl --private --clone). Clónalo dentro de esta carpeta, instala las dependencias con npm install y corre npm run diagnostico. Dime qué salió y qué falta.</span></div>
-    <p>Si prefieres crear la copia desde el navegador: <a href="https://github.com/davidiriza-lab/plantilla-webinar-ghl/generate" target="_blank" rel="noopener">crear mi repositorio desde la plantilla ↗</a>, elige <em>Private</em>, y luego pídele a Claude que lo clone. El resultado es el mismo.</p>
-    <p>Claude va a correr, más o menos, esto (apruébalo cuando te lo muestre):</p>
-<pre><code>gh repo create webinar-mi-programa --template davidiriza-lab/plantilla-webinar-ghl --private --clone
-cd webinar-mi-programa
-npm install
-npm run diagnostico</code></pre>
-    <p>El diagnóstico revisa el taller entero y te dice qué módulos faltan. Así se ve cuando todo lo del módulo 02 quedó bien:</p>
-<pre><code>Diagnóstico del taller
+    <ol class="pasos">
+      <li class="claude"><p><span class="quien c">Claude</span>Cambia <code>webinar-mi-programa</code> por el nombre de tu webinar, en minúsculas y sin espacios.</p>
+        <div class="prompt"><b>Crear mi copia</b><span class="texto">Crea mi copia de la plantilla https://github.com/davidiriza-lab/plantilla-webinar-ghl como repositorio PRIVADO llamado webinar-mi-programa en mi cuenta de GitHub (es un repositorio template: usa gh repo create con --template davidiriza-lab/plantilla-webinar-ghl --private --clone). Clónalo dentro de esta carpeta, instala las dependencias con npm install y corre npm run diagnostico. Dime qué salió y qué falta.</span></div></li>
+      <li class="tu-paso"><p><span class="quien t">Tú</span>Abre la carpeta nueva en VS Code: <em>Archivo → Abrir carpeta → webinar-mi-programa</em>. Desde ahora Claude siempre trabaja ahí. Apunta tu repositorio en <a href="#ficha">tu ficha</a>.</p></li>
+      <li class="claude"><p><span class="quien c">Claude</span>Míralo funcionando en tu computadora.</p>
+        <div class="prompt"><b>Verlo correr</b><span class="texto">Arranca el sitio y dime en qué dirección lo abro. Luego explícame en tres líneas dónde está el copy que voy a cambiar.</span></div></li>
+    </ol>
+    <p>Vas a ver la plantilla con el copy de ejemplo, igual que la demo. Para apagarlo: "detén el sitio".</p>
 
-  ✓ Node 22.11.0
-  ✓ git version 2.39.5
-  ✓ Claude Code 2.1.179
-  ✓ GitHub conectado como tu-usuario
-  ✓ Vercel conectado como tu-usuario
-  ✓ Dependencias instaladas
-  ✗ No existe .env.local
-      → Módulo 04: conecta GoHighLevel
-  ✗ La carpeta no está ligada a Vercel
-      → Módulo 11: npx vercel link
+    <details class="falla"><summary>Si algo falla</summary>
+      <ul>
+        <li><strong>"repository not found".</strong> Casi siempre es que GitHub no tiene sesión o está en otra cuenta: pídele a Claude "revisa gh auth status y vuelve a conectarme".</li>
+        <li><strong>Error de sintaxis al instalar o al correr algo.</strong> Es Node viejo. Instala la LTS del módulo 02.</li>
+        <li><strong>Tu copia quedó pública.</strong> Pídele a Claude: "cambia mi repositorio a privado".</li>
+      </ul>
+    </details>
 
-Herramientas listas. Lo marcado con ✗ (si hay) son módulos que aún no tocan.</code></pre>
-
-    <div class="tu"><span class="t">Lo único que haces tú</span><p>Abre la carpeta nueva en VS Code (Archivo → Abrir carpeta → <code>webinar-mi-programa</code>). A partir de aquí Claude siempre trabaja dentro de ella y lee su <code>CLAUDE.md</code>.</p></div>
-
-    <h3>Comprueba</h3>
-    <div class="prompt"><b>Prompt · verlo correr</b><span class="texto">Arranca el sitio con npm run dev y dime en qué URL lo abro. Luego explícame en tres líneas qué hace cada carpeta de src/ y dónde está el copy que voy a cambiar.</span></div>
-    <p>Abre la URL (normalmente <code>http://localhost:3000</code>): verás la plantilla con el copy de ejemplo, igual que la demo. Cuando termines, dile a Claude "detén el sitio" o cierra la terminal.</p>
-
-    <h4>Si algo falla</h4>
-    <ul>
-      <li><strong>"repository not found"</strong> al crear la copia. Casi siempre es que <code>gh</code> no tiene sesión o está en otra cuenta: pídele a Claude que corra <code>gh auth status</code> y, si hace falta, <code>gh auth login</code>.</li>
-      <li><strong>Tu copia quedó pública.</strong> Pídele a Claude: "cambia mi repositorio a privado con gh repo edit --visibility private". Tu copy y tu configuración no tienen por qué estar a la vista.</li>
-      <li><strong>npm install o npm run instalar fallan con un error de sintaxis.</strong> Es Node viejo: el diagnóstico lo dice. Instala la LTS.</li>
-    </ul>
+    <p class="en-clase"><b>En la clase</b> Qué hay dentro de tu copia y qué nunca vas a necesitar abrir.</p>
 
     <div class="lista" data-modulo="m3">
-      <div class="cab"><b>Módulo 03</b><span></span></div>
-      <label><input type="checkbox" id="c-3-1"><span><a class="vivo" data-repo="" target="_blank" rel="noopener">Mi repositorio</a> existe en GitHub, privado, creado desde la plantilla</span></label>
-      <label><input type="checkbox" id="c-3-2"><span><code>npm run diagnostico</code> dice "Herramientas listas"</span></label>
-      <label><input type="checkbox" id="c-3-3"><span>Abrí la carpeta nueva en VS Code y el sitio se ve en localhost</span></label>
+      <div class="cab"><b>Listo cuando</b><span></span></div>
+      <label><input type="checkbox" id="c-3-1"><span><a class="vivo" data-repo="" target="_blank" rel="noopener">Mi repositorio</a> existe en GitHub y es privado</span></label>
+      <label><input type="checkbox" id="c-3-3"><span>Abrí la carpeta nueva en VS Code y vi el sitio en mi navegador</span></label>
     </div>
   </section>
 
-  <!-- ══════════════════════════════════════════════════════════════ -->
+  <!-- ═══ 04 ═══ -->
   <section class="modulo" id="m4" data-titulo="Conectar GoHighLevel">
     <div class="cabecera"><span class="num">04</span><h2>Conectar GoHighLevel</h2><p class="meta">Veinte minutos. El paso más importante del manual.</p></div>
 
-    <h3>Qué es</h3>
-    <p>El sitio necesita dos cosas para hablar con tu sub-cuenta: una llave (el <em>Private Integration Token</em>) y la dirección (el <em>Location ID</em>). Con eso, el instalador crea en tu sub-cuenta todo lo que el embudo usa: los custom values donde vive la configuración, tres custom fields de contacto (de dónde vino, a qué clase se apuntó en texto, y ese mismo día como fecha para que los recordatorios sepan cuándo salir), y comprueba el pipeline. Lo corre Claude; tú solo consigues la llave.</p>
+    <p class="para">Conectas tu sitio con tu sub-cuenta para que cada registrado quede guardado ahí. Tú consigues una llave; Claude instala todo lo demás.</p>
 
-    <h3>Cómo funciona</h3>
-    <p>Un Private Integration Token es una llave que GHL le da a una integración, con permisos concretos. No caduca por tiempo: solo muere si alguien la borra desde la sub-cuenta. Por eso es la llave correcta para algo que va a vivir meses. Las "API keys" viejas de GHL no sirven aquí.</p>
-    <p>El instalador (<code>npm run instalar</code>) es idempotente: puedes correrlo veinte veces y solo crea lo que falta. Nunca borra ni sobreescribe valores que ya existan.</p>
+    <ol class="pasos">
+      <li class="tu-paso"><p><span class="quien t">Tú</span><strong>Zona horaria.</strong> En <a class="vivo" data-ghl="settings/company" target="_blank" rel="noopener">Configuración → Perfil de la empresa</a>, pon la zona horaria de tu audiencia. Tus recordatorios salen con esa hora: si está mal, llegan tarde.</p></li>
+      <li class="tu-paso"><p><span class="quien t">Tú</span><strong>Tu Location ID.</strong> Está en esa misma pantalla, unos 20 caracteres. Cópialo y escríbelo en <a href="#ficha">tu ficha</a>: desde ahí los enlaces a GoHighLevel de este manual abren tu sub-cuenta.</p></li>
+      <li class="tu-paso"><p><span class="quien t">Tú</span><strong>La llave.</strong> En <a class="vivo" data-ghl="settings/private-integrations" target="_blank" rel="noopener">Configuración → Integraciones privadas</a>, crea una integración llamada <em>Embudo webinar</em> con permiso de ver y editar en: <em>Contacts</em>, <em>Opportunities</em>, <em>Custom Values</em>, <em>Custom Fields</em> y <em>Tags</em>. Copia el token: empieza con <code>pit-</code> y solo se muestra una vez.</p></li>
+      <li class="tu-paso"><p><span class="quien t">Tú</span><strong>El pipeline.</strong> En <a class="vivo" data-ghl="opportunities/list" target="_blank" rel="noopener">Oportunidades</a>, pestaña Pipelines, crea uno llamado <em>Webinars</em> con cuatro etapas, en este orden: <em>Nuevo Registro</em>, <em>Asistió al Webinar</em>, <em>Cliente Potencial</em>, <em>Cliente Ganado</em>.</p></li>
+      <li class="tu-paso"><p><span class="quien t">Tú</span><strong>La contraseña de tu panel.</strong> Una frase de 12 caracteres o más, con letras, números y <code>- _ . ! * + = @</code>. Sin espacios ni <code>$ # " '</code>. Ese panel descarga tus contactos: trátala como la de tu banco.</p></li>
+      <li class="claude"><p><span class="quien c">Claude</span>Pega las tres cosas.</p>
+        <div class="prompt"><b>Instalar en mi sub-cuenta</b><span class="texto">Este es el Private Integration Token de mi sub-cuenta de GoHighLevel: [pit-…], y este el Location ID: [……]. La contraseña de mi panel será: [mi-frase-larga]. Crea .env.local a partir de .env.example si no existe, escribe ahí GHL_API_KEY, GHL_LOCATION_ID y ADMIN_PASSWORD editando el archivo (no los pases como argumentos de un comando ni los repitas en pantalla) y luego corre npm run instalar. Si algo sale con ✗, explícame qué tengo que hacer en GoHighLevel y vuelve a correrlo cuando te diga.</span></div></li>
+    </ol>
+    <p>Claude crea en tu sub-cuenta los campos donde vive la configuración de tu webinar y los tres datos que guarda de cada registrado: de qué anuncio vino y a qué clase se apuntó. Puedes correrlo las veces que quieras: solo crea lo que falta y nunca borra nada.</p>
 
-    <div class="tu"><span class="t">Lo único que haces tú (en GHL, dentro de tu sub-cuenta)</span>
-      <ol>
-        <li><strong>Zona horaria.</strong> <a class="vivo" data-ghl="settings/company" target="_blank" rel="noopener">Configuración → Perfil de la empresa</a> → Zona horaria: la de tu audiencia (por ejemplo <code>America/Mexico_City</code>).</li>
-        <li><strong>El token.</strong> <a class="vivo" data-ghl="settings/private-integrations" target="_blank" rel="noopener">Configuración → Integraciones privadas</a> → Crear nueva integración. Nombre: <em>Embudo webinar</em>. Permisos: <em>Contacts</em> (ver y editar), <em>Opportunities</em> (ver y editar), <em>Locations</em> con <em>Custom Values</em> y <em>Custom Fields</em> (ver y editar), y <em>Tags</em> si aparece aparte. Copia el token: empieza con <code>pit-</code> y solo se muestra una vez.</li>
-        <li><strong>El Location ID.</strong> En la misma pantalla de Perfil de la empresa. Son unos 20 caracteres; también aparece en la URL cuando estás dentro de la sub-cuenta: <code>…/location/AQUÍ/…</code></li>
-        <li><strong>El pipeline.</strong> <a class="vivo" data-ghl="opportunities/list" target="_blank" rel="noopener">Oportunidades</a> → pestaña Pipelines → Crear pipeline. Nombre: <em>Webinars</em>. Cuatro etapas, en este orden y con estos nombres: <em>Nuevo Registro</em>, <em>Asistió al Webinar</em>, <em>Cliente Potencial</em>, <em>Cliente Ganado</em>. La API de GHL no crea pipelines, por eso es a mano. El sitio las encuentra por nombre, sin copiar IDs.</li>
-      </ol>
-    </div>
+    <details class="falla"><summary>Si algo falla</summary>
+      <ul>
+        <li><strong>"El token no entra" (401).</strong> Está mal copiado o es de otra sub-cuenta.</li>
+        <li><strong>"No se pudieron leer…" (403).</strong> Le faltó un permiso. Edita la integración y agrégalo; el token es el mismo.</li>
+        <li><strong>"No existe un pipeline llamado Webinars".</strong> Vuelve al paso 4. Si lo llamaste distinto, dile a Claude el nombre.</li>
+      </ul>
+    </details>
 
-    <div class="nota"><span class="t">Apunta tu Location ID en tu ficha</span><p>En cuanto lo tengas, escríbelo en <a href="#ficha">tu ficha</a>. Desde ese momento los enlaces a GoHighLevel de este manual, como los tres de arriba, abren la pantalla exacta de tu sub-cuenta en vez de la portada.</p></div>
-
-    <div class="ojo-con"><span class="t">Trampa conocida</span><p>Los workflows de GHL (recordatorios por correo y WhatsApp) usan la zona horaria de la sub-cuenta, no la del panel del sitio. Si la sub-cuenta está en Los Ángeles y tu clase es en Ciudad de México, los recordatorios salen dos horas tarde. El instalador te avisa si la zona se ve rara.</p></div>
-
-    <h3>Pídele a Claude</h3>
-    <p>Elige también la contraseña con la que vas a entrar a tu panel: <strong>una frase de 12 caracteres o más</strong>, con letras, números y <code>- _ . ! * + = @</code>. Sin espacios ni <code>$ # " '</code>, que se leen distinto en tu computadora y en Vercel. Ese panel edita tu embudo y descarga tus contactos: trátala como la de tu banco. Pega las tres cosas:</p>
-    <div class="prompt"><b>Prompt · instalar en mi sub-cuenta</b><span class="texto">Este es el Private Integration Token de mi sub-cuenta de GoHighLevel: [pit-…], y este el Location ID: [……]. La contraseña de mi panel será: [mi-frase-larga]. Crea .env.local a partir de .env.example si no existe, escribe ahí GHL_API_KEY, GHL_LOCATION_ID y ADMIN_PASSWORD editando el archivo (no los pases como argumentos de un comando ni los repitas en pantalla) y luego corre npm run instalar. Si algo sale con ✗, explícame qué tengo que hacer en GHL y vuelve a correrlo cuando te diga.</span></div>
-    <p>Claude escribe las tres variables en <code>.env.local</code> (un archivo que nunca se sube a GitHub) y corre el instalador. Vas a ver algo así:</p>
-<pre><code>1. GoHighLevel
-  ✓ Sub-cuenta "Mi negocio" · zona horaria America/Mexico_City
-2. Custom values (la configuración que edita /admin)
-  + "Titulo del webinar"
-  + "Webinar Modo"
-  … (crea 30 la primera vez)
-3. Custom fields de contacto (Fuente, Fecha de su clase y Dia de su clase)
-  + campo "Fuente"
-  · GHL_CAMPO_FUENTE_ID=xxxx → se escribe en .env.local
-  + campo "Dia de su clase"
-  · GHL_CAMPO_DIA_CLASE_ID=xxxx → se escribe en .env.local
-4. Pipeline de oportunidades
-  ✓ Pipeline "Webinars" con sus 4 etapas
-5. Panel /admin
-  · ADMIN_SESSION_SECRET generado → se escribe en .env.local
-Todo listo del lado de GoHighLevel.</code></pre>
-
-    <h4>Si algo falla</h4>
-    <ul>
-      <li><strong>"El token no entra a la sub-cuenta (HTTP 401)".</strong> Está mal copiado o es de otra sub-cuenta. Los PIT son por sub-cuenta, no por agencia.</li>
-      <li><strong>"No se pudieron leer los custom values (HTTP 403)".</strong> Le faltó un permiso al token. Edita la integración en GHL y agrega Custom Values y Custom Fields; el token es el mismo.</li>
-      <li><strong>"No existe un pipeline llamado Webinars".</strong> Vuelve al paso 4 de la caja dorada. Si lo llamaste distinto, dile a Claude el nombre: lo pone en <code>GHL_PIPELINE_NOMBRE</code>.</li>
-    </ul>
+    <p class="en-clase"><b>En la clase</b> Creamos la sub-cuenta, la llave y el pipeline en pantalla · qué instala Claude en tu GoHighLevel y dónde verlo.</p>
 
     <div class="lista" data-modulo="m4">
-      <div class="cab"><b>Módulo 04</b><span></span></div>
-      <label><input type="checkbox" id="c-4-1"><span>La zona horaria de la sub-cuenta es la de mi audiencia</span></label>
-      <label><input type="checkbox" id="c-4-2"><span>Creé el token con los permisos de contactos, oportunidades, custom values y custom fields</span></label>
-      <label><input type="checkbox" id="c-4-3"><span>Creé el pipeline Webinars con sus 4 etapas, en orden</span></label>
-      <label><input type="checkbox" id="c-4-4"><span>Claude corrió el instalador y terminó con "Todo listo del lado de GoHighLevel"</span></label>
+      <div class="cab"><b>Listo cuando</b><span></span></div>
+      <label><input type="checkbox" id="c-4-1"><span>La zona horaria de mi sub-cuenta es la de mi audiencia</span></label>
+      <label><input type="checkbox" id="c-4-3"><span>Existe el pipeline Webinars con sus 4 etapas, en orden</span></label>
+      <label><input type="checkbox" id="c-4-4"><span>Claude terminó con "Todo listo del lado de GoHighLevel"</span></label>
     </div>
   </section>
 
-  <!-- ══════════════════════════════════════════════════════════════ -->
+  <!-- ═══ 05 ═══ -->
   <section class="modulo" id="m5" data-titulo="El panel de control">
-    <div class="cabecera"><span class="num">05</span><h2>El panel de control</h2><p class="meta">Veinte minutos. Aquí vive todo lo que cambia de semana en semana.</p></div>
+    <div class="cabecera"><span class="num">05</span><h2>El panel de control</h2><p class="meta">Veinte minutos. La única pantalla que vas a abrir cada semana.</p></div>
 
-    <h3>Qué es</h3>
-    <p><code>/admin</code> es la única pantalla que vas a abrir cada semana. Desde ahí fijas el día y la hora de la clase, el enlace de Zoom, el grupo de WhatsApp, el precio, el enlace de pago y el pixel. Nada de eso está en el código: todo son custom values de tu sub-cuenta, y el panel es la forma cómoda de editarlos. Es la parte del sistema que <em>no</em> pasa por Claude, a propósito: es tu tablero de operación.</p>
+    <p class="para">Desde el panel decides cuándo es la clase, a qué Zoom entra la gente, cuánto cuesta tu programa y qué video ven al registrarse. Lo que guardas ahí se refleja en tu sitio y en tus correos en menos de un minuto.</p>
 
     <div class="dos-capturas">
-      <figure class="captura"><img src="assets/capturas/admin-panel.jpg" alt="El panel de control por dentro: la próxima clase arriba, el banner de salud con dos avisos y el grupo Programación" width="1440" height="900" loading="lazy"><figcaption><b>El panel por dentro.</b> Arriba, la próxima clase calculada. Debajo, el banner de salud: aquí avisa que todavía no hay copia de seguridad (módulo 11) ni enlace de la sala. Cuando termines el manual, en el tuyo no debe decir nada.</figcaption></figure>
-      <figure class="captura"><img src="assets/capturas/admin-login.jpg" alt="La pantalla de entrada al panel, con un solo campo de contraseña" width="1440" height="900" loading="lazy"><figcaption>La entrada. La contraseña es la que le diste a Claude en el módulo 04.</figcaption></figure>
+      <figure class="captura"><img src="assets/capturas/admin-panel.jpg" alt="El panel por dentro: la próxima clase arriba, el aviso de salud y el grupo Programación" width="1440" height="900" loading="lazy"><figcaption><b>El panel por dentro.</b> Arriba, tu próxima clase ya calculada. Debajo, el aviso de salud: si dice algo, es lo primero que hay que arreglar. Si no dice nada, todo está bien.</figcaption></figure>
+      <figure class="captura"><img src="assets/capturas/admin-login.jpg" alt="La entrada al panel, con un solo campo de contraseña" width="1440" height="900" loading="lazy"><figcaption>La entrada, con la contraseña que elegiste en el módulo 04.</figcaption></figure>
     </div>
 
-    <h3>Cómo funciona</h3>
-    <p>Cuando guardas en el panel, el sitio escribe en dos lugares: en GHL (la fuente de verdad) y en una copia en Vercel Edge Config (lo que leen las páginas). Las páginas nunca le preguntan a GHL en cada visita; leen la copia, que responde en milisegundos y no se cae con GHL. Hasta el módulo 11 no hay copia todavía: el sitio lee GHL directo. Funciona igual; solo el banner te lo recuerda.</p>
-    <p>El banner de salud es lo primero que miras. Si dice algo en rojo, es lo primero que hay que arreglar: "GoHighLevel no responde con el token actual", "Falta el enlace de la sala", "La fecha única ya pasó". Si no dice nada, todo está bien.</p>
+    <ol class="pasos">
+      <li class="claude"><p><span class="quien c">Claude</span></p>
+        <div class="prompt"><b>Abrir mi panel</b><span class="texto">Arranca el sitio y dame la dirección del panel de administración.</span></div></li>
+      <li class="tu-paso"><p><span class="quien t">Tú</span>Entra con tu contraseña y llena lo que ya tengas:</p>
+        <div class="tabla"><table>
+          <thead><tr><th>Grupo</th><th>Qué decides</th><th>Consejo</th></tr></thead>
+          <tbody>
+            <tr><td>Programación</td><td>Si la clase se repite cada semana o es una sola fecha; día, hora y zona horaria</td><td>Si se repite, la fecha avanza sola cada semana. Una sola fecha cierra el registro cuando pasa.</td></tr>
+            <tr><td>La sala</td><td>Cuántos minutos antes abre la puerta, y el mando manual</td><td>15 minutos, y el mando en <em>auto</em>.</td></tr>
+            <tr><td>Enlaces</td><td>Tu Zoom, tu grupo de WhatsApp y tu WhatsApp de soporte</td><td>El Zoom con la contraseña incluida en el enlace, para que nadie la teclee. El enlace de la puerta y el de la oferta los llenas en el módulo 11, cuando ya tengas dominio.</td></tr>
+            <tr><td>Contenido</td><td>El título de tu clase y el video de bienvenida</td><td><strong>Sube el video a GoHighLevel</strong>, que ya lo pagas: <a class="vivo" data-ghl="media-storage" target="_blank" rel="noopener">Media Storage</a> → sube el archivo → copia su enlace → pégalo aquí. Comprímelo antes: 720p y menos de 50 MB.</td></tr>
+            <tr><td>La oferta</td><td>Precio (solo el número) y moneda: MXN, USD, EUR, COP…</td><td>Se muestran juntos: <code>$9,997 USD</code>. El enlace de pago déjalo vacío por ahora.</td></tr>
+            <tr><td>Seguimiento</td><td>Tu pixel de Meta</td><td>Se llena en el módulo 10.</td></tr>
+          </tbody>
+        </table></div></li>
+      <li class="tu-paso"><p><span class="quien t">Tú</span>Guarda y abre tu página de registro en otra pestaña: la fecha y la hora ya son las tuyas.</p></li>
+    </ol>
 
-    <h3>Pídele a Claude</h3>
-    <div class="prompt"><b>Prompt · abrir el panel</b><span class="texto">Arranca el sitio con npm run dev y dame la URL del panel de administración. Cuando lo abra, explícame en una línea qué decide cada grupo del panel.</span></div>
-
-    <div class="tu"><span class="t">Lo único que haces tú (en el panel, con tu contraseña)</span>
-      <div class="tabla"><table>
-        <thead><tr><th>Grupo</th><th>Qué decides</th><th>Consejo</th></tr></thead>
-        <tbody>
-          <tr><td>Programación</td><td>Modo recurrente (cada jueves) o fecha única; día, hora, zona, duración</td><td>Recurrente si vas a dar la clase cada semana. Fecha única cierra el registro sola cuando pasa.</td></tr>
-          <tr><td>La sala</td><td>Cuántos minutos antes abre la puerta; mando manual (auto / abierta / cerrada)</td><td>15 minutos. Deja el mando en <em>auto</em> salvo el día de la clase si quieres abrir antes.</td></tr>
-          <tr><td>Enlaces</td><td>Zoom, enlace de la puerta, grupo de WhatsApp, WhatsApp de soporte, enlace de la oferta</td><td>El Zoom con la contraseña incluida (<code>?pwd=…</code>). El <strong>enlace de la puerta</strong> es tu dominio + <code>/ingreso</code> y el de la oferta tu dominio + <code>/oferta</code>: son los que mandan tus correos. Mientras no tengas dominio (módulo 11), déjalos vacíos y vuelve.</td></tr>
-          <tr><td>Contenido</td><td>Título del webinar y video de bienvenida de la página de gracias</td><td><strong>Sube el video a GoHighLevel</strong>, que ya lo pagas: en tu sub-cuenta, <a class="vivo" data-ghl="media-storage" target="_blank" rel="noopener">Media Storage</a> → sube el archivo → en el video, <em>copiar enlace</em> → pégalo aquí. Comprímelo antes (720p, menos de 50 MB) para que cargue rápido en el teléfono. También acepta YouTube o Vimeo. Vacío = no aparece el bloque.</td></tr>
-          <tr><td>La oferta</td><td>Precio (solo el número) y moneda (MXN, USD, EUR, COP…)</td><td>Se muestran juntos: <code>$9,997 USD</code>. El enlace de pago déjalo vacío por ahora: el método de pago se ve más adelante en la formación, y mientras tanto el botón avisa que falta.</td></tr>
-          <tr><td>Etiquetas</td><td>Los nombres de las etiquetas generales</td><td>Déjalas como vienen. Son las que disparan tus workflows (módulo 07).</td></tr>
-          <tr><td>Seguimiento</td><td>Pixel de Meta y token de conversiones</td><td>Módulo 10. Puede quedar vacío hasta entonces.</td></tr>
-        </tbody>
-      </table></div>
-      <p>Guarda. Abre la landing en otra pestaña: la fecha y la hora ya son las tuyas.</p>
-    </div>
-
-    <div class="nota"><span class="t">Regla</span><p>Si quieres cambiar fecha, enlace, precio o pixel, es en el panel. Si le pides a Claude "cambia la fecha a…", te va a decir lo mismo. Está bien que lo haga: así nadie edita código para algo que cambia cada semana.</p></div>
+    <p class="en-clase"><b>En la clase</b> Clase semanal o fecha única y cuándo conviene cada una · cómo leer el aviso de salud · por qué lo semanal vive aquí y no en el código.</p>
 
     <div class="lista" data-modulo="m5">
-      <div class="cab"><b>Módulo 05</b><span></span></div>
-      <label><input type="checkbox" id="c-5-1"><span>Entré a <code>/admin</code> con mi contraseña</span></label>
-      <label><input type="checkbox" id="c-5-2"><span>Elegí modo (recurrente o fecha única), día, hora y zona horaria</span></label>
-      <label><input type="checkbox" id="c-5-3"><span>Puse el enlace de Zoom con la contraseña incluida, el grupo de WhatsApp y el WhatsApp de soporte</span></label>
-      <label><input type="checkbox" id="c-5-4"><span>Guardé y la landing muestra mi fecha</span></label>
-      <label><input type="checkbox" id="c-5-6"><span>Subí mi video de bienvenida a Media Storage de GHL y pegué su enlace (o decidí no poner video)</span></label>
-      <label><input type="checkbox" id="c-5-5"><span>El banner de salud solo avisa de la copia (que llega en el módulo 11), nada más en rojo</span></label>
+      <div class="cab"><b>Listo cuando</b><span></span></div>
+      <label><input type="checkbox" id="c-5-1"><span>Entré a mi panel con mi contraseña</span></label>
+      <label><input type="checkbox" id="c-5-2"><span>Puse día, hora y zona horaria, y mi página de registro los muestra</span></label>
+      <label><input type="checkbox" id="c-5-3"><span>Puse mi Zoom, mi grupo de WhatsApp y mi WhatsApp de soporte</span></label>
+      <label><input type="checkbox" id="c-5-6"><span>Subí mi video de bienvenida a GoHighLevel y pegué su enlace (o decidí no poner video)</span></label>
     </div>
   </section>
 
-  <!-- ══════════════════════════════════════════════════════════════ -->
+  <!-- ═══ 06 ═══ -->
   <section class="modulo" id="m6" data-titulo="Tu copy y tu marca">
-    <div class="cabecera"><span class="num">06</span><h2>Tu copy y tu marca</h2><p class="meta">Una o dos horas, según cuánto copy ya tengas. Aquí es donde Claude más ayuda.</p></div>
+    <div class="cabecera"><span class="num">06</span><h2>Tu copy y tu marca</h2><p class="meta">Una o dos horas. Aquí es donde Claude más ayuda.</p></div>
 
-    <h3>Qué es</h3>
-    <p>Todo el texto del sitio vive en tres archivos dentro de <code>src/contenido/</code>. Las páginas solo lo acomodan. Nunca vas a editar una página para cambiar una frase, y tampoco vas a abrir esos archivos si no quieres: se los dictas a Claude.</p>
-    <div class="tabla"><table>
-      <thead><tr><th>Archivo</th><th>Qué contiene</th></tr></thead>
-      <tbody>
-        <tr><td><code>marca.ts</code></td><td>Tu nombre, tu rol, el nombre del webinar y del producto, logo, retrato, dominio, SEO, aviso legal</td></tr>
-        <tr><td><code>landing.ts</code></td><td>Todo el copy de la página de registro y de la de gracias: hero, los 3 puntos, para quién es, casos, cierre</td></tr>
-        <tr><td><code>oferta.ts</code></td><td>Las nueve secciones de la oferta: problema, etapas, qué incluye, garantía, inversión, cierre</td></tr>
-      </tbody>
-    </table></div>
+    <p class="para">Cambias todo el texto y la imagen de la plantilla por los tuyos. No editas páginas: le dictas a Claude quién eres, a quién le hablas y qué ofreces, y él lo escribe donde va.</p>
 
-    <figure class="captura"><div class="ventana"><img src="assets/capturas/landing-completa.jpg" alt="La landing de registro completa, de arriba abajo: hero con formulario, lo que más escucho, las tres partes de la clase, para quién es, casos y cierre con contador" width="1440" height="6000" loading="lazy"></div><figcaption><b>La landing completa</b> (desplázate dentro de la imagen). Cada bloque que ves es una entrada de <code>landing.ts</code>: cuando le pidas a Claude "reescribe los 3 puntos", es la sección de las tres tarjetas.</figcaption></figure>
+    <figure class="captura"><div class="ventana"><img src="assets/capturas/landing-completa.jpg" alt="La página de registro completa, de arriba abajo" width="1440" height="6000" loading="lazy"></div><figcaption><b>La página de registro completa</b> (desplázate dentro de la imagen): titular con formulario, el problema, las tres partes de la clase, quién la da, para quién es, casos y cierre.</figcaption></figure>
 
-    <h3>Cómo funciona</h3>
-    <p>Cada texto de ejemplo lleva al final una marca <code>// EJEMPLO</code>. Cuando Claude cambia el texto, borra la marca. El comando <code>npm run revisar</code> lista los que siguen marcados, con su número de línea. Cuando la lista quede vacía, la plantilla es tuya.</p>
-    <p>Las imágenes van en <code>public/assets/</code> y se referencian por ruta desde los archivos de contenido. Si una ruta queda vacía, el sitio muestra un marcador con la descripción de lo que falta. Los colores son nueve variables al principio de <code>src/app/globals.css</code>. Las tipografías, dos líneas en <code>src/app/layout.tsx</code>.</p>
+    <ol class="pasos">
+      <li class="claude"><p><span class="quien c">Claude</span><strong>Quién eres.</strong></p>
+        <div class="prompt"><b>Mi marca</b><span class="texto">Pon mis datos en la marca del sitio: me llamo [nombre], soy [qué eres o qué creaste], mi clase se llama "[nombre de la clase]" y al final ofrezco [nombre del programa]. Mi dominio va a ser [mi-dominio.com]. Dime qué dejaste pendiente (logo, retrato, aviso legal).</span></div></li>
+      <li class="claude"><p><span class="quien c">Claude</span><strong>Tu página de registro.</strong> Entre más le cuentes, más suena a ti. Si tienes un audio tuyo hablando de la clase, pégale la transcripción.</p>
+        <div class="prompt"><b>Mi página de registro</b><span class="texto">Mi clase se llama "[nombre]". La doy para [audiencia] que tiene [problema]. En la clase van a ver: [los 3 puntos]. Al final ofrezco [programa]. Reescribe toda la página de registro y la de gracias con mi voz: [describe tu tono o pega un texto tuyo]. Cambia el sentido de las frases, no solo los nombres.</span></div></li>
+      <li class="tu-paso"><p><span class="quien t">Tú</span>Arrastra tu logo y tu retrato a la carpeta <code>public/assets</code> del proyecto, desde el explorador de archivos de VS Code.</p></li>
+      <li class="claude"><p><span class="quien c">Claude</span><strong>Tu imagen.</strong></p>
+        <div class="prompt"><b>Mis colores y mis imágenes</b><span class="texto">Mi color principal es [#hex o "azul marino"]. Ajusta la paleta del sitio a partir de él cuidando que los botones se lean bien. Dejé mi logo y mi retrato en public/assets como [logo.png] y [retrato.jpg]: conéctalos.</span></div></li>
+      <li class="claude"><p><span class="quien c">Claude</span><strong>Qué falta.</strong> La plantilla marca cada texto de ejemplo. Cuando no quede ninguno, el sitio es tuyo.</p>
+        <div class="prompt"><b>Revisar lo que sigue siendo ejemplo</b><span class="texto">Corre npm run revisar y dime qué textos de ejemplo siguen sin cambiar, agrupados por página. La oferta la dejamos para después.</span></div></li>
+    </ol>
 
-    <h3>Pídele a Claude</h3>
-    <p>En este orden. Cada prompt es una conversación: si el resultado no te gusta, dile qué cambiar.</p>
-    <div class="prompt"><b>Prompt 1 · la marca</b><span class="texto">En src/contenido/marca.ts pon mis datos: me llamo [nombre], soy [rol], mi clase se llama "[nombre del webinar]" y al final ofrezco [nombre del producto]. Mi dominio va a ser [mi-dominio.com]. Borra las marcas EJEMPLO de lo que cambies y dime qué dejaste pendiente (logo, retrato, aviso legal).</span></div>
-    <div class="prompt"><b>Prompt 2 · la landing</b><span class="texto">Mi clase se llama "[nombre]". La doy para [audiencia] que tiene [problema]. Al final ofrezco [producto] a [precio]. Reescribe el hero, los 3 puntos y "para quién es" en src/contenido/landing.ts con mi voz: [describe tu tono en una frase o pega un texto tuyo]. Borra las marcas EJEMPLO de lo que cambies.</span></div>
-    <div class="prompt"><b>Prompt 3 · la oferta</b><span class="texto">Mi programa se llama [nombre], dura [duración] y tiene estas etapas: [lista]. Incluye [qué incluye]. Garantía: [cuál]. Precio: [precio]. Reescribe src/contenido/oferta.ts con eso; si mi oferta no son cuatro etapas, ajusta la lista. Borra las marcas EJEMPLO.</span></div>
-    <div class="prompt"><b>Prompt 4 · colores e imágenes</b><span class="texto">Mi color principal es [#hex]. Ajusta las nueve variables de globals.css a partir de él manteniendo el contraste de los botones. Dejé mi logo y mi retrato en public/assets/ como [logo.png] y [retrato.jpg]: conéctalos en marca.ts.</span></div>
-    <div class="prompt"><b>Prompt 5 · qué falta</b><span class="texto">Corre npm run revisar y dime qué textos de ejemplo siguen sin cambiar, agrupados por archivo.</span></div>
-
-    <div class="tu"><span class="t">Lo único que haces tú</span><p>Arrastrar tu logo y tu retrato a la carpeta <code>public/assets/</code> del proyecto (desde VS Code, con el explorador de archivos de la izquierda). Y decidir el copy: Claude escribe, tú sabes qué duele a tu audiencia.</p></div>
-
-    <div class="ojo-con"><span class="t">Copy de venta</span><p>La plantilla trae una estructura probada, no tu argumento. Lo que convierte es tu problema concreto, tu promesa concreta y tu prueba. Pídele a Claude que cambie el sentido de las frases, no solo los nombres. Si le das un audio transcrito tuyo hablando de tu clase, el resultado suena a ti.</p></div>
+    <p class="en-clase"><b>En la clase</b> La estructura de una página de registro que convierte · cómo darle tu voz a Claude · qué prueba poner y cuál no.</p>
 
     <div class="lista" data-modulo="m6">
-      <div class="cab"><b>Módulo 06</b><span></span></div>
-      <label><input type="checkbox" id="c-6-1"><span><code>marca.ts</code> tiene mi nombre, mi rol, mi producto y mi dominio</span></label>
-      <label><input type="checkbox" id="c-6-2"><span><code>landing.ts</code> tiene mi copy: hero, los 3 puntos, para quién es, cierre</span></label>
-      <label><input type="checkbox" id="c-6-3"><span><code>oferta.ts</code> tiene mi oferta: etapas, qué incluye, garantía, inversión</span></label>
-      <label><input type="checkbox" id="c-6-4"><span>Cargué al menos mi retrato y mi logo (o decidí usar el nombre en texto)</span></label>
-      <label><input type="checkbox" id="c-6-5"><span>Ajusté los colores (o decidí quedarme con los de la plantilla)</span></label>
-      <label><input type="checkbox" id="c-6-6"><span><code>npm run revisar</code> dice "Sin copy de ejemplo"</span></label>
+      <div class="cab"><b>Listo cuando</b><span></span></div>
+      <label><input type="checkbox" id="c-6-1"><span>El sitio dice mi nombre, mi clase y mi programa</span></label>
+      <label><input type="checkbox" id="c-6-2"><span>La página de registro y la de gracias tienen mi copy</span></label>
+      <label><input type="checkbox" id="c-6-4"><span>Están mi logo y mi retrato (o decidí usar mi nombre en texto)</span></label>
+      <label><input type="checkbox" id="c-6-5"><span>Los colores son los míos (o me quedé con los de la plantilla)</span></label>
     </div>
   </section>
 
-  <!-- ══════════════════════════════════════════════════════════════ -->
-  <section class="modulo" id="m7" data-titulo="Etiquetas y automatizaciones">
-    <div class="cabecera"><span class="num">07</span><h2>Etiquetas y automatizaciones</h2><p class="meta">Una hora en GHL. Es lo que hace que la gente llegue a la clase, y es el módulo con más trabajo tuyo.</p></div>
+  <!-- ═══ 07 ═══ -->
+  <section class="modulo" id="m7" data-titulo="Correos y recordatorios">
+    <div class="cabecera"><span class="num">07</span><h2>Correos y recordatorios</h2><p class="meta">Una hora en GoHighLevel. Es lo que hace que la gente llegue a la clase.</p></div>
 
-    <h3>Qué es</h3>
-    <p>El sitio no manda correos ni WhatsApp. Lo que hace es poner etiquetas en el contacto en cada momento del embudo, y tus workflows de GHL se disparan con esas etiquetas. Tú decides qué se manda y cuándo; el sitio solo avisa "esta persona acaba de registrarse", "esta acaba de entrar a la sala", "esta fue a pagar".</p>
+    <p class="para">Tu sitio no manda correos. Lo que hace es ponerle una etiqueta a cada persona en cada momento, y GoHighLevel reacciona a esa etiqueta mandando el correo que toca.</p>
 
-    <h3>Cómo funciona</h3>
-    <p>Cada envío pone dos etiquetas: una general, fija, que dispara la automatización; y una con la fecha de la clase, para poder filtrar por edición. GHL guarda las etiquetas en minúsculas.</p>
     <div class="flujo">
-      <div class="paso"><div class="k">/ · registro</div><div class="r">Se registró</div><div class="e"><i>registro webinar</i><i>registro 24-septiembre</i><i>→ Nuevo Registro</i></div></div>
-      <div class="paso"><div class="k">/ingreso · puerta</div><div class="r">Entró a la sala</div><div class="e"><i>ingreso webinar</i><i>ingreso 24-septiembre</i><i>→ Asistió al Webinar</i></div></div>
-      <div class="paso"><div class="k">/oferta · comprar</div><div class="r">Fue a pagar</div><div class="e"><i>carrito webinar</i><i>carrito 24-septiembre</i><i>→ Cliente Potencial</i></div></div>
-      <div class="paso"><div class="k">al cobrar · más adelante</div><div class="r">Pagó</div><div class="e"><i>pago webinar</i><i>pago 24-septiembre</i><i>→ Cliente Ganado</i></div></div>
+      <div class="paso"><div class="k">se registra</div><div class="r">registro webinar</div><div class="e"><i>→ confirmación</i><i>→ recordatorios</i></div></div>
+      <div class="paso"><div class="k">entra a la sala</div><div class="r">ingreso webinar</div><div class="e"><i>→ la oferta, después de la clase</i></div></div>
+      <div class="paso"><div class="k">va a pagar</div><div class="r">carrito webinar</div><div class="e"><i>→ lo ves en tu pipeline</i></div></div>
+      <div class="paso"><div class="k">paga · más adelante</div><div class="r">pago webinar</div><div class="e"><i>→ bienvenida</i></div></div>
     </div>
-    <p>Además, cada contacto lleva tres campos: <em>Fuente</em> (de qué anuncio vino, armado con los parámetros UTM del enlace), <em>Fecha de su clase</em> (el texto "jueves 24 de septiembre", para que tus correos lo digan sin calcular nada) y <em>Dia de su clase</em> (ese mismo día como fecha: a él apuntan las esperas de los recordatorios, porque una espera de GHL no puede apuntar a un texto).</p>
 
-    <h3>Los cuatro workflows</h3>
+    <h3>Las cuatro automatizaciones</h3>
     <div class="tabla"><table>
-      <thead><tr><th>Workflow</th><th>Se dispara con</th><th>Qué hace</th></tr></thead>
+      <thead><tr><th>Automatización</th><th>Se dispara con</th><th>Qué hace</th></tr></thead>
       <tbody>
-        <tr><td>1 · Confirmación de registro</td><td><code>registro webinar</code></td><td>Correo inmediato: fecha y hora de su clase, grupo de WhatsApp, enlace de la puerta.</td></tr>
-        <tr><td>2 · Recordatorios</td><td><code>registro webinar</code></td><td>Espera al <em>Dia de su clase</em> y manda tres correos: 9:00 am, una hora antes y diez minutos antes. Si alguien se registra tarde, los que ya pasaron se saltan.</td></tr>
-        <tr><td>3 · Oferta post-clase</td><td><code>ingreso webinar</code></td><td>Solo a quien entró a la sala: dos horas después la oferta, y un correo más cada día por dos días. Sin contadores ni urgencia falsa.</td></tr>
-        <tr><td>4 · Compró</td><td><code>pago webinar</code></td><td>Saca al comprador del workflow 3 y le manda la bienvenida. Déjalo creado: empieza a dispararse cuando conectes tu método de pago, más adelante en la formación.</td></tr>
+        <tr><td>1 · Confirmación</td><td><code>registro webinar</code></td><td>Correo inmediato: su fecha y hora, tu grupo de WhatsApp y su enlace de entrada.</td></tr>
+        <tr><td>2 · Recordatorios</td><td><code>registro webinar</code></td><td>El día de la clase: 9:00 am, una hora antes y diez minutos antes.</td></tr>
+        <tr><td>3 · Oferta</td><td><code>ingreso webinar</code></td><td>Solo a quien entró a la sala: tu oferta dos horas después, y un correo más cada día por dos días.</td></tr>
+        <tr><td>4 · Compró</td><td><code>pago webinar</code></td><td>Lo saca de los correos de oferta y le da la bienvenida. Empieza a correr cuando conectes tu cobro, más adelante.</td></tr>
       </tbody>
     </table></div>
-    <p>La estructura completa y el copy de ejemplo de los nueve correos están en <a href="https://github.com/davidiriza-lab/plantilla-webinar-ghl/blob/main/docs/WORKFLOWS.md" target="_blank" rel="noopener"><code>docs/WORKFLOWS.md</code> ↗</a> (también viene en tu copia). Todos los datos que cambian salen de custom values o del contacto (<code>{{contact.fecha_de_su_clase}}</code>, <code>{{custom_values.webinar_proxima_hora}}</code>, <code>{{custom_values.enlace_de_la_puerta}}</code>…): cambias la fecha en el panel y los correos de la semana siguiente ya la dicen bien.</p>
+    <p>Los nueve correos de ejemplo, con su estructura, están en <a href="https://github.com/davidiriza-lab/plantilla-webinar-ghl/blob/main/docs/WORKFLOWS.md" target="_blank" rel="noopener">este documento ↗</a> y también dentro de tu copia.</p>
 
-    <h3>Pídele a Claude · el copy</h3>
-    <div class="prompt"><b>Prompt · mis correos</b><span class="texto">Lee docs/WORKFLOWS.md y mi copy en src/contenido/. Reescribe los nueve correos con mi voz, mi clase y mi oferta, conservando tal cual todo lo que va entre llaves dobles (custom values y campos del contacto). Entrégamelos en un archivo docs/MIS-CORREOS.md, cada uno con su asunto, listos para pegar en GoHighLevel.</span></div>
+    <ol class="pasos">
+      <li class="claude"><p><span class="quien c">Claude</span></p>
+        <div class="prompt"><b>Mis correos</b><span class="texto">Lee docs/WORKFLOWS.md y el copy de mi sitio. Reescribe los nueve correos con mi voz, mi clase y mi oferta, conservando tal cual todo lo que va entre llaves dobles. Entrégamelos en un archivo docs/MIS-CORREOS.md, cada uno con su asunto, listos para pegar en GoHighLevel.</span></div></li>
+      <li class="tu-paso"><p><span class="quien t">Tú</span>En <a class="vivo" data-ghl="automation/workflows" target="_blank" rel="noopener">GoHighLevel → Automatizaciones</a>, crea las cuatro con la estructura del documento y pega tus correos. El disparador de cada una es <em>Contact Tag → Tag Added</em> con su etiqueta, en minúsculas.</p></li>
+      <li class="tu-paso"><p><span class="quien t">Tú</span>En los recordatorios, las tres esperas apuntan al campo <em>Dia de su clase</em> y traen las horas de una clase a las 8:00 pm. <strong>Si tu clase es a otra hora, cámbialas.</strong></p></li>
+      <li class="tu-paso"><p><span class="quien t">Tú</span>En las cuatro: activa <strong>Allow Re-Entry</strong> y <strong>publícalas</strong>.</p></li>
+      <li class="claude"><p><span class="quien c">Claude</span>La prueba: un registro real, con tu correo, comprobado en tu GoHighLevel.</p>
+        <div class="prompt"><b>Probar mi embudo</b><span class="texto">Corre npm run probar:embudo -- --email [mi@correo.com] contra mi sitio local y dime si mi contacto llegó a GoHighLevel con la etiqueta de registro y cayó en Nuevo Registro. Déjalo: quiero ver que me llegue el correo de confirmación.</span></div></li>
+    </ol>
 
-    <div class="tu"><span class="t">Lo único que haces tú (en <a class="vivo" data-ghl="automation/workflows" target="_blank" rel="noopener">GHL → Automatizaciones</a>)</span>
-      <p>GHL no permite crear workflows con su API oficial, por eso este paso es tuyo. Si en la formación recibiste el <strong>snapshot</strong> de la sub-cuenta, los cuatro ya están creados en borrador: abre cada uno, pega tu copy y publícalo. Si no, créalos con la estructura de <code>docs/WORKFLOWS.md</code>:</p>
-      <ol>
-        <li>Disparador <em>Contact Tag → Tag Added</em> con la etiqueta general, en minúsculas.</li>
-        <li>Los pasos, en el orden del documento. En los recordatorios, la espera es de tipo <em>fecha específica</em> apuntando al campo <em>Dia de su clase</em>.</li>
-        <li><strong>Si tu clase no es a las 8:00 pm</strong>, cambia la hora de las tres esperas del workflow 2 (9:00 am, una hora antes, diez minutos antes).</li>
-        <li>En cada workflow: activa <strong>Allow Re-Entry</strong> y <strong>publícalo</strong>.</li>
-      </ol>
-    </div>
+    <div class="ojo-con"><span class="t">Tres descuidos que cuestan una clase entera</span><p>1. Sin <em>Allow Re-Entry</em>, quien se registró la semana pasada y vuelve a registrarse no recibe nada. 2. Una automatización sin publicar no manda nada y no avisa. 3. Tus correos mandan <strong>el enlace de entrada</strong> de tu sitio, nunca el Zoom directo: quien entra por el Zoom no pasa lista y jamás le llega tu oferta.</p></div>
 
-    <div class="ojo-con"><span class="t">Tres trampas que cuestan una clase entera</span><p>1. Sin <em>Allow Re-Entry</em>, quien se registró a la clase de la semana pasada y se registra otra vez no recibe nada. 2. Un workflow en borrador no manda nada y no avisa. Publica. 3. Los recordatorios mandan el <strong>enlace de la puerta</strong>, nunca el Zoom directo: quien entra por el Zoom no pasa lista, no recibe la etiqueta de ingreso y jamás le llega la oferta.</p></div>
-
-    <h3>Pídele a Claude</h3>
-    <p>Antes te registrabas a mano con tu correo para probar. Ahora lo hace un comando: manda un registro real por la misma ruta que la landing y va a GHL a comprobar contacto, etiquetas y pipeline. Con tu correo, para que te llegue la confirmación del workflow.</p>
-    <div class="prompt"><b>Prompt · probar el embudo</b><span class="texto">Corre npm run probar:embudo -- --email [mi@correo.com] contra el sitio local y dime si el contacto llegó a GoHighLevel con la etiqueta de registro y cayó en la etapa Nuevo Registro. Deja el contacto: quiero ver que me llegue el correo de confirmación.</span></div>
-    <p>Así se ve cuando todo está bien:</p>
-<pre><code>1. Registro (/api/registro, tipo registro)
-  ✓ El sitio aceptó el registro
-  ✓ Contacto creado en GHL (b1c2…)
-  ✓ Etiquetas: registro webinar, registro 24-septiembre
-  ✓ Custom fields escritos (3): Fuente, Fecha de su clase…
-  ✓ "Dia de su clase" = 2026-09-24 (a este campo esperan los recordatorios)
-  ✓ Oportunidad en el pipeline: etapa "Nuevo Registro" del pipeline "Webinars"
-
-El embudo escribe bien en GoHighLevel.</code></pre>
-    <p>Si el correo no llega en dos minutos, el sitio no es el problema (el contacto ya tiene la etiqueta): revisa que el workflow esté publicado. Para limpiar después, pídele a Claude que vuelva a correrlo con <code>--limpiar</code>, o borra el contacto en GHL.</p>
+    <p class="en-clase"><b>En la clase</b> Construimos juntos las cuatro automatizaciones · qué decir en cada recordatorio · cómo leer tu pipeline después de una clase.</p>
 
     <div class="lista" data-modulo="m7">
-      <div class="cab"><b>Módulo 07</b><span></span></div>
-      <label><input type="checkbox" id="c-7-1"><span>Claude reescribió los nueve correos con mi voz y conservó los custom values</span></label>
-      <label><input type="checkbox" id="c-7-2"><span>Los cuatro workflows existen, con Allow Re-Entry, y están publicados</span></label>
-      <label><input type="checkbox" id="c-7-3"><span>Las tres esperas de los recordatorios tienen la hora de mi clase y apuntan a <em>Dia de su clase</em></span></label>
-      <label><input type="checkbox" id="c-7-6"><span>El <em>enlace de la puerta</em> y el de la oferta están cargados en el panel</span></label>
-      <label><input type="checkbox" id="c-7-4"><span><code>npm run probar:embudo</code> terminó con "El embudo escribe bien en GoHighLevel"</span></label>
-      <label><input type="checkbox" id="c-7-5"><span>Me llegó el correo de confirmación del workflow</span></label>
+      <div class="cab"><b>Listo cuando</b><span></span></div>
+      <label><input type="checkbox" id="c-7-1"><span>Tengo mis nueve correos con mi voz</span></label>
+      <label><input type="checkbox" id="c-7-2"><span>Las cuatro automatizaciones existen, con Allow Re-Entry, y están publicadas</span></label>
+      <label><input type="checkbox" id="c-7-3"><span>Las tres esperas de los recordatorios tienen la hora de mi clase</span></label>
+      <label><input type="checkbox" id="c-7-4"><span>La prueba terminó bien y me llegó el correo de confirmación</span></label>
     </div>
   </section>
 
-  <!-- ══════════════════════════════════════════════════════════════ -->
+  <!-- ═══ 08 ═══ -->
   <section class="modulo" id="m8" data-titulo="La puerta de la sala">
-    <div class="cabecera"><span class="num">08</span><h2>La puerta de la sala</h2><p class="meta">Diez minutos para entenderla. Es la pieza más delicada del sistema.</p></div>
+    <div class="cabecera"><span class="num">08</span><h2>La puerta de la sala</h2><p class="meta">Diez minutos.</p></div>
 
-    <h3>Qué es</h3>
-    <p><code>/ingreso</code> es la página a la que mandas a la gente para entrar a la clase. Antes de la hora muestra un contador. Quince minutos antes (o lo que pongas en el panel) se convierte en un formulario de nombre, correo y WhatsApp; al confirmarlo, la persona queda etiquetada como asistente y se abre el Zoom. Es tu lista de asistencia sin que nadie pase lista.</p>
+    <p class="para">Es el enlace que mandas para entrar a la clase. Antes de la hora muestra un contador. Quince minutos antes pide nombre, correo y WhatsApp, y al confirmar abre tu Zoom. Así sabes exactamente quién asistió, sin pasar lista.</p>
 
-    <figure class="captura"><img src="assets/capturas/ingreso.jpg" alt="La puerta de la sala: contador de días, horas, minutos y segundos, y el formulario de confirmación de datos" width="1440" height="900" loading="lazy"><figcaption><b>La puerta, antes de la hora.</b> El contador cuenta hacia la próxima clase que calculó el panel. El formulario se activa solo cuando abre.</figcaption></figure>
+    <figure class="captura"><img src="assets/capturas/ingreso.jpg" alt="La puerta de la sala: el contador hacia la clase y el formulario de confirmación" width="1440" height="900" loading="lazy"><figcaption><b>La puerta, antes de la hora.</b> Se abre sola, deja entrar a quien llega tarde y se cierra al terminar la clase.</figcaption></figure>
 
-    <h3>Cómo funciona</h3>
-    <p>La puerta está diseñada para equivocarse abriendo. Si el sitio no puede leer la configuración, abre. Si GHL no responde al momento de pasar lista, deja entrar igual y anota el fallo. Si alguien llega tarde, entra: la puerta se cierra al terminar la clase, no al empezar.</p>
-    <p>El enlace de Zoom nunca viaja al navegador antes de tiempo: el servidor también revisa la hora y responde "todavía no abre" aunque alguien cambie el reloj de su teléfono.</p>
-    <p>El mando manual del panel gana sobre todo: <em>abierta</em> deja entrar desde ya (útil para abrir la sala antes con el contador visible), <em>cerrada</em> no deja entrar a nadie. Después de la clase, regresa el mando a <em>auto</em>; si lo dejas en <em>abierta</em>, la puerta nunca se cierra.</p>
+    <ol class="pasos">
+      <li class="tu-paso"><p><span class="quien t">Tú</span>En tu panel, grupo <em>La sala</em>, pon el mando en <em>abierta</em> y guarda. Es solo para probarla ahora, fuera de horario.</p></li>
+      <li class="claude"><p><span class="quien c">Claude</span></p>
+        <div class="prompt"><b>Probar la puerta</b><span class="texto">Puse la puerta en "abierta" en mi panel. Corre npm run probar:embudo -- --puerta --email [mi@correo.com] y confirma que la puerta abrió, que me puso la etiqueta de ingreso y que pasé a Asistió al Webinar.</span></div></li>
+      <li class="tu-paso"><p><span class="quien t">Tú</span><strong>Regresa el mando a <em>auto</em> y guarda.</strong> Si lo dejas en <em>abierta</em>, la puerta nunca se cierra.</p></li>
+    </ol>
 
-    <div class="tu"><span class="t">Lo único que haces tú</span><p>En el panel, grupo <em>La sala</em>: pon el mando en <em>abierta</em> y guarda. Es para probarla ahora, fuera de horario.</p></div>
-
-    <h3>Pídele a Claude</h3>
-    <div class="prompt"><b>Prompt · probar la puerta</b><span class="texto">Puse la puerta en "abierta" en el panel. Corre npm run probar:embudo -- --puerta --email [mi@correo.com] y confirma que la puerta abrió, que me puso la etiqueta de ingreso y que mi oportunidad se movió a Asistió al Webinar.</span></div>
-    <p>Luego, si quieres verla con tus ojos: abre <code>/ingreso</code> en tu navegador, llena tus datos y confirma. Debe abrirse tu Zoom en otra pestaña.</p>
-
-    <div class="tu"><span class="t">Y al terminar</span><p>Regresa el mando a <em>auto</em> y guarda. Abre <code>/ingreso</code> de nuevo: debe mostrar el contador.</p></div>
+    <p class="en-clase"><b>En la clase</b> Cómo usar el mando el día del evento · por qué la puerta prefiere dejar pasar a alguien de más que dejar a alguien fuera.</p>
 
     <div class="lista" data-modulo="m8">
-      <div class="cab"><b>Módulo 08</b><span></span></div>
-      <label><input type="checkbox" id="c-8-1"><span>Con la puerta forzada en <em>abierta</em>, la prueba me etiquetó <code>ingreso webinar</code> y me movió a Asistió al Webinar</span></label>
+      <div class="cab"><b>Listo cuando</b><span></span></div>
+      <label><input type="checkbox" id="c-8-1"><span>La prueba me etiquetó como asistente y me movió a Asistió al Webinar</span></label>
       <label><input type="checkbox" id="c-8-2"><span>Regresé el mando a <em>auto</em> y la puerta muestra el contador</span></label>
-      <label><input type="checkbox" id="c-8-3"><span>Entiendo que la puerta se cierra al terminar la clase, no al empezar</span></label>
     </div>
   </section>
 
-  <!-- ══════════════════════════════════════════════════════════════ -->
+  <!-- ═══ 09 ═══ -->
   <section class="modulo" id="m9" data-titulo="La oferta">
-    <div class="cabecera"><span class="num">09</span><h2>La oferta</h2><p class="meta">Una o dos horas. Es la página que presenta tu programa módulo por módulo.</p></div>
+    <div class="cabecera"><span class="num">09</span><h2>La oferta</h2><p class="meta">Una o dos horas.</p></div>
 
-    <h3>Qué es</h3>
-    <p><code>/oferta</code> es a donde mandas a la gente al final de la clase. No es una lista de beneficios: recorre tu programa <strong>módulo por módulo</strong>, cada uno con su caja, y termina en la inversión. El ejemplo que trae es el de Business Growth Intensive: cámbialo entero por el tuyo.</p>
+    <p class="para">Es la página a la que mandas a la gente al final de la clase. Recorre tu programa módulo por módulo, cada uno con su caja, y termina en la inversión. La de la plantilla es de ejemplo: cámbiala entera por la tuya.</p>
 
-    <figure class="captura"><div class="ventana"><img src="assets/capturas/oferta-completa.jpg" alt="La página de oferta completa: hero, problema, el programa módulo por módulo con la caja de cada uno, qué incluye, para quién es, acompañamiento en vivo, garantía, inversión y cierre" width="1440" height="6000" loading="lazy"></div><figcaption><b>La oferta completa</b> (desplázate dentro de la imagen). Todo sale de <code>src/contenido/oferta.ts</code>; el precio y la moneda, del panel.</figcaption></figure>
+    <figure class="captura"><div class="ventana"><img src="assets/capturas/oferta-completa.jpg" alt="La página de oferta completa" width="1440" height="6000" loading="lazy"></div><figcaption><b>La oferta completa</b> (desplázate dentro de la imagen): promesa, el problema, el programa módulo por módulo, qué incluye, para quién es, el acompañamiento, la garantía, la inversión y el cierre.</figcaption></figure>
 
-    <h3>Cómo está armada</h3>
-    <div class="tabla"><table>
-      <thead><tr><th>Sección</th><th>Qué lleva</th></tr></thead>
-      <tbody>
-        <tr><td>Hero</td><td>La promesa, a quién le hablas, y tres datos cortos (duración, modalidad, idioma).</td></tr>
-        <tr><td>El problema</td><td>Lo que le pasa hoy a tu cliente, en sus palabras.</td></tr>
-        <tr><td><strong>El programa, módulo por módulo</strong></td><td>Por cada módulo: su caja (imagen), <em>Módulo 01 / 04</em> con su fase y sus semanas, el nombre, una frase que lo resume, la promesa, el detalle, y la lista de lo que la persona se lleva. Si le pones valor, sale tachado como "por separado" y se suma al final.</td></tr>
-        <tr><td>Qué incluye</td><td>El acompañamiento: sesiones, coach, comunidad, materiales.</td></tr>
-        <tr><td>Bonos</td><td>Opcional. Con la lista vacía, la sección no aparece.</td></tr>
-        <tr><td>Para quién es y para quién no</td><td>Tres a cinco frases, y una honesta de para quién no.</td></tr>
-        <tr><td>Acompañamiento en vivo</td><td>Las frases reales que la gente trae a las sesiones.</td></tr>
-        <tr><td>Garantía</td><td>Los días y las condiciones <strong>reales</strong> de tu garantía. No dejes la del ejemplo.</td></tr>
-        <tr><td>Inversión</td><td>La escalera de precio: valor por separado y precio regular, tachados (opcionales), y tu precio de hoy con su moneda.</td></tr>
-        <tr><td>Cierre</td><td>La última pregunta y el botón.</td></tr>
-      </tbody>
-    </table></div>
+    <ol class="pasos">
+      <li class="claude"><p><span class="quien c">Claude</span><strong>Tus módulos.</strong> De cada uno se muestra: cuándo ocurre, su nombre, una frase que lo resume, qué se logra, y la lista de lo que la persona se lleva.</p>
+        <div class="prompt"><b>Mis módulos</b><span class="texto">Mi programa se llama [nombre], dura [duración] y tiene estos módulos, en orden: [el nombre de cada módulo y qué se logra en él]. Reescribe los módulos de la oferta con eso. Como ya estoy personalizando la oferta, quita la leyenda de "oferta ficticia".</span></div></li>
+      <li class="tu-paso"><p><span class="quien t">Tú</span>Consigue o genera la caja de cada módulo (imagen vertical, fondo transparente) y déjalas en <code>public/assets</code>. Si aún no las tienes, la página muestra un marcador y se ve bien igual.</p></li>
+      <li class="claude"><p><span class="quien c">Claude</span></p>
+        <div class="prompt"><b>Las cajas de mis módulos</b><span class="texto">Dejé en public/assets la caja de cada módulo, en orden: [caja-1.png, caja-2.png…]. Conviértelas a WebP de 640 px de ancho conservando el fondo transparente y conéctalas a sus módulos. Al que no tenga imagen déjale el marcador.</span></div></li>
+      <li class="claude"><p><span class="quien c">Claude</span><strong>El resto de la página.</strong></p>
+        <div class="prompt"><b>El resto de mi oferta</b><span class="texto">Con lo que ya sabes de mi programa, reescribe el resto de la oferta: la promesa, el problema, qué incluye, para quién es y para quién no, el acompañamiento y el cierre. Mi garantía real es: [días y condiciones]. Mis bonos: [lista, o "no tengo"]. Si quiero mostrar precios tachados, el valor por separado es [número] y el precio regular [número]; si no, no los muestres.</span></div></li>
+      <li class="tu-paso"><p><span class="quien t">Tú</span>En tu panel, grupo <em>La oferta</em>: tu <strong>precio</strong> (solo el número) y tu <strong>moneda</strong>. Guarda y abre tu página de oferta.</p></li>
+    </ol>
 
-    <h3>Cómo funciona</h3>
-    <p>Cuando alguien se registra o entra a la sala, el sitio guarda una cookie con su nombre, correo y teléfono (30 días). Si esa persona llega a la oferta desde el mismo navegador y toca el botón, queda etiquetada como <code>carrito webinar</code> y pasa a <em>Cliente Potencial</em> en tu pipeline. Si llega de otro navegador, el sitio le pide sus datos primero: nadie llega al cobro sin que sepas quién es.</p>
+    <div class="nota"><span class="t">El cobro, más adelante</span><p>El botón de la oferta lleva al enlace de pago que pongas en tu panel. Cómo cobrar se ve más adelante en la formación. Mientras ese enlace esté vacío, el botón avisa que falta y nadie puede pagar: puedes publicar y llenar tu sala sin riesgo.</p></div>
 
-    <h3>Pídele a Claude</h3>
-    <div class="prompt"><b>Prompt 1 · mis módulos</b><span class="texto">Mi programa se llama [nombre], dura [duración] y tiene estos módulos, en orden: [lista con el nombre de cada módulo y qué se logra en él]. Reescribe la lista de módulos de src/contenido/oferta.ts: para cada uno llena cuando, fase, nombre, frase, promesa, detalle y teLlevas (lo que la persona se lleva al terminarlo). Deja valor en 0 salvo que te dé un precio por separado. Borra las marcas EJEMPLO de lo que cambies.</span></div>
-    <div class="prompt"><b>Prompt 2 · las cajas de los módulos</b><span class="texto">Dejé en public/assets/ la imagen de la caja de cada módulo, en orden: [caja-1.png, caja-2.png…]. Conviértelas a WebP de 640 px de ancho con fondo transparente, guárdalas como modulo-1.webp, modulo-2.webp… y conéctalas en el campo imagen de cada módulo. Si de alguno no tengo imagen, deja imagen en '' para que salga el marcador.</span></div>
-    <div class="prompt"><b>Prompt 3 · el resto de la oferta</b><span class="texto">Con lo que ya sabes de mi programa, reescribe en src/contenido/oferta.ts el hero, el problema, qué incluye, para quién es, el acompañamiento en vivo y el cierre. Deja aviso en '' para quitar la leyenda de oferta ficticia, porque esta ya es mi oferta real. Mi garantía real es: [días y condiciones]. Si tengo bonos son estos: [lista]; si no, deja la lista vacía. Si quiero mostrar escalera de precio, el valor por separado es [número] y el precio regular [número]; si no, déjalos en 0.</span></div>
-
-    <div class="tu"><span class="t">Lo único que haces tú</span>
-      <ol>
-        <li>Conseguir o generar la caja de cada módulo (retrato, fondo transparente). Si no las tienes todavía, la página muestra un marcador y se ve bien igual.</li>
-        <li>En el panel, grupo <em>La oferta</em>: tu <strong>precio</strong> (solo el número) y tu <strong>moneda</strong>. Guarda y abre <code>/oferta</code>.</li>
-      </ol>
-    </div>
-
-    <div class="nota"><span class="t">El método de pago, más adelante</span><p>El botón de la oferta lleva al enlace de pago que pongas en el panel. Cómo cobrar y cómo registrar las ventas en tu pipeline se ve más adelante en la formación. Mientras el enlace esté vacío, el botón avisa que falta y nadie puede pagar: puedes publicar y probar todo lo demás sin riesgo.</p></div>
+    <p class="en-clase"><b>En la clase</b> Cómo se arma una oferta por módulos · qué va en la garantía · cuándo conviene mostrar precios tachados y bonos.</p>
 
     <div class="lista" data-modulo="m9">
-      <div class="cab"><b>Módulo 09</b><span></span></div>
-      <label><input type="checkbox" id="c-9-1"><span>Mis módulos están en <code>oferta.ts</code>, cada uno con su frase, promesa, detalle y lo que se lleva</span></label>
-      <label><input type="checkbox" id="c-9-2"><span>Cada módulo tiene su caja (o decidí dejar el marcador por ahora)</span></label>
-      <label><input type="checkbox" id="c-9-3"><span>La garantía que se lee es la mía, con mis días y mis condiciones</span></label>
-      <label><input type="checkbox" id="c-9-6"><span>Quité la leyenda de "oferta ficticia" (<code>aviso</code> en <code>oferta.ts</code>, vacío) porque la oferta ya es la mía</span></label>
-      <label><input type="checkbox" id="c-9-4"><span>Precio y moneda cargados en el panel, y <code>/oferta</code> los muestra bien</span></label>
-      <label><input type="checkbox" id="c-9-5"><span>Probé el botón en una ventana privada: me pide mis datos antes de avanzar</span></label>
+      <div class="cab"><b>Listo cuando</b><span></span></div>
+      <label><input type="checkbox" id="c-9-1"><span>Mis módulos están en la oferta, con lo que la persona se lleva en cada uno</span></label>
+      <label><input type="checkbox" id="c-9-6"><span>Ya no aparece la leyenda de "oferta ficticia"</span></label>
+      <label><input type="checkbox" id="c-9-3"><span>La garantía que se lee es la mía</span></label>
+      <label><input type="checkbox" id="c-9-4"><span>Mi precio y mi moneda salen bien en la página</span></label>
     </div>
   </section>
 
-  <!-- ══════════════════════════════════════════════════════════════ -->
-  <section class="modulo" id="m10" data-titulo="Meta: pixel y conversiones">
-    <div class="cabecera"><span class="num">10</span><h2>Meta: pixel y conversiones</h2><p class="meta">Veinte minutos. No es opcional: sin esto tus anuncios no aprenden.</p></div>
+  <!-- ═══ 10 ═══ -->
+  <section class="modulo" id="m10" data-titulo="Meta: que tus anuncios aprendan">
+    <div class="cabecera"><span class="num">10</span><h2>Meta: que tus anuncios aprendan</h2><p class="meta">Veinte minutos. No es opcional si vas a pautar.</p></div>
 
-    <h3>Qué es</h3>
-    <p>El sitio manda a Meta tres eventos, cada uno una sola vez por persona: <em>Lead</em> cuando alguien se registra, <em>Asistio</em> (evento propio) cuando entra a la sala, y <em>Purchase</em> cuando paga (eso se activa con tu método de pago, más adelante). Con eso tu campaña optimiza hacia registros reales y puedes ver el costo por asistente, no solo por registro.</p>
+    <p class="para">Tu sitio le avisa a Meta tres cosas, una sola vez por persona: quién se registró, quién entró a la sala y quién pagó. Con eso tus campañas buscan gente que sí se registra y sí asiste, y sabes cuánto te cuesta cada asistente, no solo cada registro.</p>
 
-    <h3>Cómo funciona</h3>
-    <p>Cada evento sale por dos caminos con el mismo identificador: el pixel del navegador y la API de conversiones desde el servidor. Meta los une y cuenta uno. El camino del servidor recupera lo que el navegador pierde por bloqueadores y por iOS.</p>
-    <p>La fuente de cada contacto se arma con los parámetros UTM del enlace del anuncio. Si en Ads Manager pones el nombre de la campaña en <code>utm_campaign</code> y el del anuncio en <code>utm_content</code> (el enlace exacto está abajo), cada contacto en GHL dice de qué campaña y anuncio vino, sin que hagas nada.</p>
+    <ol class="pasos">
+      <li class="tu-paso"><p><span class="quien t">Tú</span>En <a href="https://business.facebook.com/events_manager2" target="_blank" rel="noopener">Meta → Administrador de eventos ↗</a>, entra a tu pixel → <em>Configuración</em> → <strong>Generar token de acceso</strong>. Copia el id del pixel y el token.</p></li>
+      <li class="tu-paso"><p><span class="quien t">Tú</span>En tu panel, grupo <em>Seguimiento</em>: pega el id del pixel y el token. Guarda.</p></li>
+      <li class="claude"><p><span class="quien c">Claude</span>Con tu sitio ya publicado (módulo 11), manda un registro de prueba para que Meta lo reciba.</p>
+        <div class="prompt"><b>Un registro de prueba para Meta</b><span class="texto">Corre npm run probar:embudo -- https://[mi-dominio.com] --email [mi@correo.com] --limpiar para que Meta reciba un registro desde mi sitio publicado, y dime si entró.</span></div></li>
+      <li class="tu-paso"><p><span class="quien t">Tú</span>En el Administrador de eventos, pestaña <em>Probar eventos</em>, confirma que llegó un <em>Lead</em> "desde navegador y servidor".</p></li>
+      <li class="tu-paso"><p><span class="quien t">Tú</span>En tus anuncios, usa esta dirección de destino. Así cada contacto en tu GoHighLevel dice de qué campaña y de qué anuncio vino:</p>
+<pre><code>https://TU-DOMINIO/?utm_source=fb&amp;utm_medium=paid&amp;utm_campaign={{campaign.name}}&amp;utm_content={{ad.name}}</code></pre></li>
+    </ol>
 
-    <div class="tu"><span class="t">Lo único que haces tú</span>
-      <ol>
-        <li><a href="https://business.facebook.com/events_manager2" target="_blank" rel="noopener">Meta Business → Administrador de eventos ↗</a> → tu pixel → Configuración → <strong>Generar token de acceso</strong> (API de conversiones). Copia el id del pixel y el token.</li>
-        <li>En el panel, grupo <em>Seguimiento</em>: id del pixel y token. Guarda.</li>
-        <li>En tus anuncios, la URL de destino con UTMs:</li>
-      </ol>
-<pre><code>https://TU-DOMINIO/?utm_source=fb&amp;utm_medium=paid&amp;utm_campaign={{campaign.name}}&amp;utm_content={{ad.name}}</code></pre>
-    </div>
+    <div class="ojo-con"><span class="t">Nombra tus campañas sin fecha</span><p>El nombre de la campaña se queda grabado en cada contacto. Si tu clase es semanal, una campaña llamada "clase 24 de septiembre" va a seguir marcando esa fecha en octubre.</p></div>
 
-    <h3>Pídele a Claude</h3>
-    <p>Con el sitio ya publicado (módulo 11), un registro de prueba contra tu dominio dispara el Lead por los dos caminos:</p>
-    <div class="prompt"><b>Prompt · disparar un Lead de prueba</b><span class="texto">Corre npm run probar:embudo -- https://[mi-dominio.com] --email [mi@correo.com] --limpiar para que Meta reciba un Lead desde mi sitio publicado, y dime si el registro entró.</span></div>
-    <p>Luego, en el <a href="https://business.facebook.com/events_manager2" target="_blank" rel="noopener">Administrador de eventos ↗</a>, pestaña <em>Probar eventos</em>, confirma que llegó un Lead "desde navegador y servidor". Esa pantalla es de Meta: no hay forma de leerla desde Claude.</p>
-
-    <div class="ojo-con"><span class="t">Nombres de campaña</span><p>Si pones la fecha en el nombre de la campaña, esa fecha se queda grabada como fuente en cada contacto aunque cambies la clase. Para un webinar recurrente, nombra la campaña sin fecha.</p></div>
+    <p class="en-clase"><b>En la clase</b> Qué evento elegir para optimizar tu campaña · cómo leer costo por registro contra costo por asistente.</p>
 
     <div class="lista" data-modulo="m10">
-      <div class="cab"><b>Módulo 10</b><span></span></div>
-      <label><input type="checkbox" id="c-10-1"><span>Pixel y token de conversiones cargados en el panel</span></label>
-      <label><input type="checkbox" id="c-10-2"><span>Un registro de prueba apareció en "Probar eventos" como Lead, navegador y servidor</span></label>
-      <label><input type="checkbox" id="c-10-3"><span>Mis anuncios llevan UTMs con el nombre de campaña y de anuncio</span></label>
+      <div class="cab"><b>Listo cuando</b><span></span></div>
+      <label><input type="checkbox" id="c-10-1"><span>Mi pixel y mi token están en el panel</span></label>
+      <label><input type="checkbox" id="c-10-2"><span>Un registro de prueba apareció en "Probar eventos", navegador y servidor</span></label>
+      <label><input type="checkbox" id="c-10-3"><span>Mis anuncios llevan la dirección con el nombre de campaña y de anuncio</span></label>
     </div>
   </section>
 
-  <!-- ══════════════════════════════════════════════════════════════ -->
-  <section class="modulo" id="m11" data-titulo="Publicar en Vercel">
-    <div class="cabecera"><span class="num">11</span><h2>Publicar en Vercel</h2><p class="meta">Veinte minutos la primera vez. Después, cada cambio se publica solo al subirlo a GitHub.</p></div>
+  <!-- ═══ 11 ═══ -->
+  <section class="modulo" id="m11" data-titulo="Publicar tu sitio">
+    <div class="cabecera"><span class="num">11</span><h2>Publicar tu sitio</h2><p class="meta">Veinte minutos la primera vez. Después, cada cambio se publica solo.</p></div>
 
-    <h3>Qué es</h3>
-    <p>Vercel es donde vive el sitio. Claude, con la cuenta que conectaste en el módulo 02, crea el proyecto, le sube las mismas variables que tienes en <code>.env.local</code>, crea la copia (Edge Config) y liga el proyecto a tu repositorio: desde ese momento, cada vez que subes un cambio a GitHub, se publica solo. Lo único tuyo son un token y, si tienes dominio, dos registros DNS.</p>
+    <p class="para">Pones tu sitio en internet, con tu dominio. Casi todo lo hace Claude con las cuentas que conectaste en el módulo 02. Lo tuyo son una llave de Vercel y, si tienes dominio, dos datos en tu proveedor.</p>
 
-    <h3>Pídele a Claude · A. Publicar la primera vez</h3>
-    <div class="prompt"><b>Prompt · crear el proyecto y publicar</b><span class="texto">Liga esta carpeta a un proyecto nuevo de Vercel con mi cuenta (vercel link, con el nombre de mi repo), sube todas las variables de .env.local con npm run subir-env y publica a producción con vercel --prod. Dame la URL y confirma que /admin abre.</span></div>
-    <p>Al terminar tienes una URL <code>.vercel.app</code>. Ábrela y entra a <code>/admin</code> con tu contraseña.</p>
+    <ol class="pasos">
+      <li class="claude"><p><span class="quien c">Claude</span><strong>Publicar.</strong></p>
+        <div class="prompt"><b>Publicar por primera vez</b><span class="texto">Liga esta carpeta a un proyecto nuevo de Vercel con mi cuenta (vercel link, con el nombre de mi repositorio), sube mis variables con npm run subir-env y publica a producción con vercel --prod. Dame la dirección y confirma que mi panel abre.</span></div></li>
+      <li class="tu-paso"><p><span class="quien t">Tú</span><strong>La llave de Vercel.</strong> En <a href="https://vercel.com/account/tokens" target="_blank" rel="noopener">Vercel → Account Settings → Tokens ↗</a>, crea una con el nombre de tu proyecto y alcance <strong>solo</strong> a la cuenta donde vive. Cópiala: solo se muestra una vez.</p></li>
+      <li class="claude"><p><span class="quien c">Claude</span><strong>La copia de seguridad.</strong> Hace que tu sitio siga mostrando bien tu fecha y tus enlaces aunque GoHighLevel tarde en responder, justo cuando más tráfico tienes.</p>
+        <div class="prompt"><b>Crear la copia de seguridad</b><span class="texto">Este es mi token de la API de Vercel: [……]. Escríbelo en .env.local como VERCEL_API_TOKEN editando el archivo (no lo pases como argumento ni lo repitas en pantalla), corre npm run edge-config, vuelve a subir mis variables con npm run subir-env y publica con vercel --prod.</span></div></li>
+      <li class="claude"><p><span class="quien c">Claude</span><strong>Que cada cambio se publique solo.</strong></p>
+        <div class="prompt"><b>Ligar mi repositorio</b><span class="texto">Conecta este proyecto de Vercel con mi repositorio de GitHub (vercel git connect) para que cada cambio que subas se publique solo. Si me pide autorizar a Vercel en GitHub, dime cuándo.</span></div></li>
+      <li class="claude"><p><span class="quien c">Claude</span><strong>Tu dominio.</strong></p>
+        <div class="prompt"><b>Agregar mi dominio</b><span class="texto">Agrega mi dominio [mi-dominio.com] al proyecto de Vercel y dime exactamente qué registros DNS tengo que poner en mi proveedor. Cuando te diga que ya están, actualiza el dominio en la marca del sitio y súbelo.</span></div></li>
+      <li class="tu-paso"><p><span class="quien t">Tú</span>Pon esos registros en tu proveedor de dominio. Vercel los valida en minutos, a veces horas. Apunta tu dominio en <a href="#ficha">tu ficha</a>.</p></li>
+      <li class="tu-paso"><p><span class="quien t">Tú</span>Entra a <a class="vivo" data-sitio="/admin" target="_blank" rel="noopener">tu panel</a> ya publicado. En <em>Enlaces</em> pon el <strong>enlace de la puerta</strong> (tu dominio + <code>/ingreso</code>) y el <strong>enlace de la oferta</strong> (tu dominio + <code>/oferta</code>): son los que mandan tus correos. <strong>Guarda.</strong> Ese guardado deja lista la copia de seguridad.</p></li>
+      <li class="claude"><p><span class="quien c">Claude</span><strong>La revisión final.</strong></p>
+        <div class="prompt"><b>La salud de mi sitio</b><span class="texto">Abre https://[mi-dominio.com]/api/salud y dime si todas las revisiones están bien. Si alguna falla, explícame qué es y qué hago.</span></div></li>
+    </ol>
 
-    <h3>Pídele a Claude · B. La copia (Edge Config)</h3>
-    <div class="tu"><span class="t">Lo único que haces tú</span><p>En <a href="https://vercel.com/account/tokens" target="_blank" rel="noopener">vercel.com → tu foto → Account Settings → Tokens</a> → Create. Nombre: el de tu proyecto. Alcance: <strong>solo</strong> la cuenta o el equipo donde vive este proyecto, no "todos". Ponle vencimiento si lo vas a dejar años. Copia el token: solo se muestra una vez. Este token se queda guardado en tu proyecto (es con el que el panel actualiza la copia), así que que sea uno dedicado a esto.</p></div>
-    <div class="prompt"><b>Prompt · crear la copia</b><span class="texto">Este es mi token de la API de Vercel: [……]. Escríbelo en .env.local como VERCEL_API_TOKEN editando el archivo (no lo pases como argumento ni lo repitas en pantalla), corre npm run edge-config para crear la copia en Edge Config, vuelve a subir las variables con npm run subir-env y publica con vercel --prod.</span></div>
-    <p>El comando crea el Edge Config, su token de lectura y deja las cuatro variables en <code>.env.local</code>:</p>
-<pre><code>Copia en Edge Config
-
-  ✓ Token válido (tu-usuario) · cuenta personal
-  + Edge Config "webinar-mi-programa-config" → ecfg_…
-  + Token de lectura creado
-  · EDGE_CONFIG, EDGE_CONFIG_ID, VERCEL_API_TOKEN → escritas en .env.local
-
-Listo. Ahora súbelas y publica:  npm run subir-env && npx vercel --prod</code></pre>
-    <div class="tu"><span class="t">Y una cosa más tuya</span><p>Entra a <a class="vivo" data-sitio="/admin" target="_blank" rel="noopener">tu panel</a> y <strong>guarda una vez</strong>: eso siembra la copia. El banner de salud debe quedar sin avisos.</p></div>
-
-    <h3>Pídele a Claude · C. Que cada cambio se publique solo</h3>
-    <div class="prompt"><b>Prompt · ligar GitHub</b><span class="texto">Conecta este proyecto de Vercel con mi repositorio de GitHub (vercel git connect) para que cada push a main publique. Si me pide autorizar la app de Vercel en GitHub, dime cuándo.</span></div>
-    <p>Prueba: pídele a Claude que cambie una frase en <code>landing.ts</code> y la suba. En un par de minutos está en tu URL. El repositorio trae además un flujo de GitHub Actions que corre las pruebas en cada push (<a class="vivo" data-repo="/actions" target="_blank" rel="noopener">pestaña Actions de tu repositorio</a>): si algo falla, aparece en rojo antes de que lo vea nadie.</p>
-
-    <h3>Pídele a Claude · D. Tu dominio</h3>
-    <div class="prompt"><b>Prompt · agregar el dominio</b><span class="texto">Agrega mi dominio [mi-dominio.com] al proyecto de Vercel (vercel domains add) y dime exactamente qué registros DNS tengo que poner en mi proveedor. Cuando te diga que ya están, actualiza "sitio" en src/contenido/marca.ts con el dominio y súbelo.</span></div>
-    <div class="tu"><span class="t">Lo único que haces tú</span><p>Poner los registros en tu proveedor de dominio (normalmente un <code>A</code> a <code>76.76.21.21</code> y un <code>CNAME</code> para <code>www</code>). Vercel lo marca válido en minutos, a veces horas.</p></div>
-
-    <h3>Comprueba</h3>
-    <div class="prompt"><b>Prompt · la salud</b><span class="texto">Abre https://[mi-dominio.com]/api/salud y dime si las cuatro revisiones están en verde. Si alguna falla, explícame qué es.</span></div>
-    <p>Debe decir <code>"ok": true</code>. Si un día algo se rompe, esta URL lo dice antes que nadie.</p>
+    <p class="en-clase"><b>En la clase</b> Qué es publicar y qué pasa cuando le dices "súbelo" a Claude · cómo conectar un dominio que ya usas en otro lado.</p>
 
     <div class="lista" data-modulo="m11">
-      <div class="cab"><b>Módulo 11</b><span></span></div>
-      <label><input type="checkbox" id="c-11-1"><span>Claude creó el proyecto, subió las variables y me dio una URL que abre</span></label>
-      <label><input type="checkbox" id="c-11-2"><span>Creé el token de Vercel y Claude creó la copia con <code>npm run edge-config</code></span></label>
-      <label><input type="checkbox" id="c-11-3"><span>Guardé una vez en <code>/admin</code> en producción y el banner de salud está limpio</span></label>
-      <label><input type="checkbox" id="c-11-4"><span><code>vercel git connect</code> hecho: un push publicó solo</span></label>
-      <label><input type="checkbox" id="c-11-5"><span>Mi dominio apunta al proyecto y <code>marca.ts</code> lo tiene</span></label>
-      <label><input type="checkbox" id="c-11-6"><span><a class="vivo" data-sitio="/api/salud" target="_blank" rel="noopener">La salud de mi sitio</a> responde <code>"ok": true</code></span></label>
+      <div class="cab"><b>Listo cuando</b><span></span></div>
+      <label><input type="checkbox" id="c-11-1"><span>Mi sitio abre en mi dominio</span></label>
+      <label><input type="checkbox" id="c-11-3"><span>Puse el enlace de la puerta y el de la oferta en mi panel, y guardé</span></label>
+      <label><input type="checkbox" id="c-11-4"><span>Le pedí a Claude un cambio y se publicó solo</span></label>
+      <label><input type="checkbox" id="c-11-6"><span><a class="vivo" data-sitio="/api/salud" target="_blank" rel="noopener">La salud de mi sitio</a> dice que todo está bien, y el aviso de mi panel está vacío</span></label>
     </div>
   </section>
 
-  <!-- ══════════════════════════════════════════════════════════════ -->
-  <section class="modulo" id="m12" data-titulo="Operar cada semana">
-    <div class="cabecera"><span class="num">12</span><h2>Operar cada semana</h2><p class="meta">Quince minutos por semana. Esta es la rutina, y es tuya: aquí Claude casi no entra.</p></div>
+  <!-- ═══ 12 ═══ -->
+  <section class="modulo" id="m12" data-titulo="Cada semana">
+    <div class="cabecera"><span class="num">12</span><h2>Cada semana</h2><p class="meta">Quince minutos por semana. Esta rutina es tuya.</p></div>
 
-    <h3>Qué es</h3>
-    <p>Una vez publicado, el embudo se opera desde el panel y desde GHL. En modo recurrente, la fecha se recorre sola cuando termina cada clase: la landing, el calendario y las etiquetas pasan a la siguiente semana sin que hagas nada. Lo que sí cambia de semana en semana está aquí.</p>
+    <p class="para">Una vez publicado, tu embudo se opera desde tu panel y tu GoHighLevel. Si tu clase se repite, la fecha avanza sola al terminar cada una: la página, el calendario y las etiquetas pasan a la siguiente semana sin que hagas nada.</p>
 
-    <figure class="captura"><img src="assets/capturas/gracias.jpg" alt="La página de gracias: tu lugar está apartado, botones para agendar en Google Calendar o Apple y Outlook, y el contador hacia la clase" width="1440" height="900" loading="lazy"><figcaption><b>Lo que ve cada registrado</b> al terminar: agendar en su calendario y, si lo pusiste en el panel, el grupo de WhatsApp. Todo sale de la fecha que el panel calculó esta semana.</figcaption></figure>
+    <figure class="captura"><img src="assets/capturas/gracias.jpg" alt="La página de gracias: tu lugar está apartado, botones para agendar en el calendario y el contador hacia la clase" width="1440" height="900" loading="lazy"><figcaption><b>Lo que ve cada registrado</b> al terminar: agendar la clase y entrar a tu grupo. Todo sale de la fecha que tu panel calculó esta semana.</figcaption></figure>
 
-    <h3>La rutina</h3>
-    <h4>Antes de la clase (el día anterior)</h4>
-    <ul>
-      <li>Abre <code>/admin</code>. Confirma fecha y hora. Revisa que el banner de salud esté limpio.</li>
-      <li>Si abriste un grupo de WhatsApp nuevo, cambia el enlace. Si el Zoom cambió, también.</li>
-      <li>Revisa en GHL cuántos contactos tienen <code>registro &lt;fecha&gt;</code>. Ese es tu número real de registrados a esta clase.</li>
-      <li>Toca <strong>Descargar respaldo</strong> en el panel y guarda el CSV. Es tu copia si alguien borra algo en GHL.</li>
-    </ul>
-    <h4>El día de la clase</h4>
-    <ul>
-      <li>Si quieres abrir la sala antes de los 15 minutos, pon la puerta en <em>abierta</em>. El contador sigue visible.</li>
-      <li>Manda al grupo el enlace de <code>/ingreso</code>, no el de Zoom: así pasas lista.</li>
-      <li>Al soltar la oferta, manda el enlace de <code>/oferta</code>.</li>
-    </ul>
-    <h4>Después de la clase</h4>
-    <ul>
-      <li><strong>Regresa la puerta a <em>auto</em>.</strong></li>
-      <li>Cuenta: registrados (<code>registro &lt;fecha&gt;</code>), asistentes (<code>ingreso &lt;fecha&gt;</code>), carritos (<code>carrito &lt;fecha&gt;</code>), pagos (<code>pago &lt;fecha&gt;</code>). Esa es tu conversión por etapa.</li>
-      <li>Si la próxima semana no hay clase, cambia a modo <em>fecha única</em> con la siguiente fecha; cuando reanudes, vuelve a <em>recurrente</em>.</li>
-    </ul>
+    <ol class="pasos">
+      <li class="tu-paso"><p><span class="quien t">Tú</span><strong>El día anterior.</strong> Abre tu panel: confirma fecha y hora, que el aviso de salud esté vacío, y cambia el Zoom o el grupo de WhatsApp si cambiaron. Toca <em>Descargar respaldo</em> y guarda el archivo. En GoHighLevel, cuenta cuántos contactos tienen la etiqueta <code>registro</code> con la fecha de esta clase: son tus registrados reales.</p></li>
+      <li class="tu-paso"><p><span class="quien t">Tú</span><strong>El día de la clase.</strong> Manda a tu grupo el <strong>enlace de la puerta</strong>, no el de Zoom: así queda registrado quién asistió. Si quieres abrir antes de los 15 minutos, pon el mando en <em>abierta</em>. Al presentar tu oferta, manda el enlace de la oferta.</p></li>
+      <li class="tu-paso"><p><span class="quien t">Tú</span><strong>Después de la clase.</strong> Regresa el mando a <em>auto</em>. Anota registrados, asistentes, carritos y pagos de esta fecha: esa es tu conversión en cada etapa. Si la próxima semana no hay clase, cambia a fecha única con la siguiente fecha.</p></li>
+      <li class="claude"><p><span class="quien c">Claude</span><strong>Entre semana</strong>, cualquier cambio de texto o de diseño.</p>
+        <div class="prompt"><b>Un cambio entre semana</b><span class="texto">Cambia en mi página de registro la frase "[frase actual]" por "[frase nueva]", verifica que todo siga bien y súbelo.</span></div></li>
+    </ol>
 
-    <h3>Cuando sí entra Claude</h3>
-    <div class="prompt"><b>Prompt · un cambio de copy entre semana</b><span class="texto">Cambia en landing.ts la frase "[frase actual]" por "[frase nueva]", verifica y súbelo.</span></div>
-    <div class="prompt"><b>Prompt · una sección nueva</b><span class="texto">Agrega en la landing, antes del cierre, una sección de preguntas frecuentes con estas 5 preguntas: [lista]. El copy va en landing.ts, no en la página. Verifica y súbelo.</span></div>
+    <p class="en-clase"><b>En la clase</b> Los cuatro números que miras cada semana y qué mover cuando uno baja.</p>
 
     <div class="lista" data-modulo="m12">
-      <div class="cab"><b>Módulo 12 · mi primera semana</b><span></span></div>
-      <label><input type="checkbox" id="c-12-1"><span>Revisé el panel el día anterior y el banner estaba limpio</span></label>
-      <label><input type="checkbox" id="c-12-2"><span>Descargué el respaldo</span></label>
-      <label><input type="checkbox" id="c-12-3"><span>Mandé <code>/ingreso</code> al grupo, no el Zoom directo</span></label>
-      <label><input type="checkbox" id="c-12-4"><span>Regresé la puerta a <em>auto</em> después de la clase</span></label>
-      <label><input type="checkbox" id="c-12-5"><span>Anoté registrados, asistentes, carritos y pagos de la edición</span></label>
+      <div class="cab"><b>Mi primera semana</b><span></span></div>
+      <label><input type="checkbox" id="c-12-1"><span>Revisé mi panel el día anterior y descargué el respaldo</span></label>
+      <label><input type="checkbox" id="c-12-3"><span>Mandé al grupo el enlace de la puerta, no el Zoom</span></label>
+      <label><input type="checkbox" id="c-12-4"><span>Regresé el mando a <em>auto</em> después de la clase</span></label>
+      <label><input type="checkbox" id="c-12-5"><span>Anoté registrados, asistentes, carritos y pagos</span></label>
     </div>
   </section>
 
-  <!-- ══════════════════════════════════════════════════════════════ -->
+  <!-- ═══ 13 ═══ -->
   <section class="modulo" id="m13" data-titulo="Si algo falla">
-    <div class="cabecera"><span class="num">13</span><h2>Si algo falla</h2><p class="meta">Síntoma, causa y arreglo. Empieza siempre por <code>/api/salud</code>, y pégaselo a Claude.</p></div>
+    <div class="cabecera"><span class="num">13</span><h2>Si algo falla</h2><p class="meta">Empieza siempre por aquí.</p></div>
 
-    <div class="prompt"><b>Prompt · el primero para cualquier problema</b><span class="texto">Algo falla: [describe lo que ves]. Abre /api/salud en mi dominio, dime qué revisión falla y qué tengo que hacer. Si es algo en GHL o en Vercel que no puedes hacer tú, dame los pasos exactos.</span></div>
+    <p class="para">Tu sitio se revisa a sí mismo y te dice qué le duele. Pídele a Claude que lo lea y te diga qué hacer.</p>
+
+    <ol class="pasos">
+      <li class="claude"><p><span class="quien c">Claude</span></p>
+        <div class="prompt"><b>El primero para cualquier problema</b><span class="texto">Algo falla: [describe lo que ves]. Abre la salud de mi sitio en https://[mi-dominio.com]/api/salud, dime qué revisión falla y qué tengo que hacer. Si es algo en GoHighLevel o en Vercel que no puedes hacer tú, dame los pasos exactos.</span></div></li>
+    </ol>
 
     <div class="tabla"><table>
-      <thead><tr><th>Síntoma</th><th>Causa probable</th><th>Arreglo</th></tr></thead>
+      <thead><tr><th>Lo que ves</th><th>Casi siempre es</th><th>Qué hacer</th></tr></thead>
       <tbody>
-        <tr><td>El formulario dice "No pudimos guardar tu registro"</td><td>GHL no responde con el token, o el token fue borrado</td><td>Si la revisión <em>ghl</em> falla: genera un token nuevo en GHL y pídele a Claude que lo ponga en <code>.env.local</code>, lo suba con <code>npm run subir-env</code> y publique</td></tr>
-        <tr><td>La landing muestra una fecha vieja o "por defecto"</td><td>La copia en Edge Config no se actualizó</td><td>Entra a <code>/admin</code>, toca <strong>Re-sincronizar la web</strong>. Si el banner dice que no hay copia, módulo 11 B</td></tr>
-        <tr><td>Los recordatorios llegan dos horas tarde</td><td>Zona horaria de la sub-cuenta distinta a la de la clase</td><td><a class="vivo" data-ghl="settings/company" target="_blank" rel="noopener">GHL → Configuración → Perfil de la empresa</a> → Zona horaria</td></tr>
-        <tr><td>Alguien se registró y no le llegó el correo</td><td>Workflow en borrador, o sin Allow Re-Entry y la persona ya se había registrado antes</td><td>Publica el workflow y activa Allow Re-Entry. <code>npm run probar:embudo</code> te dice si el sitio hizo su parte</td></tr>
-        <tr><td>La puerta no abre a la hora</td><td>Mando en <em>cerrada</em>, o fecha única ya pasada</td><td>Panel → La sala → mando en <em>auto</em>; revisa la fecha</td></tr>
-        <tr><td>La puerta está abierta todo el tiempo</td><td>Mando quedó en <em>abierta</em> desde la última clase</td><td>Panel → La sala → <em>auto</em></td></tr>
-        <tr><td>El registro dice "cerrado"</td><td>Modo fecha única con fecha pasada, o "Webinar activo" en no</td><td>Pon la siguiente fecha o cambia a recurrente; revisa el interruptor</td></tr>
-        <tr><td>Meta cuenta más leads que registros en GHL</td><td>Otro pixel o evento Lead duplicado en la página (por ejemplo en GHL o en un plugin)</td><td>El sitio solo manda Lead en el registro. Busca el otro origen en "Probar eventos"</td></tr>
-        <tr><td>El panel no me deja entrar y dice "Demasiados intentos"</td><td>Cinco contraseñas mal en 15 minutos</td><td>Espera 15 minutos. Si olvidaste la contraseña, pídele a Claude que cambie <code>ADMIN_PASSWORD</code> en <code>.env.local</code>, la suba y publique</td></tr>
-        <tr><td>Subí un cambio y no se publicó</td><td>El repositorio no está ligado a Vercel, o el build falló</td><td>Pídele a Claude: "corre npm run verificar y revisa el último deploy en Vercel (vercel ls); dime por qué falló"</td></tr>
+        <tr><td>El formulario dice "No pudimos guardar tu registro"</td><td>La llave de GoHighLevel se borró o cambió</td><td>Crea una llave nueva (módulo 04) y dásela a Claude: "actualiza mi llave de GoHighLevel y publica"</td></tr>
+        <tr><td>Tu página muestra una fecha vieja</td><td>La copia de seguridad se quedó atrás</td><td>En tu panel, toca <strong>Re-sincronizar la web</strong></td></tr>
+        <tr><td>Los recordatorios llegan a otra hora</td><td>La zona horaria de tu sub-cuenta</td><td><a class="vivo" data-ghl="settings/company" target="_blank" rel="noopener">Configuración → Perfil de la empresa</a> → Zona horaria</td></tr>
+        <tr><td>Alguien se registró y no le llegó el correo</td><td>La automatización no está publicada, o le falta Allow Re-Entry</td><td>Publícala y activa Allow Re-Entry. Pídele a Claude la prueba del módulo 07 para confirmar que tu sitio hizo su parte</td></tr>
+        <tr><td>La puerta no abre, o no se cierra nunca</td><td>El mando quedó en <em>cerrada</em> o en <em>abierta</em></td><td>Panel → La sala → <em>auto</em></td></tr>
+        <tr><td>El registro dice "cerrado"</td><td>Una fecha única que ya pasó, o el registro apagado</td><td>Pon la siguiente fecha o cambia a clase semanal</td></tr>
+        <tr><td>Meta cuenta más registros que GoHighLevel</td><td>Otro pixel o evento duplicado en tu página</td><td>Búscalo en "Probar eventos". Tu sitio solo avisa una vez por persona</td></tr>
+        <tr><td>"Demasiados intentos" al entrar al panel</td><td>Cinco contraseñas mal en 15 minutos</td><td>Espera 15 minutos. Si la olvidaste, pídele a Claude: "cambia la contraseña de mi panel y publica"</td></tr>
+        <tr><td>Pedí un cambio y no se publicó</td><td>El repositorio no está ligado, o algo falló al publicar</td><td>Pídele a Claude: "revisa por qué no se publicó mi último cambio"</td></tr>
       </tbody>
     </table></div>
 
     <div class="lista" data-modulo="m13">
-      <div class="cab"><b>Módulo 13</b><span></span></div>
-      <label><input type="checkbox" id="c-13-1"><span>Sé abrir <a class="vivo" data-sitio="/api/salud" target="_blank" rel="noopener">la salud de mi sitio</a> y leer qué revisión falla</span></label>
-      <label><input type="checkbox" id="c-13-2"><span>Sé dónde está el botón Re-sincronizar y para qué sirve</span></label>
-      <label><input type="checkbox" id="c-13-3"><span>Sé pedirle a Claude que cambie el token de GHL o la contraseña del panel y publique</span></label>
+      <div class="cab"><b>Listo cuando</b><span></span></div>
+      <label><input type="checkbox" id="c-13-1"><span>Sé pedirle a Claude que revise la salud de mi sitio</span></label>
+      <label><input type="checkbox" id="c-13-2"><span>Sé dónde está el botón Re-sincronizar</span></label>
     </div>
   </section>
 
-  <!-- ══════════════════════════════════════════════════════════════ -->
+  <!-- ═══ Ficha ═══ -->
   <section class="modulo" id="ficha" data-titulo="Mi ficha del proyecto" data-sin-nav="1">
-    <div class="cabecera"><span class="num">·</span><h2>Mi ficha del proyecto</h2><p class="meta">Se guarda en este navegador. Aquí no pongas contraseñas ni tokens.</p></div>
+    <div class="cabecera"><span class="num">·</span><h2>Mi ficha del proyecto</h2><p class="meta">Se guarda solo en este navegador. Aquí no pongas contraseñas ni llaves.</p></div>
     <div class="ficha">
       <div class="campos">
-        <label>Nombre del webinar<input id="f-webinar" placeholder="Clase en vivo"></label>
-        <label>Mi dominio<input id="f-dominio" placeholder="https://mi-dominio.com"></label>
-        <label>Repositorio en GitHub<input id="f-repo" placeholder="usuario/webinar-mi-programa"></label>
-        <label>Location ID de GHL<input id="f-location" placeholder="20 caracteres" autocomplete="off" spellcheck="false"></label>
-        <label>Dominio de mi GHL<input id="f-ghl-host" placeholder="app.gohighlevel.com" autocomplete="off" spellcheck="false"></label>
-        <label>Nombre del pipeline<input id="f-pipeline" placeholder="Webinars"></label>
+        <label>Nombre de mi clase<input id="f-webinar" placeholder="Clase en vivo"></label>
+        <label>Mi dominio<input id="f-dominio" placeholder="https://mi-dominio.com" autocomplete="off" spellcheck="false"></label>
+        <label>Mi repositorio en GitHub<input id="f-repo" placeholder="usuario/webinar-mi-programa" autocomplete="off" spellcheck="false"></label>
+        <label>Location ID de GoHighLevel<input id="f-location" placeholder="20 caracteres" autocomplete="off" spellcheck="false"></label>
+        <label>Dominio de mi GoHighLevel<input id="f-ghl-host" placeholder="app.gohighlevel.com" autocomplete="off" spellcheck="false"></label>
         <label>Día y hora de la clase<input id="f-horario" placeholder="Jueves 8:00 pm CDMX"></label>
         <label>Precio del programa<input id="f-precio" placeholder="9,997 USD"></label>
-        <label>Id del pixel de Meta<input id="f-pixel" placeholder="15 dígitos"></label>
+        <label>Id de mi pixel de Meta<input id="f-pixel" placeholder="15 dígitos"></label>
       </div>
-      <p class="pie">Lo que escribes aquí se queda en tu navegador. Sirve para tener a la mano lo que vas a pegar en los prompts, y con <em>Mi dominio</em>, <em>Repositorio</em> y <em>Location ID</em> se arman los enlaces de este manual que llevan a tus propias pantallas. Si tu agencia usa un dominio propio para GoHighLevel, ponlo en <em>Dominio de mi GHL</em>; si no, déjalo vacío.</p>
+      <p class="pie">Sirve para tener a la mano lo que vas a pegar en los textos para Claude. Con tu dominio, tu repositorio y tu Location ID se arman los enlaces de este manual que llevan a tus propias pantallas. Si tu agencia usa un dominio propio para GoHighLevel, ponlo; si no, deja ese campo vacío.</p>
     </div>
   </section>
 
   </main>
 
-  <footer class="pie-doc">Manual del embudo de webinar · Business Growth Intensive · <a href="https://github.com/davidiriza-lab/plantilla-webinar-ghl" target="_blank" rel="noopener">Plantilla en GitHub</a> · <a href="https://www.mibgi.com/plantilla" target="_blank" rel="noopener">Demo</a> · <a href="https://github.com/davidiriza-lab/plantilla-webinar-ghl/blob/main/docs/WORKFLOWS.md" target="_blank" rel="noopener">Workflows</a> · Las casillas y la ficha se guardan solo en este navegador.</footer>
+  <footer class="pie-doc">Manual del embudo de webinar · Business Growth Intensive · <a href="https://github.com/davidiriza-lab/plantilla-webinar-ghl" target="_blank" rel="noopener">Plantilla en GitHub</a> · <a href="https://www.mibgi.com/plantilla" target="_blank" rel="noopener">Demo</a> · <a href="https://github.com/davidiriza-lab/plantilla-webinar-ghl/blob/main/docs/WORKFLOWS.md" target="_blank" rel="noopener">Correos de ejemplo</a> · Las casillas y la ficha se guardan solo en este navegador.</footer>
 </div>
 
 <script>
