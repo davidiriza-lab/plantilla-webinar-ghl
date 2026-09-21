@@ -46,6 +46,11 @@ de Vercel/Meta/Mercado Pago, DNS) díselo con los pasos exactos.
 - **Nada de configuración en código.** Si el dueño quiere cambiar fecha, enlace,
   precio o pixel, se hace en `/admin`, no editando archivos. Si te piden
   "cambia la fecha a…", di que va en el panel.
+- **La leyenda de "oferta ficticia" se quita al empezar a personalizar.**
+  `OFERTA.aviso` en `src/contenido/oferta.ts` pinta una franja que dice que la
+  oferta es de demostración. En cuanto el dueño te pida cambiar cualquier texto
+  de la oferta (módulos, precio, garantía…), deja `aviso: ''` en ese mismo
+  cambio y díselo: publicar su oferta real con esa leyenda le tumba las ventas.
 - **El copy va en `src/contenido/`**, nunca inline en las páginas. Al cambiar un
   texto de ejemplo, borra su marca `// EJEMPLO` (`npm run revisar` las lista).
 - **GHL es la fuente de verdad.** Las páginas leen una copia en Vercel Edge

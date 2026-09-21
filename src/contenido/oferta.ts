@@ -97,9 +97,17 @@ const BONOS: readonly Bono[] = [];
 
 export const OFERTA = {
   /**
-   * Leyenda de demostración. Sale en una franja arriba de la página y junto al
-   * precio. La plantilla la trae porque su oferta de ejemplo NO es real: en
-   * cuanto pongas la tuya, déjala en '' y desaparece.
+   * ╔══════════════════════════════════════════════════════════════════════╗
+   * ║  QUÍTALA EN CUANTO EMPIECES A PERSONALIZAR ESTA OFERTA               ║
+   * ╚══════════════════════════════════════════════════════════════════════╝
+   * Leyenda de demostración: sale en una franja dorada arriba de la página y
+   * otra vez junto al precio, diciendo que la oferta es ficticia. La plantilla
+   * la trae porque su oferta de ejemplo NO es real. La tuya sí lo es: al
+   * cambiar el primer texto de este archivo, deja `aviso: ''` y desaparece de
+   * los dos lugares. `npm run revisar` te lo recuerda mientras siga puesta.
+   *
+   * (Claude: si el dueño te pide personalizar cualquier parte de la oferta y
+   * `aviso` todavía tiene texto, vacíalo en ese mismo cambio y avísale.)
    */
   aviso:
     'Página de demostración. Esta es una oferta ficticia, no una oferta real de Business Growth Intensive: el precio, la garantía y las condiciones son de ejemplo.', // EJEMPLO

@@ -25,6 +25,17 @@ for (const archivo of readdirSync(DIR).sort()) {
   total += marcadas.length;
 }
 
+// La leyenda de demostración de la oferta: mientras tenga texto, la página le
+// dice a tus visitantes que la oferta es ficticia.
+const oferta = readFileSync(join(DIR, 'oferta.ts'), 'utf8');
+const aviso = oferta.match(/\n  aviso:\s*\n?\s*(['"`])([\s\S]*?)\1/);
+if (aviso && aviso[2].trim() !== '') {
+  console.log(
+    "\n⚠  La oferta todavía muestra la leyenda de \"oferta ficticia\" (arriba de la página y junto al precio)." +
+      "\n   Si ya empezaste a personalizarla, deja  aviso: ''  en src/contenido/oferta.ts.",
+  );
+}
+
 console.log(
   total === 0
     ? '\nSin copy de ejemplo: la plantilla ya es tuya.\n'
