@@ -239,7 +239,7 @@
       </svg>
     </div>
 
-    <div class="nota"><span class="t">Dónde vive la plantilla</span><p>En GitHub: <a href="https://github.com/davidiriza-lab/plantilla-webinar-ghl" target="_blank" rel="noopener">github.com/davidiriza-lab/plantilla-webinar-ghl</a>. Es un repositorio <em>template</em>: no lo modificas, sacas tu propia copia privada (módulo 03) y trabajas sobre ella. Si al abrir el enlace GitHub dice que no existe, tu usuario todavía no tiene acceso: pídelo en la formación con tu nombre de usuario de GitHub.</p></div>
+    <div class="nota"><span class="t">Dónde vive la plantilla</span><p>En GitHub: <a href="https://github.com/davidiriza-lab/plantilla-webinar-ghl" target="_blank" rel="noopener">github.com/davidiriza-lab/plantilla-webinar-ghl</a>. Es un repositorio público y <em>template</em>: no lo modificas, sacas tu propia copia (módulo 03) y trabajas sobre ella. La plantilla es pública; <strong>tu copia va privada</strong>, porque ahí van a vivir tu copy y tu configuración.</p></div>
 
     <h3>Lo que necesitas tener antes de empezar</h3>
     <div class="tabla"><table>
@@ -399,7 +399,7 @@ Herramientas listas. Lo marcado con ✗ (si hay) son módulos que aún no tocan.
 
     <h4>Si algo falla</h4>
     <ul>
-      <li><strong>"repository not found"</strong> al crear la copia. Tu cuenta de GitHub no tiene acceso a la plantilla. Abre <a href="https://github.com/davidiriza-lab/plantilla-webinar-ghl" target="_blank" rel="noopener">el enlace</a> con tu sesión de GitHub: si da 404, pide acceso en la formación con tu nombre de usuario.</li>
+      <li><strong>"repository not found"</strong> al crear la copia. Casi siempre es que <code>gh</code> no tiene sesión o está en otra cuenta: pídele a Claude que corra <code>gh auth status</code> y, si hace falta, <code>gh auth login</code>.</li>
       <li><strong>Tu copia quedó pública.</strong> Pídele a Claude: "cambia mi repositorio a privado con gh repo edit --visibility private". Tu copy y tu configuración no tienen por qué estar a la vista.</li>
       <li><strong>npm install o npm run instalar fallan con un error de sintaxis.</strong> Es Node viejo: el diagnóstico lo dice. Instala la LTS.</li>
     </ul>
